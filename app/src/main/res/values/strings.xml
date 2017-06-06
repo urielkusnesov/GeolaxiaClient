@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Geolaxia</string>
+
+    <!-- Strings related to login -->
+    <string name="username">Usuario</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="first_name">Nombre</string>
+    <string name="last_name">Apellido</string>
+    <string name="email">Email</string>
+    <string name="action_sign_in">Iniciar Sesión</string>
+    <string name="action_register">Registrarse</string>
+    <string name="register_text">¿No estas registrado?</string>
+    <string name="action_sign_in_short">Iniciar Sesión</string>
+    <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_field_required">El campo es requerido</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="password_not_match">El valor debe coincidir con el campo contraseña</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="openDrawer">Abrir menu</string>
+    <string name="closeDrawer">Cerrar menu</string>
+</resources>

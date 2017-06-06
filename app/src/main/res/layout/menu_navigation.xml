@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:title="Principal"/>
+        <item
+            android:id="@+id/attack"
+            android:title="Ataque"/>
+        <item
+            android:id="@+id/defense"
+            android:title="Defensa"/>
+        <item
+            android:id="@+id/constructions"
+            android:title="Construcciones"/>
+        <item
+            android:id="@+id/military"
+            android:title="Militares"/>
+        <item
+            android:id="@+id/help"
+            android:title="Ayuda"/>
+    </group>
+</menu>

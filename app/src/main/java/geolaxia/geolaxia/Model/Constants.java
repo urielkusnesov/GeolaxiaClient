@@ -1,0 +1,47 @@
+package geolaxia.geolaxia.Model;
+
+/**
+ * Created by uriel on 15/4/2017.
+ */
+
+public class Constants {
+    public static String BASE_URL = "192.168.0.11";/*Server IP*/
+    public static final String SERVER_URL_PROPERTY = "SERVER_URL";
+    public static final String SERVER_IP_REQUEST = "http://martinhernan.xyz/ip";
+    public static final String PORT = ":62078/";
+    public static final String HTTP = "http://";
+    public static final String LOGIN_SERVICE = "api/player/login";
+    public static final String LOGOUT_SERVICE = "api/logout";
+    public static final String REGISTER_SERVICE = "api/player/register";
+    public static final String PLANETSBYPLAYER_SERVICE = "api/planet/getbyplayer";
+    public static final String PLANET_SERVICE = "api/planet/getbyId";
+    public static final String WEATHER_SERVICE = "http://api.openweathermap.org/data/2.5/weather";
+    public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
+
+    /*URLs*/
+    public static String getLoginServiceUrl() { return (HTTP + BASE_URL + PORT + LOGIN_SERVICE); }
+    public static String getLogoutServiceUrl() { return (HTTP + BASE_URL + PORT + LOGOUT_SERVICE); }
+    public static String getRegisterServiceUrl() { return (HTTP + BASE_URL + PORT + REGISTER_SERVICE); }
+    public static String getPlanetsByPlayerServiceUrl() { return (HTTP + BASE_URL + PORT + PLANETSBYPLAYER_SERVICE); }
+    public static String getPlanetServiceUrl() { return (HTTP + BASE_URL + PORT + PLANET_SERVICE); }
+    public static String getWeatherServiceUrl(String latitude, String longitude) { return (WEATHER_SERVICE + "?lat=" + latitude + "&lon=" + longitude + "&units=metric&APPID=a6e31252461e3c4a9ccaf2bcb32740c5"); }
+
+    //
+    public static final String ERROR_RESPONSE = "error";
+    public static final String OK_RESPONSE = "ok";
+
+    public static final int INVALID_USERNAME = 1;
+    public static final int INVALID_PASSWORD = 2;
+    public static final int INVALID_TOKEN = 3;
+    public static final int ERROR_SEND_MESSAGE = 4;
+    public static final int ERROR_USER_PROFILE_DOESNT_EXISTS = 5;
+    public static final int USERNAME_ALREADY_EXISTS = 6;
+    public static final int NO_PASSWORD = 7;
+    public static final int NO_USERNAME = 8;
+
+    //Common
+    public static final String TITLES[] = {"Principal","Ataque","Defensa","Construcciones","Construcciones militares", "Ayuda"};
+    public static final int WHITE_PLANET = 0;
+    public static final int BLUE_PLANET = 1;
+    public static final int BLACK_PLANET = 2;
+}
