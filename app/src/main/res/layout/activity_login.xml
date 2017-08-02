@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/background"
+    android:background="@drawable/login_bg"
     tools:context="geolaxia.geolaxia.Activities.LoginActivity">
 
     <!-- Login progress -->
@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:maxLines="1"
-                    android:textColor="#00Afff"
+                    android:textColor="#0000ff"
                     android:text="@string/action_register"
                     android:layout_toRightOf="@+id/registerText" />
 
@@ -106,6 +106,15 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/facebook_login_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Iniciar sesión con Facebook"
+                android:textStyle="bold"
+                />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package geolaxia.geolaxia.Services.Interface;
 
+import org.json.JSONException;
+
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.MenuActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
@@ -20,6 +22,7 @@ public interface IRestService {
     public final static String LOGIN_IMAGE = "com.example.uriel.ordertracker.App.Services.RestService.LOGIN_IMAGE";
 
     void LogIn(final String username, final String password, final LoginActivity act);
+    void FacebookLogIn(Player player, String token, LoginActivity context) throws JSONException;
     void Register(Player player, final RegisterActivity act);
     //void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act);
     //void GetPlanet(final int planetId, final String username, final String token, final HomeActivity act);

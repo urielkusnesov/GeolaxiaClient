@@ -105,6 +105,70 @@ public class RestService implements IRestService {
     }
 
     @Override
+    public void FacebookLogIn(final Player player, final String token, final LoginActivity act) {
+        String url = Constants.getFacebookLoginServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            PlayerDTO playersContainer = new Gson().fromJson(response.toString(), PlayerDTO.class);
+                            if(Constants.OK_RESPONSE.equals(playersContainer.getStatus().getResult())) {
+
+                                //transformar a planetas segun herencia
+                                ArrayList<Planet> planets = new ArrayList<Planet>();
+                                for (Planet planet: playersContainer.getData().getPlanets()) {
+                                    Planet newPlanet = null;
+                                    switch (planet.getPlanetType()){
+                                        case Constants.WHITE_PLANET:
+                                            newPlanet = new WhitePlanet(planet);
+                                            break;
+                                        case Constants.BLUE_PLANET:
+                                            newPlanet = new BluePlanet(planet);
+                                            break;
+                                        case Constants.BLACK_PLANET:
+                                            newPlanet = new BlackPlanet(planet);
+                                            break;
+                                    }
+                                    planets.add(newPlanet);
+                                }
+                                playersContainer.getData().setPlanets(planets);
+
+                                act.LogIn(playersContainer.getData());
+                            } else {
+                                act.handleUnexpectedError(playersContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("userid", player.getFacebookId());
+                headers.put("token", token);
+                headers.put("username", player.getUsername());
+                headers.put("email", player.getEmail());
+                headers.put("firstName", player.getFirstName());
+                headers.put("lastName", player.getLastName());
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
     public void Register(final Player player, final RegisterActivity act) {
         String url = Constants.getRegisterServiceUrl();
 

@@ -20,9 +20,14 @@ public class Player implements Serializable {
     private String FirstName;
     private String LastName;
     private String Email;
+    private String FacebookId;
     private ArrayList<Planet> Planets;
 
-    public Player(int id, int level, int resourcesUsed, String username, String password, String firstName, String lastName, String email, ArrayList<Planet> planets){
+    public Player() {
+
+    }
+
+    public Player(int id, int level, int resourcesUsed, String username, String password, String firstName, String lastName, String email, String facebookId, ArrayList<Planet> planets){
         this.Id = id;
         this.Level = level;
         this.ResourcesUsed = resourcesUsed;
@@ -31,6 +36,7 @@ public class Player implements Serializable {
         this.FirstName = firstName;
         this.LastName = lastName;
         this.Email = email;
+        this.FacebookId = facebookId;
         this.Planets = planets;
     }
 
@@ -89,7 +95,7 @@ public class Player implements Serializable {
     }
 
     public String getLastName() {
-        return Token;
+        return LastName;
     }
 
     public void setLastName(String lastName) {
@@ -102,6 +108,14 @@ public class Player implements Serializable {
 
     public void setEmail(String email) {
         this.Email = email;
+    }
+
+    public String getFacebookId() {
+        return FacebookId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.FacebookId = facebookId;
     }
 
     public ArrayList<Planet> getPlanets() {
@@ -140,6 +154,11 @@ public class Player implements Serializable {
             params.put("email", this.Email);
         }else {
             params.put("email", "");
+        }
+        if (this.FacebookId != null){
+            params.put("facebookId", this.FacebookId);
+        }else {
+            params.put("facebookId", "");
         }
         return new JSONObject(params);
     }

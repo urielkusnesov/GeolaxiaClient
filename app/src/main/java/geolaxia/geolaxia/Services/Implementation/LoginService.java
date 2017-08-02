@@ -21,6 +21,11 @@ public class LoginService implements ILoginService {
     }
 
     @Override
+    public void FacebookLogIn(Player player, String token, LoginActivity context) throws JSONException {
+        restService.FacebookLogIn(player, token, context);
+    }
+
+    @Override
     public void Register(Player player, RegisterActivity context) throws JSONException {
         restService.Register(player, context);
     }

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.R;
 
@@ -21,6 +22,7 @@ public class MenuActivity extends BaseActivity {
 
     private Activity context = this;
     private Player player;
+    private Planet planet;
     private Toolbar toolbar;                              // Declaring the Toolbar Object
     private DrawerLayout drawerLayout;                 // Declaring Action Bar Drawer Toggle
 
@@ -30,6 +32,7 @@ public class MenuActivity extends BaseActivity {
 
         Intent intent = getIntent();
         player = (Player) intent.getExtras().getSerializable("player");
+        planet = (Planet) intent.getExtras().getSerializable("planet");
 
         initNavigationDrawer();
     }
@@ -46,11 +49,15 @@ public class MenuActivity extends BaseActivity {
                 switch (id){
                     case R.id.home:
                         drawerLayout.closeDrawers();
-                        Intent intent = new Intent(context, HomeActivity.class);
-                        intent.putExtra("player", player);
-                        startActivity(intent);
+                        Intent homeIntent = new Intent(context, HomeActivity.class);
+                        homeIntent.putExtra("player", player);
+                        startActivity(homeIntent);
                     case R.id.attack:
                         drawerLayout.closeDrawers();
+                        Intent attackIntent = new Intent(context, AttackActivity.class);
+                        attackIntent.putExtra("player", player);
+                        attackIntent.putExtra("planet", planet);
+                        startActivity(attackIntent);
                         break;
                     case R.id.defense:
                         drawerLayout.closeDrawers();
@@ -59,6 +66,9 @@ public class MenuActivity extends BaseActivity {
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.military:
+                        drawerLayout.closeDrawers();
+                        break;
+                    case R.id.colonization:
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.help:
@@ -111,5 +121,9 @@ public class MenuActivity extends BaseActivity {
         //}
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void changePlanet(Planet planet){
+        this.planet = planet;
     }
 }

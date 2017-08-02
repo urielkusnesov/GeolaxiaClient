@@ -25,11 +25,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import geolaxia.geolaxia.Model.Helpers;
+import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.R;
 import geolaxia.geolaxia.Services.Implementation.LoginService;
@@ -54,7 +68,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     private AutoCompleteTextView mUserNameView;
     private EditText mPasswordView;
     private ILoginService loginService;
-    final Activity context = this;
+    final LoginActivity context = this;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +110,52 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             }
         });
 
+        callbackManager = CallbackManager.Factory.create();
+        LoginButton facebookButton = (LoginButton) findViewById(R.id.facebook_login_button);
+        facebookButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                final String userId = loginResult.getAccessToken().getUserId();
+                final String token = loginResult.getAccessToken().getToken();
+
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                try {
+                                    Player player = new Player();
+                                    player.setUsername(object.getString("name"));
+                                    player.setFirstName(object.getString("first_name"));
+                                    player.setLastName(object.getString("last_name"));
+                                    player.setEmail(""/*object.getString("email")*/);
+                                    player.setFacebookId(userId);
+
+                                    loginService.FacebookLogIn(player, token, context);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,first_name,last_name");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                handleUnexpectedError("EL inicio de sesión con Facebook falló.");
+            }
+        });
+
         TextView mRegisterTextView = (TextView) findViewById(R.id.register);
         mRegisterTextView.setClickable(true);
         mRegisterTextView.setOnClickListener(new OnClickListener() {
@@ -106,6 +167,12 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
         mFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.progress);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void populateAutoComplete() {
@@ -192,6 +259,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         showProgress(false);
         Intent intent = new Intent(context, HomeActivity.class);
         intent.putExtra("player", player);
+        intent.putExtra("planet", new Planet());
         startActivity(intent);
     }
 

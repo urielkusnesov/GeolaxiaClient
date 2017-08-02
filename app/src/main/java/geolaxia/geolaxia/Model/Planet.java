@@ -22,6 +22,10 @@ public class Planet implements Serializable{
     private int PositionZ;
     private int PlanetType;
 
+    public Planet(){
+
+    }
+
     public Planet(int id, String name, Player conqueror, int metal, int crystal, int darkMatter, int energy, boolean isOrigin,
                   SolarSystem solarSystem, int positionX, int positionY, int positionZ, int planetType){
         this.Id = id;
@@ -150,6 +154,6 @@ public class Planet implements Serializable{
     @Override
     public String toString()
     {
-        return Name;
+        return Name + " - " + String.valueOf(PositionX) + ":" + String.valueOf(PositionY) + ":" + String.valueOf(PositionZ);
     }
 }

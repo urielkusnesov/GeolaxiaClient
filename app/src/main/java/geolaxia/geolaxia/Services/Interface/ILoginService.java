@@ -12,5 +12,6 @@ import geolaxia.geolaxia.Model.Player;
 
 public interface ILoginService {
     void LogIn(String username, String password, LoginActivity context) throws JSONException;
+    void FacebookLogIn(Player player, String token, LoginActivity context) throws JSONException;
     void Register(Player player, RegisterActivity context) throws JSONException;
 }

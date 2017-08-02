@@ -56,6 +56,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
     final HomeActivity context = this;
 
     private Player player;
+    private Planet planet;
     private IPlanetService planetService;
     private IWeatherService weatherService;
 
@@ -181,6 +182,8 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         crystalQtt.setText(String.valueOf(planet.getCrystal()));
         darkMatterQtt.setText(String.valueOf(planet.getDarkMatter()));
         energyQtt.setText(String.valueOf(planet.getEnergy()));
+
+        super.changePlanet(planet);
     }
 
     public void ParseWeather(JSONObject weatherResponse) {

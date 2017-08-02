@@ -130,7 +130,7 @@ public class RegisterActivity extends BaseActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            Player player = new Player(0, 1, 0, username, password, firstname, lastname, email, new ArrayList<Planet>());
+            Player player = new Player(0, 1, 0, username, password, firstname, lastname, email, "", new ArrayList<Planet>());
             loginService.Register(player, this);
         }
     }

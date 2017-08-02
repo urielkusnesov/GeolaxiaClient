@@ -17,7 +17,10 @@
             android:title="Construcciones"/>
         <item
             android:id="@+id/military"
-            android:title="Militares"/>
+            android:title="Construcciones Militares"/>
+        <item
+            android:id="@+id/colonization"
+            android:title="Colonización"/>
         <item
             android:id="@+id/help"
             android:title="Ayuda"/>

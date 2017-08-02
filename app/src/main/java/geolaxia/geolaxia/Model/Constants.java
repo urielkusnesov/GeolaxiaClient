@@ -11,6 +11,7 @@ public class Constants {
     public static final String PORT = ":62078/";
     public static final String HTTP = "http://";
     public static final String LOGIN_SERVICE = "api/player/login";
+    public static final String FACEBOOK_LOGIN_SERVICE = "api/player/facebooklogin";
     public static final String LOGOUT_SERVICE = "api/logout";
     public static final String REGISTER_SERVICE = "api/player/register";
     public static final String PLANETSBYPLAYER_SERVICE = "api/planet/getbyplayer";
@@ -20,6 +21,7 @@ public class Constants {
 
     /*URLs*/
     public static String getLoginServiceUrl() { return (HTTP + BASE_URL + PORT + LOGIN_SERVICE); }
+    public static String getFacebookLoginServiceUrl() { return (HTTP + BASE_URL + PORT + FACEBOOK_LOGIN_SERVICE); }
     public static String getLogoutServiceUrl() { return (HTTP + BASE_URL + PORT + LOGOUT_SERVICE); }
     public static String getRegisterServiceUrl() { return (HTTP + BASE_URL + PORT + REGISTER_SERVICE); }
     public static String getPlanetsByPlayerServiceUrl() { return (HTTP + BASE_URL + PORT + PLANETSBYPLAYER_SERVICE); }
