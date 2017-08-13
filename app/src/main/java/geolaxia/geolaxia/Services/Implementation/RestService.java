@@ -15,18 +15,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
+import geolaxia.geolaxia.Model.Attack;
 import geolaxia.geolaxia.Model.BlackPlanet;
 import geolaxia.geolaxia.Model.BluePlanet;
 import geolaxia.geolaxia.Model.Constants;
+import geolaxia.geolaxia.Model.Dto.AttackDTO;
 import geolaxia.geolaxia.Model.Dto.BaseDTO;
+import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
 import geolaxia.geolaxia.Model.Dto.PlayerDTO;
+import geolaxia.geolaxia.Model.Dto.ShipsDTO;
+import geolaxia.geolaxia.Model.Dto.SolarSystemsDTO;
+import geolaxia.geolaxia.Model.Galaxy;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
+import geolaxia.geolaxia.Model.Ship;
+import geolaxia.geolaxia.Model.ShipX;
+import geolaxia.geolaxia.Model.ShipY;
+import geolaxia.geolaxia.Model.ShipZ;
+import geolaxia.geolaxia.Model.SolarSystem;
 import geolaxia.geolaxia.Model.WhitePlanet;
 import geolaxia.geolaxia.Services.Interface.IRestService;
 
@@ -198,39 +210,143 @@ public class RestService implements IRestService {
         Request response = Volley.newRequestQueue(act).add(req);
     }
 
-/*    @Override
-    public void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act) {
-        String url = Constants.getPlanetsByPlayerServiceUrl();
+    /*    @Override
+        public void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act) {
+            String url = Constants.getPlanetsByPlayerServiceUrl();
+
+            JsonObjectRequest req = new JsonObjectRequest(url, null,
+                    new Response.Listener<JSONObject> () {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                PlanetsDTO planetsContainer = new Gson().fromJson(response.toString(), PlanetsDTO.class);
+                                if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
+
+                                    //transformar a planetas segun herencia
+                                    ArrayList<Planet> planets = new ArrayList<Planet>();
+                                    for (Planet planet: planetsContainer.getData()) {
+                                        Planet newPlanet = null;
+                                        switch (planet.getPlanetType()){
+                                            case Constants.WHITE_PLANET:
+                                                newPlanet = new WhitePlanet(planet);
+                                                break;
+                                            case Constants.BLUE_PLANET:
+                                                newPlanet = new BluePlanet(planet);
+                                                break;
+                                            case Constants.BLACK_PLANET:
+                                                newPlanet = new BlackPlanet(planet);
+                                                break;
+                                        }
+                                        planets.add(newPlanet);
+                                    }
+
+                                    act.FillPlanets(planets);
+                                } else {
+                                    act.handleUnexpectedError(planetsContainer.getStatus().getDescription());
+                                }
+                            }catch (Exception e){
+                                act.handleUnexpectedError("Ocurrio un error");
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyError volleyError = new VolleyError(new String(error.networkResponse.data));
+                    act.handleUnexpectedError(error.getMessage());
+                    //handle error
+                }
+            })
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("username", username);
+                    headers.put("token", token);
+                    return headers;
+                }
+            };
+
+            // add the request object to the queue to be executed
+            Request response = Volley.newRequestQueue(act).add(req);
+        }
+
+        @Override
+        public void GetPlanet(final int planetId, final String username, final String token, final HomeActivity act) {
+            String url = Constants.getPlanetServiceUrl();
+
+            JsonObjectRequest req = new JsonObjectRequest(url, null,
+                    new Response.Listener<JSONObject> () {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                PlanetDTO planetContainer = new Gson().fromJson(response.toString(), PlanetDTO.class);
+                                if(Constants.OK_RESPONSE.equals(planetContainer.getStatus().getResult())) {
+
+                                    //transformar a planeta segun herencia
+                                    Planet newPlanet = null;
+                                    switch (planetContainer.getData().getPlanetType()){
+                                        case Constants.WHITE_PLANET:
+                                            newPlanet = new WhitePlanet(planetContainer.getData());
+                                            break;
+                                        case Constants.BLUE_PLANET:
+                                            newPlanet = new BluePlanet(planetContainer.getData());
+                                            break;
+                                        case Constants.BLACK_PLANET:
+                                            newPlanet = new BlackPlanet(planetContainer.getData());
+                                            break;
+                                    }
+
+                                    act.FillPlanetInfo(newPlanet);
+                                } else {
+                                    act.handleUnexpectedError(planetContainer.getStatus().getDescription());
+                                }
+                            }catch (Exception e){
+                                act.handleUnexpectedError("Ocurrio un error");
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    act.handleUnexpectedError(error.getMessage());
+                    //handle error
+                }
+            })
+            {
+                @Override
+                public Map<String, String> getParams() {
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("id", String.valueOf(planetId));
+                    return  params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("username", username);
+                    headers.put("token", token);
+                    return headers;
+                }
+            };
+
+            // add the request object to the queue to be executed
+            Request response = Volley.newRequestQueue(act).add(req);
+        }
+    */
+
+    @Override
+    public void GetAllGalaxies(final String username, final String token, final AttackActivity act) {
+        String url = Constants.getGalaxiesServiceUrl();
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject> () {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            PlanetsDTO planetsContainer = new Gson().fromJson(response.toString(), PlanetsDTO.class);
-                            if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
-
-                                //transformar a planetas segun herencia
-                                ArrayList<Planet> planets = new ArrayList<Planet>();
-                                for (Planet planet: planetsContainer.getData()) {
-                                    Planet newPlanet = null;
-                                    switch (planet.getPlanetType()){
-                                        case Constants.WHITE_PLANET:
-                                            newPlanet = new WhitePlanet(planet);
-                                            break;
-                                        case Constants.BLUE_PLANET:
-                                            newPlanet = new BluePlanet(planet);
-                                            break;
-                                        case Constants.BLACK_PLANET:
-                                            newPlanet = new BlackPlanet(planet);
-                                            break;
-                                    }
-                                    planets.add(newPlanet);
-                                }
-
-                                act.FillPlanets(planets);
+                            GalaxiesDTO galaxiesContainer = new Gson().fromJson(response.toString(), GalaxiesDTO.class);
+                            if(Constants.OK_RESPONSE.equals(galaxiesContainer.getStatus().getResult())) {
+                                act.FillGalaxies(galaxiesContainer.getData());
                             } else {
-                                act.handleUnexpectedError(planetsContainer.getStatus().getDescription());
+                                act.handleUnexpectedError(galaxiesContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
                             act.handleUnexpectedError("Ocurrio un error");
@@ -239,7 +355,6 @@ public class RestService implements IRestService {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyError volleyError = new VolleyError(new String(error.networkResponse.data));
                 act.handleUnexpectedError(error.getMessage());
                 //handle error
             }
@@ -259,34 +374,19 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void GetPlanet(final int planetId, final String username, final String token, final HomeActivity act) {
-        String url = Constants.getPlanetServiceUrl();
+    public void GetSolarSystemsByGalaxy(final String username, final String token, final AttackActivity act, final int galaxyId) {
+        String url = Constants.getSolarSystemsServiceUrl();
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
                 new Response.Listener<JSONObject> () {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            PlanetDTO planetContainer = new Gson().fromJson(response.toString(), PlanetDTO.class);
-                            if(Constants.OK_RESPONSE.equals(planetContainer.getStatus().getResult())) {
-
-                                //transformar a planeta segun herencia
-                                Planet newPlanet = null;
-                                switch (planetContainer.getData().getPlanetType()){
-                                    case Constants.WHITE_PLANET:
-                                        newPlanet = new WhitePlanet(planetContainer.getData());
-                                        break;
-                                    case Constants.BLUE_PLANET:
-                                        newPlanet = new BluePlanet(planetContainer.getData());
-                                        break;
-                                    case Constants.BLACK_PLANET:
-                                        newPlanet = new BlackPlanet(planetContainer.getData());
-                                        break;
-                                }
-
-                                act.FillPlanetInfo(newPlanet);
+                            SolarSystemsDTO solarSystemsContainer = new Gson().fromJson(response.toString(), SolarSystemsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(solarSystemsContainer.getStatus().getResult())) {
+                                act.FillSolarSystems(solarSystemsContainer.getData());
                             } else {
-                                act.handleUnexpectedError(planetContainer.getStatus().getDescription());
+                                act.handleUnexpectedError(solarSystemsContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
                             act.handleUnexpectedError("Ocurrio un error");
@@ -303,7 +403,7 @@ public class RestService implements IRestService {
             @Override
             public Map<String, String> getParams() {
                 HashMap<String, String> params = new HashMap<String, String>();
-                params.put("id", String.valueOf(planetId));
+                params.put("galaxyId", String.valueOf(galaxyId));
                 return  params;
             }
 
@@ -319,7 +419,123 @@ public class RestService implements IRestService {
         // add the request object to the queue to be executed
         Request response = Volley.newRequestQueue(act).add(req);
     }
-*/
+
+    @Override
+    public void GetPlanetsBySolarSystem(final String username, final String token, final AttackActivity act, final int solarSystemId) {
+        String url = Constants.getPlanetsbySolarSystemService();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            PlanetsDTO planetsContainer = new Gson().fromJson(response.toString(), PlanetsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
+                                act.FillPlanets(planetsContainer.getData());
+                            } else {
+                                act.handleUnexpectedError(planetsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("solarSystemId", String.valueOf(solarSystemId));
+                return  params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetPlanetFleet(final String username, final String token, final AttackActivity act, final int planetId) {
+        String url = Constants.getPlanetFleetServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            ShipsDTO shipsContainer = new Gson().fromJson(response.toString(), ShipsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(shipsContainer.getStatus().getResult())) {
+
+                                //transformar a planetas segun herencia
+                                ArrayList<ShipX> shipsX = new ArrayList<ShipX>();
+                                ArrayList<ShipY> shipsY = new ArrayList<ShipY>();
+                                ArrayList<ShipZ> shipsZ = new ArrayList<ShipZ>();
+                                for (Ship ship: shipsContainer.getData()) {
+                                    switch (ship.getShipType()){
+                                        case Constants.SHIP_X:
+                                            ShipX newShipX = new ShipX(ship);
+                                            shipsX.add(newShipX);
+                                            break;
+                                        case Constants.SHIP_Y:
+                                            ShipY newShipY = new ShipY(ship);
+                                            shipsY.add(newShipY);
+                                            break;
+                                        case Constants.SHIP_Z:
+                                            ShipZ newShipZ = new ShipZ(ship);
+                                            shipsZ.add(newShipZ);
+                                            break;
+                                    }
+                                }
+
+                                act.FillFleets(shipsX, shipsY, shipsZ);
+                            } else {
+                                act.handleUnexpectedError(shipsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("planetId", String.valueOf(planetId));
+                return  params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
     public void GetWeather(final String latitude, final String longitude, final HomeActivity act) {
         String url = Constants.getWeatherServiceUrl(latitude, longitude);
         JsonObjectRequest req = new JsonObjectRequest(url, null,
@@ -337,5 +553,47 @@ public class RestService implements IRestService {
 
         Request response = Volley.newRequestQueue(act).add(req);
     }
+
+    @Override
+    public void Attack(final String username, final String token, final AttackActivity context, final Attack attack) {
+        String url = Constants.getAttackServiceUrl();
+
+        JSONObject jsonAttack = attack.toJSONObject();
+        JsonObjectRequest req = new JsonObjectRequest(url, jsonAttack,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            AttackDTO attackContainer = new Gson().fromJson(response.toString(), AttackDTO.class);
+                            if(Constants.OK_RESPONSE.equals(attackContainer.getStatus().getResult())) {
+                                context.AttackSaved();
+                            } else {
+                                context.handleUnexpectedError(attackContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
 
 }

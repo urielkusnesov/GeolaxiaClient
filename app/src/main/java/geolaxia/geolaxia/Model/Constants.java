@@ -16,7 +16,12 @@ public class Constants {
     public static final String REGISTER_SERVICE = "api/player/register";
     public static final String PLANETSBYPLAYER_SERVICE = "api/planet/getbyplayer";
     public static final String PLANET_SERVICE = "api/planet/getbyId";
+    public static final String GALAXIES_SERVICE = "api/attack/galaxies";
+    public static final String SOLARSYSTEMS_SERVICE = "api/attack/solarsystems";
+    public static final String PLANETSS_SERVICE = "api/attack/planetsbyss";
+    public static final String FLEET_SERVICE = "api/attack/fleet";
     public static final String WEATHER_SERVICE = "http://api.openweathermap.org/data/2.5/weather";
+    public static final String ATTACK_SERVICE = "api/attack/attack";
     public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
 
     /*URLs*/
@@ -26,7 +31,12 @@ public class Constants {
     public static String getRegisterServiceUrl() { return (HTTP + BASE_URL + PORT + REGISTER_SERVICE); }
     public static String getPlanetsByPlayerServiceUrl() { return (HTTP + BASE_URL + PORT + PLANETSBYPLAYER_SERVICE); }
     public static String getPlanetServiceUrl() { return (HTTP + BASE_URL + PORT + PLANET_SERVICE); }
+    public static String getGalaxiesServiceUrl() { return (HTTP + BASE_URL + PORT + GALAXIES_SERVICE); }
+    public static String getSolarSystemsServiceUrl() { return (HTTP + BASE_URL + PORT + SOLARSYSTEMS_SERVICE); }
+    public static String getPlanetsbySolarSystemService() { return (HTTP + BASE_URL + PORT + PLANETSS_SERVICE); }
+    public static String getPlanetFleetServiceUrl() { return (HTTP + BASE_URL + PORT + FLEET_SERVICE); }
     public static String getWeatherServiceUrl(String latitude, String longitude) { return (WEATHER_SERVICE + "?lat=" + latitude + "&lon=" + longitude + "&units=metric&APPID=a6e31252461e3c4a9ccaf2bcb32740c5"); }
+    public static String getAttackServiceUrl() { return (HTTP + BASE_URL + PORT + ATTACK_SERVICE); }
 
     //
     public static final String ERROR_RESPONSE = "error";
@@ -46,4 +56,7 @@ public class Constants {
     public static final int WHITE_PLANET = 0;
     public static final int BLUE_PLANET = 1;
     public static final int BLACK_PLANET = 2;
+    public static final int SHIP_X = 0;
+    public static final int SHIP_Y = 1;
+    public static final int SHIP_Z = 2;
 }

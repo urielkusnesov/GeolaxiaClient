@@ -69,25 +69,25 @@
         android:layout_height="wrap_content">
 
         <NumberPicker
-            android:id="@+id/x"
+            android:id="@+id/galaxy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <NumberPicker
-            android:id="@+id/y"
+            android:id="@+id/solarSystem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/x"
-            android:layout_toEndOf="@+id/x" />
+            android:layout_toRightOf="@+id/galaxy"
+            android:layout_toEndOf="@+id/galaxy" />
 
         <NumberPicker
-            android:id="@+id/z"
+            android:id="@+id/planet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/y"
-            android:layout_toEndOf="@+id/y" />
+            android:layout_toRightOf="@+id/solarSystem"
+            android:layout_toEndOf="@+id/solarSystem" />
 
         </RelativeLayout>
 
@@ -151,5 +151,19 @@
         android:textColor="#40F000"
         android:textSize="20dp"
         android:layout_below="@id/fleetPickers"/>
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Atacar"
+        style="@style/Widget.AppCompat.Button"
+        android:background="#80000000"
+        android:textColor="#FFFFFF"
+        android:layout_toRightOf="@id/estimateText"
+        android:layout_toEndOf="@id/estimateText"
+        android:layout_alignBaseline="@id/estimateText"
+        android:layout_alignParentRight="true"
+        />
 
 </RelativeLayout>
