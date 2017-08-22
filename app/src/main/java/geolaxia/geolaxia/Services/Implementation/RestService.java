@@ -375,9 +375,9 @@ public class RestService implements IRestService {
 
     @Override
     public void GetSolarSystemsByGalaxy(final String username, final String token, final AttackActivity act, final int galaxyId) {
-        String url = Constants.getSolarSystemsServiceUrl();
+        String url = Constants.getSolarSystemsServiceUrl(galaxyId);
 
-        JsonObjectRequest req = new JsonObjectRequest(url, null,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject> () {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -401,13 +401,6 @@ public class RestService implements IRestService {
         })
         {
             @Override
-            public Map<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("galaxyId", String.valueOf(galaxyId));
-                return  params;
-            }
-
-            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("username", username);
@@ -422,9 +415,9 @@ public class RestService implements IRestService {
 
     @Override
     public void GetPlanetsBySolarSystem(final String username, final String token, final AttackActivity act, final int solarSystemId) {
-        String url = Constants.getPlanetsbySolarSystemService();
+        String url = Constants.getPlanetsbySolarSystemService(solarSystemId);
 
-        JsonObjectRequest req = new JsonObjectRequest(url, null,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject> () {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -448,13 +441,6 @@ public class RestService implements IRestService {
         })
         {
             @Override
-            public Map<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("solarSystemId", String.valueOf(solarSystemId));
-                return  params;
-            }
-
-            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("username", username);
@@ -469,16 +455,15 @@ public class RestService implements IRestService {
 
     @Override
     public void GetPlanetFleet(final String username, final String token, final AttackActivity act, final int planetId) {
-        String url = Constants.getPlanetFleetServiceUrl();
+        String url = Constants.getPlanetFleetServiceUrl(planetId);
 
-        JsonObjectRequest req = new JsonObjectRequest(url, null,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject> () {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             ShipsDTO shipsContainer = new Gson().fromJson(response.toString(), ShipsDTO.class);
                             if(Constants.OK_RESPONSE.equals(shipsContainer.getStatus().getResult())) {
-
                                 //transformar a planetas segun herencia
                                 ArrayList<ShipX> shipsX = new ArrayList<ShipX>();
                                 ArrayList<ShipY> shipsY = new ArrayList<ShipY>();
@@ -516,13 +501,6 @@ public class RestService implements IRestService {
             }
         })
         {
-            @Override
-            public Map<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("planetId", String.valueOf(planetId));
-                return  params;
-            }
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();

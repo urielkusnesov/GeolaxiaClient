@@ -103,11 +103,11 @@ public class Attack implements Serializable{
         if (this.DestinationPlayer != null) params.put("DestinationPlayerId", String.valueOf(this.DestinationPlayer.getId()));
         if (this.DestinationPlanet != null) params.put("DestinationPlanetId", String.valueOf(this.DestinationPlanet.getId()));
         String ships = "[";
-        for (Ship ship: this.getFleet()) {
+        for (Ship ship: this.Fleet) {
             ships += ship.getId() + ",";
         }
         ships = ships.substring(0, ships.length()-1) + "]";
-        if (this.getFleet().size() > 0) params.put("FleetIds", ships);
+        if (this.Fleet.size() > 0) params.put("FleetIds", ships);
         if (this.FleetDeparture != null) params.put("FleetDeparture", String.valueOf(this.FleetDeparture.getTime()));
         if (this.FleetArrival != null) params.put("FleetArrival", String.valueOf(this.FleetArrival.getTime()));
         return new JSONObject(params);

@@ -15,6 +15,8 @@ import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Attack;
@@ -28,15 +30,24 @@ import geolaxia.geolaxia.Model.ShipY;
 import geolaxia.geolaxia.Model.ShipZ;
 import geolaxia.geolaxia.Model.SolarSystem;
 import geolaxia.geolaxia.R;
+import geolaxia.geolaxia.Services.Implementation.AttackService;
 import geolaxia.geolaxia.Services.Implementation.PlanetService;
+import geolaxia.geolaxia.Services.Interface.IAttackService;
 import geolaxia.geolaxia.Services.Interface.IPlanetService;
 
 public class AttackActivity extends MenuActivity {
 
     private IPlanetService planetService;
+    private IAttackService attackService;
     private Player player;
     private Planet planet;
-    private ArrayList<Ship> availableFleet;
+    private ArrayList<ShipX> availableFleetX = new ArrayList<>();
+    private ArrayList<ShipY> availableFleetY = new ArrayList<>();
+    private ArrayList<ShipZ> availableFleetZ = new ArrayList<>();
+    private AttackActivity context;
+    private String[] galaxiesSelected;
+    private String[] solarSystemsSelected;
+    private String[] planetsSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +64,8 @@ public class AttackActivity extends MenuActivity {
         player = (Player) intent.getExtras().getSerializable("player");
         planet = (Planet) intent.getExtras().getSerializable("planet");
 
+        context = this;
+        attackService = new AttackService();
         planetService = new PlanetService();
         planetService.GetAllGalaxies(player.getUsername(), player.getToken(), this);
         planetService.GetFleet(player.getUsername(), player.getToken(), this, planet.getId());
@@ -61,7 +74,33 @@ public class AttackActivity extends MenuActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                NumberPicker planetsPicker = (NumberPicker) findViewById(R.id.planet);
+                int planetId = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+                Planet targetPlanet = new Planet();
+                targetPlanet.setId(planetId);
 
+                ArrayList<Ship> fleet = new ArrayList<>();
+                NumberPicker xPicker = (NumberPicker) findViewById(R.id.x);
+                int shipsX = xPicker.getValue();
+                for (int i = 0; i < shipsX; i++) {
+                    fleet.add(availableFleetX.get(i));
+                }
+                NumberPicker yPicker = (NumberPicker) findViewById(R.id.y);
+                int shipsY = yPicker.getValue();
+                for (int i = 0; i < shipsY; i++) {
+                    fleet.add(availableFleetY.get(i));
+                }
+                NumberPicker zPicker = (NumberPicker) findViewById(R.id.z);
+                int shipsZ = zPicker.getValue();
+                for (int i = 0; i < shipsZ; i++) {
+                    fleet.add(availableFleetZ.get(i));
+                }
+
+                Date departure = Calendar.getInstance().getTime();
+                Date arrival = Calendar.getInstance().getTime();//calculateArrivalTime();
+                Attack attack = new Attack(player, planet, null, targetPlanet, fleet, departure, arrival);
+
+                attackService.Attack(player.getUsername(), player.getToken(), context, attack);
             }
         });
 
@@ -74,9 +113,11 @@ public class AttackActivity extends MenuActivity {
 
         ArrayList<String> galaxyNames = new ArrayList<>();
         for (Galaxy galaxy: galaxies) {
-            galaxyNames.add(galaxy.getName());
+            galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
         }
-        galaxyPicker.setDisplayedValues((String[]) galaxyNames.toArray());
+        galaxiesSelected = new String[galaxyNames.size()];
+        galaxiesSelected = galaxyNames.toArray(galaxiesSelected);
+        galaxyPicker.setDisplayedValues(galaxiesSelected);
 
         planetService.GetSolarSystemsByGalaxy(player.getUsername(), player.getToken(), this, galaxies.get(0).getId());
     }
@@ -88,9 +129,11 @@ public class AttackActivity extends MenuActivity {
 
         ArrayList<String> solarSystemNames = new ArrayList<>();
         for (SolarSystem solarSystem: solarSystems) {
-            solarSystemNames.add(solarSystem.getName());
+            solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
         }
-        solarSystemPicker.setDisplayedValues((String[]) solarSystemNames.toArray());
+        solarSystemsSelected = new String[solarSystemNames.size()];
+        solarSystemsSelected = solarSystemNames.toArray(solarSystemsSelected);
+        solarSystemPicker.setDisplayedValues(solarSystemsSelected);
 
         planetService.GetPlanetsBySolarSystem(player.getUsername(), player.getToken(), this, solarSystems.get(0).getId());
     }
@@ -100,25 +143,31 @@ public class AttackActivity extends MenuActivity {
         planetsPicker.setMinValue(0);
         planetsPicker.setMaxValue(planets.size() - 1);
 
-        ArrayList<String> solarSystemNames = new ArrayList<>();
+        ArrayList<String> planetNames = new ArrayList<>();
         for (Planet planet: planets) {
-            solarSystemNames.add(planet.getName());
+            planetNames.add(planet.getId() + "-" + planet.getName());
         }
-        planetsPicker.setDisplayedValues((String[]) solarSystemNames.toArray());
+        planetsSelected = new String[planetNames.size()];
+        planetsSelected = planetNames.toArray(planetsSelected);
+        planetsPicker.setDisplayedValues(planetsSelected);
     }
 
     public void FillFleets(ArrayList<ShipX> shipsX, ArrayList<ShipY> shipsY, ArrayList<ShipZ> shipsZ){
+        availableFleetX.addAll(shipsX);
+        availableFleetY.addAll(shipsY);
+        availableFleetZ.addAll(shipsZ);
+
         NumberPicker xPicker = (NumberPicker) findViewById(R.id.x);
         xPicker.setMinValue(0);
-        xPicker.setMaxValue(shipsX.size() - 1);
+        xPicker.setMaxValue(shipsX.size());
 
         NumberPicker yPicker = (NumberPicker) findViewById(R.id.y);
         yPicker.setMinValue(0);
-        yPicker.setMaxValue(shipsX.size() - 1);
+        yPicker.setMaxValue(shipsY.size());
 
         NumberPicker zPicker = (NumberPicker) findViewById(R.id.z);
         zPicker.setMinValue(0);
-        zPicker.setMaxValue(shipsX.size() - 1);
+        zPicker.setMaxValue(shipsZ.size());
     }
 
     public void AttackSaved(){

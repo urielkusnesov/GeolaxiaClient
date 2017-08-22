@@ -40,5 +40,5 @@ public interface IRestService {
 
     void GetWeather(String latitude, String longitude, final HomeActivity act);
 
-    void Attack(String username, String token, AttackActivity context, Attack attack);
+    void Attack(String username, String token, AttackActivity context, Attack planetId);
 }

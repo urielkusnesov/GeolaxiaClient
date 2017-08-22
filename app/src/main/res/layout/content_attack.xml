@@ -70,11 +70,13 @@
 
         <NumberPicker
             android:id="@+id/galaxy"
+            android:background="#AAAAAA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <NumberPicker
             android:id="@+id/solarSystem"
+            android:background="#AAAAAA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -83,6 +85,7 @@
 
         <NumberPicker
             android:id="@+id/planet"
+            android:background="#AAAAAA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -119,25 +122,28 @@
         android:layout_height="wrap_content">
 
         <NumberPicker
-            android:id="@+id/shipX"
+            android:id="@+id/x"
+            android:background="#AAAAAA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <NumberPicker
-            android:id="@+id/shipY"
+            android:id="@+id/y"
+            android:background="#AAAAAA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/shipX"
-            android:layout_toEndOf="@+id/shipX" />
+            android:layout_toRightOf="@+id/x"
+            android:layout_toEndOf="@+id/x" />
 
         <NumberPicker
-            android:id="@+id/shipZ"
+            android:id="@+id/z"
+            android:background="#AAAAAA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/shipY"
-            android:layout_toEndOf="@+id/shipY" />
+            android:layout_toRightOf="@+id/y"
+            android:layout_toEndOf="@+id/y" />
 
     </RelativeLayout>
 

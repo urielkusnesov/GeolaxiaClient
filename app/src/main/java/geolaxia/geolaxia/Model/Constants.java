@@ -32,9 +32,9 @@ public class Constants {
     public static String getPlanetsByPlayerServiceUrl() { return (HTTP + BASE_URL + PORT + PLANETSBYPLAYER_SERVICE); }
     public static String getPlanetServiceUrl() { return (HTTP + BASE_URL + PORT + PLANET_SERVICE); }
     public static String getGalaxiesServiceUrl() { return (HTTP + BASE_URL + PORT + GALAXIES_SERVICE); }
-    public static String getSolarSystemsServiceUrl() { return (HTTP + BASE_URL + PORT + SOLARSYSTEMS_SERVICE); }
-    public static String getPlanetsbySolarSystemService() { return (HTTP + BASE_URL + PORT + PLANETSS_SERVICE); }
-    public static String getPlanetFleetServiceUrl() { return (HTTP + BASE_URL + PORT + FLEET_SERVICE); }
+    public static String getSolarSystemsServiceUrl(int galaxyId) { return (HTTP + BASE_URL + PORT + SOLARSYSTEMS_SERVICE + "?galaxyId=" + String.valueOf(galaxyId)); }
+    public static String getPlanetsbySolarSystemService(int solarSystemId) { return (HTTP + BASE_URL + PORT + PLANETSS_SERVICE + "?solarSystemId=" + String.valueOf(solarSystemId)); }
+    public static String getPlanetFleetServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + FLEET_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getWeatherServiceUrl(String latitude, String longitude) { return (WEATHER_SERVICE + "?lat=" + latitude + "&lon=" + longitude + "&units=metric&APPID=a6e31252461e3c4a9ccaf2bcb32740c5"); }
     public static String getAttackServiceUrl() { return (HTTP + BASE_URL + PORT + ATTACK_SERVICE); }
 

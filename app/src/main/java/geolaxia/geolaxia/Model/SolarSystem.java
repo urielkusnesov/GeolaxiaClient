@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class SolarSystem implements Serializable {
     private int Id;
-    private String name;
+    private String Name;
     private Galaxy Galaxy;
     private ArrayList<Planet> Planets;
 
@@ -30,11 +30,11 @@ public class SolarSystem implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 
     public int getId() {
