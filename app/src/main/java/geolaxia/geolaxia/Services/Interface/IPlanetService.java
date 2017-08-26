@@ -5,6 +5,8 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.AttackByCoordinatesActivity;
+import geolaxia.geolaxia.Activities.BaseAttackActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.MenuActivity;
 import geolaxia.geolaxia.Model.Galaxy;
@@ -17,8 +19,8 @@ import geolaxia.geolaxia.Model.SolarSystem;
 public interface IPlanetService {
     void GetByPlayer(String username, String token, HomeActivity context) throws JSONException;
     void GetPlanet(int planetId, String username, String token, HomeActivity context) throws JSONException;
-    void GetAllGalaxies(String username, String token, AttackActivity context);
-    void GetSolarSystemsByGalaxy(String username, String token, AttackActivity context, int galaxyId);
-    void GetPlanetsBySolarSystem(String username, String token, AttackActivity context, int solarSystemId);
-    void GetFleet(String username, String token, AttackActivity context, int planetId);
+    void GetAllGalaxies(String username, String token, BaseAttackActivity context);
+    void GetSolarSystemsByGalaxy(String username, String token, BaseAttackActivity context, int galaxyId);
+    void GetPlanetsBySolarSystem(String username, String token, BaseAttackActivity context, int solarSystemId);
+    void GetFleet(String username, String token, BaseAttackActivity context, int planetId);
 }

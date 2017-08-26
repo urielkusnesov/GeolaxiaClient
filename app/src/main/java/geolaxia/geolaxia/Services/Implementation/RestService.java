@@ -5,7 +5,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.BaseAttackActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -26,19 +25,16 @@ import geolaxia.geolaxia.Model.Constants;
 import geolaxia.geolaxia.Model.Dto.AttackDTO;
 import geolaxia.geolaxia.Model.Dto.BaseDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
-import geolaxia.geolaxia.Model.Dto.PlanetDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
 import geolaxia.geolaxia.Model.Dto.PlayerDTO;
 import geolaxia.geolaxia.Model.Dto.ShipsDTO;
 import geolaxia.geolaxia.Model.Dto.SolarSystemsDTO;
-import geolaxia.geolaxia.Model.Galaxy;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.Model.Ship;
 import geolaxia.geolaxia.Model.ShipX;
 import geolaxia.geolaxia.Model.ShipY;
 import geolaxia.geolaxia.Model.ShipZ;
-import geolaxia.geolaxia.Model.SolarSystem;
 import geolaxia.geolaxia.Model.WhitePlanet;
 import geolaxia.geolaxia.Services.Interface.IRestService;
 
@@ -334,7 +330,7 @@ public class RestService implements IRestService {
     */
 
     @Override
-    public void GetAllGalaxies(final String username, final String token, final AttackActivity act) {
+    public void GetAllGalaxies(final String username, final String token, final BaseAttackActivity act) {
         String url = Constants.getGalaxiesServiceUrl();
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
@@ -374,7 +370,7 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void GetSolarSystemsByGalaxy(final String username, final String token, final AttackActivity act, final int galaxyId) {
+    public void GetSolarSystemsByGalaxy(final String username, final String token, final BaseAttackActivity act, final int galaxyId) {
         String url = Constants.getSolarSystemsServiceUrl(galaxyId);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
@@ -414,7 +410,7 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void GetPlanetsBySolarSystem(final String username, final String token, final AttackActivity act, final int solarSystemId) {
+    public void GetPlanetsBySolarSystem(final String username, final String token, final BaseAttackActivity act, final int solarSystemId) {
         String url = Constants.getPlanetsbySolarSystemService(solarSystemId);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
@@ -454,7 +450,7 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void GetPlanetFleet(final String username, final String token, final AttackActivity act, final int planetId) {
+    public void GetPlanetFleet(final String username, final String token, final BaseAttackActivity act, final int planetId) {
         String url = Constants.getPlanetFleetServiceUrl(planetId);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
@@ -533,7 +529,7 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void Attack(final String username, final String token, final AttackActivity context, final Attack attack) {
+    public void Attack(final String username, final String token, final BaseAttackActivity context, final Attack attack) {
         String url = Constants.getAttackServiceUrl();
 
         JSONObject jsonAttack = attack.toJSONObject();

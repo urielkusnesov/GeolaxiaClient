@@ -2,17 +2,13 @@ package geolaxia.geolaxia.Services.Interface;
 
 import org.json.JSONException;
 
-import java.util.ArrayList;
-
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.BaseAttackActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
-import geolaxia.geolaxia.Activities.MenuActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
 import geolaxia.geolaxia.Model.Attack;
-import geolaxia.geolaxia.Model.Galaxy;
 import geolaxia.geolaxia.Model.Player;
-import geolaxia.geolaxia.Model.SolarSystem;
 
 /**
  * Created by uriel on 15/4/2017.
@@ -33,12 +29,12 @@ public interface IRestService {
 
     //void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act);
     //void GetPlanet(final int planetId, final String username, final String token, final HomeActivity act);
-    void GetAllGalaxies(String username, String token, AttackActivity context);
-    void GetSolarSystemsByGalaxy(String username, String token, AttackActivity context, int galaxyId);
-    void GetPlanetsBySolarSystem(String username, String token, AttackActivity context, int solarSystemId);
-    void GetPlanetFleet(String username, String token, AttackActivity context, int planetId);
+    void GetAllGalaxies(String username, String token, BaseAttackActivity context);
+    void GetSolarSystemsByGalaxy(String username, String token, BaseAttackActivity context, int galaxyId);
+    void GetPlanetsBySolarSystem(String username, String token, BaseAttackActivity context, int solarSystemId);
+    void GetPlanetFleet(String username, String token, BaseAttackActivity context, int planetId);
 
     void GetWeather(String latitude, String longitude, final HomeActivity act);
 
-    void Attack(String username, String token, AttackActivity context, Attack planetId);
+    void Attack(String username, String token, BaseAttackActivity context, Attack planetId);
 }

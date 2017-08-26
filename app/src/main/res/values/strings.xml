@@ -22,4 +22,5 @@
     <string name="openDrawer">Abrir menu</string>
     <string name="closeDrawer">Cerrar menu</string>
     <string name="title_activity_attack">Ataque</string>
+    <string name="title_activity_attack_by_coordinates">AttackByCoordinatesActivity</string>
 </resources>

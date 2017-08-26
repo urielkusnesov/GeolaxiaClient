@@ -3,7 +3,9 @@ package geolaxia.geolaxia.Model;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -102,14 +104,16 @@ public class Attack implements Serializable{
         if (this.AttackerPlanet != null) params.put("AttackerPlanetId", String.valueOf(this.AttackerPlanet.getId()));
         if (this.DestinationPlayer != null) params.put("DestinationPlayerId", String.valueOf(this.DestinationPlayer.getId()));
         if (this.DestinationPlanet != null) params.put("DestinationPlanetId", String.valueOf(this.DestinationPlanet.getId()));
-        String ships = "[";
+        String ships = "";
         for (Ship ship: this.Fleet) {
             ships += ship.getId() + ",";
         }
-        ships = ships.substring(0, ships.length()-1) + "]";
+        ships = ships.substring(0, ships.length()-1);
         if (this.Fleet.size() > 0) params.put("FleetIds", ships);
-        if (this.FleetDeparture != null) params.put("FleetDeparture", String.valueOf(this.FleetDeparture.getTime()));
-        if (this.FleetArrival != null) params.put("FleetArrival", String.valueOf(this.FleetArrival.getTime()));
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+        if (this.FleetDeparture != null) params.put("FleetDeparture", String.valueOf(df.format(this.FleetDeparture.getTime())));
+        if (this.FleetArrival != null) params.put("FleetArrival", String.valueOf(df.format(this.FleetArrival.getTime())));
         return new JSONObject(params);
     }
 }

@@ -2,6 +2,8 @@ package geolaxia.geolaxia.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import geolaxia.geolaxia.Model.Adapters.PlanetListAdapter;
 import geolaxia.geolaxia.Model.Attack;
 import geolaxia.geolaxia.Model.Galaxy;
 import geolaxia.geolaxia.Model.Helpers;
@@ -28,16 +31,20 @@ import geolaxia.geolaxia.Services.Implementation.PlanetService;
 import geolaxia.geolaxia.Services.Interface.IAttackService;
 import geolaxia.geolaxia.Services.Interface.IPlanetService;
 
-public class AttackActivity extends BaseAttackActivity {
+public class AttackByCoordinatesActivity extends BaseAttackActivity {
+
+    RecyclerView planetList;
+    LinearLayoutManager planetListManager;
+    PlanetListAdapter planetListAdapter;
 
     private IPlanetService planetService;
     private IAttackService attackService;
     private Player player;
     private Planet planet;
+    private AttackByCoordinatesActivity context;
     private ArrayList<ShipX> availableFleetX = new ArrayList<>();
     private ArrayList<ShipY> availableFleetY = new ArrayList<>();
     private ArrayList<ShipZ> availableFleetZ = new ArrayList<>();
-    private AttackActivity context;
     private String[] galaxiesSelected;
     private String[] solarSystemsSelected;
     private String[] planetsSelected;
@@ -45,13 +52,16 @@ public class AttackActivity extends BaseAttackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attack);
+        setContentView(R.layout.activity_attack_by_coordinates);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        super.onCreateDrawer();
 
         mFormView = findViewById(R.id.scroll_form);
         mProgressView = findViewById(R.id.progress);
+
+        planetList = (RecyclerView) findViewById(R.id.planetList);
+        planetListManager = new LinearLayoutManager(this);
+        planetList.setLayoutManager(planetListManager);
 
         Intent intent = getIntent();
         player = (Player) intent.getExtras().getSerializable("player");
@@ -78,18 +88,7 @@ public class AttackActivity extends BaseAttackActivity {
                 planetService.GetPlanetsBySolarSystem(player.getUsername(), player.getToken(), context, newVal);
             }
         });
-
-        Button searchByCoordinates = (Button) findViewById(R.id.search_coordinates);
-        searchByCoordinates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, AttackByCoordinatesActivity.class);
-                intent.putExtra("player", player);
-                intent.putExtra("planet", planet);
-                startActivity(intent);
-            }
-        });
-
+        
         Button confirm = (Button)findViewById(R.id.confirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,17 +160,8 @@ public class AttackActivity extends BaseAttackActivity {
 
     @Override
     public void FillPlanets(ArrayList<Planet> planets){
-        NumberPicker planetsPicker = (NumberPicker) findViewById(R.id.planet);
-        planetsPicker.setMinValue(0);
-        planetsPicker.setMaxValue(planets.size() - 1);
-
-        ArrayList<String> planetNames = new ArrayList<>();
-        for (Planet planet: planets) {
-            planetNames.add(planet.getId() + "-" + planet.getName());
-        }
-        planetsSelected = new String[planetNames.size()];
-        planetsSelected = planetNames.toArray(planetsSelected);
-        planetsPicker.setDisplayedValues(planetsSelected);
+        planetListAdapter = new PlanetListAdapter(planets);
+        planetList.setAdapter(planetListAdapter);
     }
 
     @Override

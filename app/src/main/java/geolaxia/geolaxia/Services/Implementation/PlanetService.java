@@ -5,6 +5,8 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.AttackByCoordinatesActivity;
+import geolaxia.geolaxia.Activities.BaseAttackActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.MenuActivity;
 import geolaxia.geolaxia.Model.Galaxy;
@@ -30,22 +32,22 @@ public class PlanetService implements IPlanetService {
     }
 
     @Override
-    public void GetAllGalaxies(String username, String token, AttackActivity context) {
+    public void GetAllGalaxies(String username, String token, BaseAttackActivity context) {
         restService.GetAllGalaxies(username, token, context);
     }
 
     @Override
-    public void GetSolarSystemsByGalaxy(String username, String token, AttackActivity context, int galaxyId) {
+    public void GetSolarSystemsByGalaxy(String username, String token, BaseAttackActivity context, int galaxyId) {
         restService.GetSolarSystemsByGalaxy(username, token, context, galaxyId);
     }
 
     @Override
-    public void GetPlanetsBySolarSystem(String username, String token, AttackActivity context, int solarSystemId) {
+    public void GetPlanetsBySolarSystem(String username, String token, BaseAttackActivity context, int solarSystemId) {
         restService.GetPlanetsBySolarSystem(username, token, context, solarSystemId);
     }
 
     @Override
-    public void GetFleet(String username, String token, AttackActivity context, int planetId) {
+    public void GetFleet(String username, String token, BaseAttackActivity context, int planetId) {
         restService.GetPlanetFleet(username, token, context, planetId);
     }
 }
