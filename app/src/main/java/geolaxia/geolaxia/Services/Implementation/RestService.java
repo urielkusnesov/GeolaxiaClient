@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import geolaxia.geolaxia.Activities.BaseAttackActivity;
+import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -94,7 +94,7 @@ public class RestService implements IRestService {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Erro de conexion");
                 //handle error
             }
         })
@@ -330,7 +330,7 @@ public class RestService implements IRestService {
     */
 
     @Override
-    public void GetAllGalaxies(final String username, final String token, final BaseAttackActivity act) {
+    public void GetAllGalaxies(final String username, final String token, final AttackActivity act, final AttackActivity.AttackFragment fr) {
         String url = Constants.getGalaxiesServiceUrl();
 
         JsonObjectRequest req = new JsonObjectRequest(url, null,
@@ -340,7 +340,7 @@ public class RestService implements IRestService {
                         try {
                             GalaxiesDTO galaxiesContainer = new Gson().fromJson(response.toString(), GalaxiesDTO.class);
                             if(Constants.OK_RESPONSE.equals(galaxiesContainer.getStatus().getResult())) {
-                                act.FillGalaxies(galaxiesContainer.getData());
+                                fr.FillGalaxies(galaxiesContainer.getData());
                             } else {
                                 act.handleUnexpectedError(galaxiesContainer.getStatus().getDescription());
                             }
@@ -370,7 +370,47 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void GetSolarSystemsByGalaxy(final String username, final String token, final BaseAttackActivity act, final int galaxyId) {
+    public void GetAllGalaxies(final String username, final String token, final AttackActivity act, final AttackActivity.CoordinatesFragment fr) {
+        String url = Constants.getGalaxiesServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            GalaxiesDTO galaxiesContainer = new Gson().fromJson(response.toString(), GalaxiesDTO.class);
+                            if(Constants.OK_RESPONSE.equals(galaxiesContainer.getStatus().getResult())) {
+                                fr.FillGalaxies(galaxiesContainer.getData());
+                            } else {
+                                act.handleUnexpectedError(galaxiesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetSolarSystemsByGalaxy(final String username, final String token, final AttackActivity act, final AttackActivity.AttackFragment fr, final int galaxyId) {
         String url = Constants.getSolarSystemsServiceUrl(galaxyId);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
@@ -380,7 +420,7 @@ public class RestService implements IRestService {
                         try {
                             SolarSystemsDTO solarSystemsContainer = new Gson().fromJson(response.toString(), SolarSystemsDTO.class);
                             if(Constants.OK_RESPONSE.equals(solarSystemsContainer.getStatus().getResult())) {
-                                act.FillSolarSystems(solarSystemsContainer.getData());
+                                fr.FillSolarSystems(solarSystemsContainer.getData());
                             } else {
                                 act.handleUnexpectedError(solarSystemsContainer.getStatus().getDescription());
                             }
@@ -410,7 +450,47 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void GetPlanetsBySolarSystem(final String username, final String token, final BaseAttackActivity act, final int solarSystemId) {
+    public void GetSolarSystemsByGalaxy(final String username, final String token, final AttackActivity act, final AttackActivity.CoordinatesFragment fr, final int galaxyId) {
+        String url = Constants.getSolarSystemsServiceUrl(galaxyId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            SolarSystemsDTO solarSystemsContainer = new Gson().fromJson(response.toString(), SolarSystemsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(solarSystemsContainer.getStatus().getResult())) {
+                                fr.FillSolarSystems(solarSystemsContainer.getData());
+                            } else {
+                                act.handleUnexpectedError(solarSystemsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetPlanetsBySolarSystem(final String username, final String token, final AttackActivity act, final AttackActivity.AttackFragment fr, final int solarSystemId) {
         String url = Constants.getPlanetsbySolarSystemService(solarSystemId);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
@@ -420,7 +500,7 @@ public class RestService implements IRestService {
                         try {
                             PlanetsDTO planetsContainer = new Gson().fromJson(response.toString(), PlanetsDTO.class);
                             if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
-                                act.FillPlanets(planetsContainer.getData());
+                                fr.FillPlanets(planetsContainer.getData());
                             } else {
                                 act.handleUnexpectedError(planetsContainer.getStatus().getDescription());
                             }
@@ -450,7 +530,47 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void GetPlanetFleet(final String username, final String token, final BaseAttackActivity act, final int planetId) {
+    public void GetPlanetsBySolarSystem(final String username, final String token, final AttackActivity act, final AttackActivity.CoordinatesFragment fr, final int solarSystemId) {
+        String url = Constants.getPlanetsbySolarSystemService(solarSystemId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            PlanetsDTO planetsContainer = new Gson().fromJson(response.toString(), PlanetsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
+                                fr.FillPlanets(planetsContainer.getData());
+                            } else {
+                                act.handleUnexpectedError(planetsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetPlanetFleet(final String username, final String token, final AttackActivity act, final AttackActivity.AttackFragment fr, final int planetId) {
         String url = Constants.getPlanetFleetServiceUrl(planetId);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
@@ -481,7 +601,68 @@ public class RestService implements IRestService {
                                     }
                                 }
 
-                                act.FillFleets(shipsX, shipsY, shipsZ);
+                                fr.FillFleets(shipsX, shipsY, shipsZ);
+                            } else {
+                                act.handleUnexpectedError(shipsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetPlanetFleet(final String username, final String token, final AttackActivity act, final AttackActivity.CoordinatesFragment fr, final int planetId) {
+        String url = Constants.getPlanetFleetServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            ShipsDTO shipsContainer = new Gson().fromJson(response.toString(), ShipsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(shipsContainer.getStatus().getResult())) {
+                                //transformar a planetas segun herencia
+                                ArrayList<ShipX> shipsX = new ArrayList<ShipX>();
+                                ArrayList<ShipY> shipsY = new ArrayList<ShipY>();
+                                ArrayList<ShipZ> shipsZ = new ArrayList<ShipZ>();
+                                for (Ship ship: shipsContainer.getData()) {
+                                    switch (ship.getShipType()){
+                                        case Constants.SHIP_X:
+                                            ShipX newShipX = new ShipX(ship);
+                                            shipsX.add(newShipX);
+                                            break;
+                                        case Constants.SHIP_Y:
+                                            ShipY newShipY = new ShipY(ship);
+                                            shipsY.add(newShipY);
+                                            break;
+                                        case Constants.SHIP_Z:
+                                            ShipZ newShipZ = new ShipZ(ship);
+                                            shipsZ.add(newShipZ);
+                                            break;
+                                    }
+                                }
+
+                                fr.FillFleets(shipsX, shipsY, shipsZ);
                             } else {
                                 act.handleUnexpectedError(shipsContainer.getStatus().getDescription());
                             }
@@ -529,7 +710,7 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void Attack(final String username, final String token, final BaseAttackActivity context, final Attack attack) {
+    public void Attack(final String username, final String token, final AttackActivity context, final Attack attack) {
         String url = Constants.getAttackServiceUrl();
 
         JSONObject jsonAttack = attack.toJSONObject();

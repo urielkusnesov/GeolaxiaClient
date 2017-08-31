@@ -1,6 +1,6 @@
 package geolaxia.geolaxia.Services.Interface;
 
-import geolaxia.geolaxia.Activities.BaseAttackActivity;
+import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Model.Attack;
 
 /**
@@ -8,5 +8,5 @@ import geolaxia.geolaxia.Model.Attack;
  */
 
 public interface IAttackService {
-    void Attack(String username, String token, BaseAttackActivity context, Attack attack);
+    void Attack(String username, String token, AttackActivity context, Attack attack);
 }

@@ -276,7 +276,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         if (mLocation != null) {
             latitude = String.valueOf(mLocation.getLatitude());
             longitude = String.valueOf(mLocation.getLongitude());
-            weatherService.GetWeather(latitude, longitude, this);
+            //weatherService.GetWeather(latitude, longitude, this);
         } else {
             // no se puedo detectar la ubicacion
         }

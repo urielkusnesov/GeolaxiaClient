@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,6 +31,12 @@
                 android:background="#A00000"
                 app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay" />
 
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:background="#80000000"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         </android.support.design.widget.AppBarLayout>
 
         <ProgressBar
@@ -43,16 +48,14 @@
             android:layout_marginTop="8dp"
             android:visibility="gone" />
 
-        <ScrollView
-            android:id="@+id/scroll_form"
-            android:layout_marginTop="8dp"
-            android:layout_below="@id/bar"
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/container"
+            android:layout_below="@+id/bar"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content" />
 
-            <include layout="@layout/content_attack" />
-
-        </ScrollView>
 
     </RelativeLayout>
 

@@ -2,15 +2,8 @@ package geolaxia.geolaxia.Services.Implementation;
 
 import org.json.JSONException;
 
-import java.util.ArrayList;
-
 import geolaxia.geolaxia.Activities.AttackActivity;
-import geolaxia.geolaxia.Activities.AttackByCoordinatesActivity;
-import geolaxia.geolaxia.Activities.BaseAttackActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
-import geolaxia.geolaxia.Activities.MenuActivity;
-import geolaxia.geolaxia.Model.Galaxy;
-import geolaxia.geolaxia.Model.SolarSystem;
 import geolaxia.geolaxia.Services.Interface.IPlanetService;
 import geolaxia.geolaxia.Services.Interface.IRestService;
 
@@ -32,22 +25,42 @@ public class PlanetService implements IPlanetService {
     }
 
     @Override
-    public void GetAllGalaxies(String username, String token, BaseAttackActivity context) {
-        restService.GetAllGalaxies(username, token, context);
+    public void GetAllGalaxies(String username, String token, AttackActivity act, AttackActivity.AttackFragment context) {
+        restService.GetAllGalaxies(username, token, act, context);
     }
 
     @Override
-    public void GetSolarSystemsByGalaxy(String username, String token, BaseAttackActivity context, int galaxyId) {
-        restService.GetSolarSystemsByGalaxy(username, token, context, galaxyId);
+    public void GetAllGalaxies(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context) {
+        restService.GetAllGalaxies(username, token, act, context);
     }
 
     @Override
-    public void GetPlanetsBySolarSystem(String username, String token, BaseAttackActivity context, int solarSystemId) {
-        restService.GetPlanetsBySolarSystem(username, token, context, solarSystemId);
+    public void GetSolarSystemsByGalaxy(String username, String token, AttackActivity act, AttackActivity.AttackFragment context, int galaxyId) {
+        restService.GetSolarSystemsByGalaxy(username, token, act, context, galaxyId);
     }
 
     @Override
-    public void GetFleet(String username, String token, BaseAttackActivity context, int planetId) {
-        restService.GetPlanetFleet(username, token, context, planetId);
+    public void GetSolarSystemsByGalaxy(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int galaxyId) {
+        restService.GetSolarSystemsByGalaxy(username, token, act, context, galaxyId);
+    }
+
+    @Override
+    public void GetPlanetsBySolarSystem(String username, String token, AttackActivity act, AttackActivity.AttackFragment context, int solarSystemId) {
+        restService.GetPlanetsBySolarSystem(username, token, act, context, solarSystemId);
+    }
+
+    @Override
+    public void GetPlanetsBySolarSystem(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int solarSystemId) {
+        restService.GetPlanetsBySolarSystem(username, token, act, context, solarSystemId);
+    }
+
+    @Override
+    public void GetFleet(String username, String token, AttackActivity act, AttackActivity.AttackFragment context, int planetId) {
+        restService.GetPlanetFleet(username, token, act, context, planetId);
+    }
+
+    @Override
+    public void GetFleet(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int planetId) {
+        restService.GetPlanetFleet(username, token, act, context, planetId);
     }
 }

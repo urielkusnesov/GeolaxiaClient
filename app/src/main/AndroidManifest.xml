@@ -54,13 +54,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.AttackActivity"
-            android:label="@string/title_activity_attack"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Activities.AttackByCoordinatesActivity"
-            android:label="@string/title_activity_attack_by_coordinates"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.BaseAttackActivity"></activity>
+            android:label="@string/title_activity_attack2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
