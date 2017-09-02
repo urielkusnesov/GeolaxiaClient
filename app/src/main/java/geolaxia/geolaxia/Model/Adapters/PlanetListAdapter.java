@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.R;
 
@@ -18,6 +19,7 @@ import geolaxia.geolaxia.R;
 
 public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.ViewHolder> {
     private ArrayList<Planet> planets;
+    private AttackActivity.CoordinatesFragment context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -28,13 +30,16 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
 
         public ViewHolder(View v) {
             super(v);
+            v.setClickable(true);
             name = (TextView) v.findViewById(R.id.name);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public PlanetListAdapter(ArrayList<Planet> planets) {
+    public PlanetListAdapter(ArrayList<Planet> planets, AttackActivity.CoordinatesFragment context)
+    {
         this.planets = planets;
+        this.context = context;
     }
 
     @Override
@@ -47,7 +52,7 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         if(planets.get(position).getConqueror() != null){
@@ -55,6 +60,14 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
         }else{
             holder.name.setText(planets.get(position).getName() + " - No Colonizado");
         }
+
+        holder.itemView.setClickable(true);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.selectTargetPlanet(planets.get(position));
+            }
+        });
     }
 
     @Override

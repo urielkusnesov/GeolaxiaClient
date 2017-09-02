@@ -48,6 +48,14 @@
             android:layout_marginTop="8dp"
             android:visibility="gone" />
 
+        <ScrollView
+            android:id="@+id/scroll_form"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ScrollView>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/container"
@@ -55,7 +63,6 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
 
     </RelativeLayout>
 

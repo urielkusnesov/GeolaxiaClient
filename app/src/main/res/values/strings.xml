@@ -26,5 +26,4 @@
     <string name="title_activity_launch_attack">LaunchAttackActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_attack2">Attack2Activity</string>
 </resources>

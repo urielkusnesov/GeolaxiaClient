@@ -7,6 +7,7 @@ import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
 import geolaxia.geolaxia.Model.Attack;
+import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 
 /**
@@ -37,6 +38,7 @@ public interface IRestService {
     void GetPlanetFleet(String username, String token, AttackActivity act, AttackActivity.AttackFragment context, int planetId);
     void GetPlanetFleet(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int planetId);
 
+    void SetLastPosition(String latitude, String longitude, Player player, HomeActivity act);
     void GetWeather(String latitude, String longitude, final HomeActivity act);
 
     void Attack(String username, String token, AttackActivity context, Attack planetId);

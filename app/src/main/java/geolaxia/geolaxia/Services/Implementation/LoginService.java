@@ -2,6 +2,7 @@ package geolaxia.geolaxia.Services.Implementation;
 
 import org.json.JSONException;
 
+import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
 import geolaxia.geolaxia.Model.Player;
@@ -28,5 +29,10 @@ public class LoginService implements ILoginService {
     @Override
     public void Register(Player player, RegisterActivity context) throws JSONException {
         restService.Register(player, context);
+    }
+
+    @Override
+    public void SetLastPosition(String latitud, String longitude, Player player, HomeActivity context) {
+        restService.SetLastPosition(latitud, longitude, player, context);
     }
 }

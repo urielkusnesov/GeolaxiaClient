@@ -1,6 +1,7 @@
 package geolaxia.geolaxia.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,10 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.HashMap;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Adapters.PlanetListAdapter;
@@ -45,6 +51,8 @@ public class AttackActivity extends MenuActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
+    static final long ONE_MINUTE_IN_MILLIS = 60000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +83,22 @@ public class AttackActivity extends MenuActivity {
 
     }
 
+    public Date calculateArrivalTime(ArrayList<Ship> fleet, Planet target){
+        int lowerSpeed = 0;
+        for (Ship ship: fleet) {
+            if(lowerSpeed == 0 || ship.getSpeed() < lowerSpeed){
+                lowerSpeed = ship.getSpeed();
+            }
+        }
+
+        int distance = planet.getOrder() > target.getOrder() ? planet.getOrder() - target.getOrder() : target.getOrder() - planet.getOrder();
+        int minutesToAdd = lowerSpeed != 0 ? Math.round(distance*1000/lowerSpeed) : 0;
+
+        Calendar date = Calendar.getInstance();
+        long t= date.getTimeInMillis();
+        return new Date(t + (minutesToAdd * ONE_MINUTE_IN_MILLIS));
+    }
+
     public void AttackSaved(){
         SweetAlertDialog dialog = Helpers.getSuccesDialog(this, "A conquistar!", "El ataque esta en marcha");
         dialog.show();
@@ -90,6 +114,7 @@ public class AttackActivity extends MenuActivity {
         private ArrayList<ShipX> availableFleetX = new ArrayList<>();
         private ArrayList<ShipY> availableFleetY = new ArrayList<>();
         private ArrayList<ShipZ> availableFleetZ = new ArrayList<>();
+        private HashMap<Integer, Planet> availablePlanets = new HashMap<>();
         private AttackFragment context;
         private AttackActivity act;
         private String[] galaxiesSelected;
@@ -123,6 +148,7 @@ public class AttackActivity extends MenuActivity {
             context = this;
 
             NumberPicker galaxyPicker = (NumberPicker) rootView.findViewById(R.id.galaxy);
+            Helpers.setNumberPickerTextColor(galaxyPicker, Color.WHITE);
             galaxyPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -131,10 +157,47 @@ public class AttackActivity extends MenuActivity {
             });
 
             NumberPicker solarSystemPicker = (NumberPicker) rootView.findViewById(R.id.solarSystem);
+            Helpers.setNumberPickerTextColor(solarSystemPicker, Color.WHITE);
             solarSystemPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                     planetService.GetPlanetsBySolarSystem(act.player.getUsername(), act.player.getToken(), act, context, newVal);
+                }
+            });
+
+            NumberPicker planetPicker = (NumberPicker) rootView.findViewById(R.id.planet);
+            Helpers.setNumberPickerTextColor(planetPicker, Color.WHITE);
+            planetPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    setArrivalTime();
+                }
+            });
+
+            NumberPicker xPicker = (NumberPicker) rootView.findViewById(R.id.x);
+            Helpers.setNumberPickerTextColor(xPicker, Color.WHITE);
+            xPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    setArrivalTime();
+                }
+            });
+
+            NumberPicker yPicker = (NumberPicker) rootView.findViewById(R.id.y);
+            Helpers.setNumberPickerTextColor(yPicker, Color.WHITE);
+            yPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    setArrivalTime();
+                }
+            });
+
+            NumberPicker zPicker = (NumberPicker) rootView.findViewById(R.id.z);
+            Helpers.setNumberPickerTextColor(zPicker, Color.WHITE);
+            zPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    setArrivalTime();
                 }
             });
 
@@ -143,29 +206,13 @@ public class AttackActivity extends MenuActivity {
                 @Override
                 public void onClick(View v) {
                     NumberPicker planetsPicker = (NumberPicker) rootView.findViewById(R.id.planet);
-                    int planetId = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
-                    Planet targetPlanet = new Planet();
-                    targetPlanet.setId(planetId);
+                    int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+                    Planet targetPlanet = availablePlanets.get(planetOrder);
 
-                    ArrayList<Ship> fleet = new ArrayList<>();
-                    NumberPicker xPicker = (NumberPicker) rootView.findViewById(R.id.x);
-                    int shipsX = xPicker.getValue();
-                    for (int i = 0; i < shipsX; i++) {
-                        fleet.add(availableFleetX.get(i));
-                    }
-                    NumberPicker yPicker = (NumberPicker) rootView.findViewById(R.id.y);
-                    int shipsY = yPicker.getValue();
-                    for (int i = 0; i < shipsY; i++) {
-                        fleet.add(availableFleetY.get(i));
-                    }
-                    NumberPicker zPicker = (NumberPicker) rootView.findViewById(R.id.z);
-                    int shipsZ = zPicker.getValue();
-                    for (int i = 0; i < shipsZ; i++) {
-                        fleet.add(availableFleetZ.get(i));
-                    }
+                    ArrayList<Ship> fleet = getAttackFleet();
 
                     Date departure = Calendar.getInstance().getTime();
-                    Date arrival = Calendar.getInstance().getTime();//calculateArrivalTime();
+                    Date arrival = act.calculateArrivalTime(fleet, targetPlanet);
                     Attack attack = new Attack(act.player, act.planet, null, targetPlanet, fleet, departure, arrival);
 
                     attackService.Attack(act.player.getUsername(), act.player.getToken(), act, attack);
@@ -173,6 +220,48 @@ public class AttackActivity extends MenuActivity {
             });
 
             return rootView;
+        }
+
+        public void setArrivalTime(){
+            TextView estimateArrival = (TextView) getView().findViewById(R.id.estimateText);
+
+            NumberPicker planetsPicker = (NumberPicker) getView().findViewById(R.id.planet);
+            int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+            Planet targetPlanet = availablePlanets.get(planetOrder);
+
+            ArrayList<Ship> fleet = getAttackFleet();
+            if(fleet.size() > 0){
+                Date arrival = act.calculateArrivalTime(fleet, targetPlanet);
+
+                long totalDifferenceInSeconds = (arrival.getTime() - Calendar.getInstance().getTime().getTime())/1000;
+                long hours = Math.abs(totalDifferenceInSeconds/3600);
+                long minutes = (totalDifferenceInSeconds%3600)/60;
+                long seconds = totalDifferenceInSeconds - (hours*3600) - (minutes*60);
+
+            }else{
+                estimateArrival.setText("El ataque llegar en: ");
+            }
+        }
+
+        public ArrayList<Ship> getAttackFleet(){
+            ArrayList<Ship> fleet = new ArrayList<>();
+            NumberPicker xPicker = (NumberPicker) getView().findViewById(R.id.x);
+            int shipsX = xPicker.getValue();
+            for (int i = 0; i < shipsX; i++) {
+                fleet.add(availableFleetX.get(i));
+            }
+            NumberPicker yPicker = (NumberPicker) getView().findViewById(R.id.y);
+            int shipsY = yPicker.getValue();
+            for (int i = 0; i < shipsY; i++) {
+                fleet.add(availableFleetY.get(i));
+            }
+            NumberPicker zPicker = (NumberPicker) getView().findViewById(R.id.z);
+            int shipsZ = zPicker.getValue();
+            for (int i = 0; i < shipsZ; i++) {
+                fleet.add(availableFleetZ.get(i));
+            }
+
+            return fleet;
         }
 
         public void FillGalaxies(ArrayList<Galaxy> galaxies){
@@ -208,13 +297,21 @@ public class AttackActivity extends MenuActivity {
         }
 
         public void FillPlanets(ArrayList<Planet> planets){
+            ArrayList<Planet> finalPlanets = new ArrayList<>();
+            for (Planet planet: planets) {
+                if(planet.getConqueror() == null || !planet.getConqueror().getUsername().equals(act.player.getUsername())){
+                    finalPlanets.add(planet);
+                }
+            }
+
             NumberPicker planetsPicker = (NumberPicker) getView().findViewById(R.id.planet);
             planetsPicker.setMinValue(0);
-            planetsPicker.setMaxValue(planets.size() - 1);
+            planetsPicker.setMaxValue(finalPlanets.size() - 1);
 
             ArrayList<String> planetNames = new ArrayList<>();
-            for (Planet planet: planets) {
-                planetNames.add(planet.getId() + "-" + planet.getName());
+            for (Planet planet: finalPlanets) {
+                availablePlanets.put(planet.getOrder(), planet);
+                planetNames.add(planet.getOrder() + "-" + planet.getName());
             }
             planetsSelected = new String[planetNames.size()];
             planetsSelected = planetNames.toArray(planetsSelected);
@@ -255,9 +352,10 @@ public class AttackActivity extends MenuActivity {
         private ArrayList<ShipX> availableFleetX = new ArrayList<>();
         private ArrayList<ShipY> availableFleetY = new ArrayList<>();
         private ArrayList<ShipZ> availableFleetZ = new ArrayList<>();
+        private HashMap<Integer, Planet> availablePlanets = new HashMap<>();
         private String[] galaxiesSelected;
         private String[] solarSystemsSelected;
-        private String[] planetsSelected;
+        private Planet targetPlanet;
 
         public CoordinatesFragment() {
 
@@ -290,6 +388,7 @@ public class AttackActivity extends MenuActivity {
             planetService.GetFleet(act.player.getUsername(), act.player.getToken(), act, this, act.planet.getId());
 
             NumberPicker galaxyPicker = (NumberPicker) rootView.findViewById(R.id.galaxy);
+            Helpers.setNumberPickerTextColor(galaxyPicker, Color.WHITE);
             galaxyPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -298,6 +397,7 @@ public class AttackActivity extends MenuActivity {
             });
 
             NumberPicker solarSystemPicker = (NumberPicker) rootView.findViewById(R.id.solarSystem);
+            Helpers.setNumberPickerTextColor(solarSystemPicker, Color.WHITE);
             solarSystemPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -305,34 +405,42 @@ public class AttackActivity extends MenuActivity {
                 }
             });
 
+            NumberPicker xPicker = (NumberPicker) rootView.findViewById(R.id.x);
+            Helpers.setNumberPickerTextColor(xPicker, Color.WHITE);
+            xPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    setArrivalTime();
+                }
+            });
+
+            NumberPicker yPicker = (NumberPicker) rootView.findViewById(R.id.y);
+            Helpers.setNumberPickerTextColor(yPicker, Color.WHITE);
+            yPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    setArrivalTime();
+                }
+            });
+
+            NumberPicker zPicker = (NumberPicker) rootView.findViewById(R.id.z);
+            Helpers.setNumberPickerTextColor(zPicker, Color.WHITE);
+            zPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    setArrivalTime();
+                }
+            });
+
             Button confirm = (Button)rootView.findViewById(R.id.confirm);
             confirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NumberPicker planetsPicker = (NumberPicker) rootView.findViewById(R.id.planet);
-                    int planetId = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
-                    Planet targetPlanet = new Planet();
-                    targetPlanet.setId(planetId);
 
-                    ArrayList<Ship> fleet = new ArrayList<>();
-                    NumberPicker xPicker = (NumberPicker) rootView.findViewById(R.id.x);
-                    int shipsX = xPicker.getValue();
-                    for (int i = 0; i < shipsX; i++) {
-                        fleet.add(availableFleetX.get(i));
-                    }
-                    NumberPicker yPicker = (NumberPicker) rootView.findViewById(R.id.y);
-                    int shipsY = yPicker.getValue();
-                    for (int i = 0; i < shipsY; i++) {
-                        fleet.add(availableFleetY.get(i));
-                    }
-                    NumberPicker zPicker = (NumberPicker) rootView.findViewById(R.id.z);
-                    int shipsZ = zPicker.getValue();
-                    for (int i = 0; i < shipsZ; i++) {
-                        fleet.add(availableFleetZ.get(i));
-                    }
+                    ArrayList<Ship> fleet = getAttackFleet();
 
                     Date departure = Calendar.getInstance().getTime();
-                    Date arrival = Calendar.getInstance().getTime();//calculateArrivalTime();
+                    Date arrival = act.calculateArrivalTime(fleet, targetPlanet);
                     Attack attack = new Attack(act.player, act.planet, null, targetPlanet, fleet, departure, arrival);
 
                     attackService.Attack(act.player.getUsername(), act.player.getToken(), act, attack);
@@ -340,6 +448,51 @@ public class AttackActivity extends MenuActivity {
             });
 
             return rootView;
+        }
+
+        public void setArrivalTime(){
+            TextView estimateArrival = (TextView) getView().findViewById(R.id.estimateText);
+
+            ArrayList<Ship> fleet = getAttackFleet();
+            if(fleet.size() > 0){
+                Date arrival = act.calculateArrivalTime(fleet, this.targetPlanet);
+
+                long totalDifferenceInSeconds = (arrival.getTime() - Calendar.getInstance().getTime().getTime())/1000;
+                long hours = Math.abs(totalDifferenceInSeconds/3600);
+                long minutes = (totalDifferenceInSeconds%3600)/60;
+                long seconds = totalDifferenceInSeconds - (hours*3600) - (minutes*60);
+
+                estimateArrival.setText("El ataque llegara en: " +
+                        String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds));
+            }else{
+                estimateArrival.setText("El ataque llegar en: ");
+            }
+        }
+
+        public void selectTargetPlanet(Planet targetPlanet){
+            this.targetPlanet = targetPlanet;
+            setArrivalTime();
+        }
+
+        public ArrayList<Ship> getAttackFleet(){
+            ArrayList<Ship> fleet = new ArrayList<>();
+            NumberPicker xPicker = (NumberPicker) getView().findViewById(R.id.x);
+            int shipsX = xPicker.getValue();
+            for (int i = 0; i < shipsX; i++) {
+                fleet.add(availableFleetX.get(i));
+            }
+            NumberPicker yPicker = (NumberPicker) getView().findViewById(R.id.y);
+            int shipsY = yPicker.getValue();
+            for (int i = 0; i < shipsY; i++) {
+                fleet.add(availableFleetY.get(i));
+            }
+            NumberPicker zPicker = (NumberPicker) getView().findViewById(R.id.z);
+            int shipsZ = zPicker.getValue();
+            for (int i = 0; i < shipsZ; i++) {
+                fleet.add(availableFleetZ.get(i));
+            }
+
+            return fleet;
         }
 
         public void FillGalaxies(ArrayList<Galaxy> galaxies){
@@ -375,8 +528,17 @@ public class AttackActivity extends MenuActivity {
         }
 
         public void FillPlanets(ArrayList<Planet> planets){
-            planetListAdapter = new PlanetListAdapter(planets);
+            ArrayList<Planet> finalPlanets = new ArrayList<>();
+            for (Planet planet: planets) {
+                if(planet.getConqueror() == null || !planet.getConqueror().getUsername().equals(act.player.getUsername())){
+                    availablePlanets.put(planet.getOrder(), planet);
+                    finalPlanets.add(planet);
+                }
+            }
+
+            planetListAdapter = new PlanetListAdapter(finalPlanets, this);
             planetList.setAdapter(planetListAdapter);
+            targetPlanet = finalPlanets.get(0);
         }
 
         public void FillFleets(ArrayList<ShipX> shipsX, ArrayList<ShipY> shipsY, ArrayList<ShipZ> shipsZ){

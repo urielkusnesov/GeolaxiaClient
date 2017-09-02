@@ -22,12 +22,15 @@ public class Player implements Serializable {
     private String Email;
     private String FacebookId;
     private ArrayList<Planet> Planets;
+    private String LastLatitude;
+    private String LastLongitude;
 
     public Player() {
 
     }
 
-    public Player(int id, int level, int resourcesUsed, String username, String password, String firstName, String lastName, String email, String facebookId, ArrayList<Planet> planets){
+    public Player(int id, int level, int resourcesUsed, String username, String password, String firstName, String lastName,
+                  String email, String facebookId, ArrayList<Planet> planets, String lastLatitude, String lastLongitude){
         this.Id = id;
         this.Level = level;
         this.ResourcesUsed = resourcesUsed;
@@ -38,6 +41,8 @@ public class Player implements Serializable {
         this.Email = email;
         this.FacebookId = facebookId;
         this.Planets = planets;
+        this.LastLatitude = lastLatitude;
+        this.LastLongitude = lastLongitude;
     }
 
     public int getId() {
@@ -118,6 +123,22 @@ public class Player implements Serializable {
         this.FacebookId = facebookId;
     }
 
+    public String getLastLatitude() {
+        return LastLatitude;
+    }
+
+    public void setLastLatitude(String lastLatitude) {
+        LastLatitude = lastLatitude;
+    }
+
+    public String getLastLongitude() {
+        return LastLongitude;
+    }
+
+    public void setLastLongitude(String lastLongitude) {
+        LastLongitude = lastLongitude;
+    }
+
     public ArrayList<Planet> getPlanets() {
         return Planets;
     }
@@ -160,6 +181,8 @@ public class Player implements Serializable {
         }else {
             params.put("facebookId", "");
         }
+        params.put("lastLatitude", this.LastLatitude);
+        params.put("lastLongitude", this.LastLongitude);
         return new JSONObject(params);
     }
 }

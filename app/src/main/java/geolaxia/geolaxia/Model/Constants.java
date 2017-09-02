@@ -20,6 +20,7 @@ public class Constants {
     public static final String SOLARSYSTEMS_SERVICE = "api/attack/solarsystems";
     public static final String PLANETSS_SERVICE = "api/attack/planetsbyss";
     public static final String FLEET_SERVICE = "api/attack/fleet";
+    public static final String LAST_POSITION_SERVICE = "api/player/setposition";
     public static final String WEATHER_SERVICE = "http://api.openweathermap.org/data/2.5/weather";
     public static final String ATTACK_SERVICE = "api/attack/attack";
     public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
@@ -35,6 +36,7 @@ public class Constants {
     public static String getSolarSystemsServiceUrl(int galaxyId) { return (HTTP + BASE_URL + PORT + SOLARSYSTEMS_SERVICE + "?galaxyId=" + String.valueOf(galaxyId)); }
     public static String getPlanetsbySolarSystemService(int solarSystemId) { return (HTTP + BASE_URL + PORT + PLANETSS_SERVICE + "?solarSystemId=" + String.valueOf(solarSystemId)); }
     public static String getPlanetFleetServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + FLEET_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String SetLastPositionServiceUrl() { return (HTTP + BASE_URL + PORT + LAST_POSITION_SERVICE); }
     public static String getWeatherServiceUrl(String latitude, String longitude) { return (WEATHER_SERVICE + "?lat=" + latitude + "&lon=" + longitude + "&units=metric&APPID=a6e31252461e3c4a9ccaf2bcb32740c5"); }
     public static String getAttackServiceUrl() { return (HTTP + BASE_URL + PORT + ATTACK_SERVICE); }
 

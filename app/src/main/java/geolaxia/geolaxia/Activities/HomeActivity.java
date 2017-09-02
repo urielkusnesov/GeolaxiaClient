@@ -46,8 +46,10 @@ import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.R;
+import geolaxia.geolaxia.Services.Implementation.LoginService;
 import geolaxia.geolaxia.Services.Implementation.PlanetService;
 import geolaxia.geolaxia.Services.Implementation.WeatherService;
+import geolaxia.geolaxia.Services.Interface.ILoginService;
 import geolaxia.geolaxia.Services.Interface.IPlanetService;
 import geolaxia.geolaxia.Services.Interface.IWeatherService;
 
@@ -58,6 +60,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
     private Player player;
     private Planet planet;
     private IPlanetService planetService;
+    private ILoginService loginService;
     private IWeatherService weatherService;
 
     Spinner planetSpinner;
@@ -103,6 +106,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         levelText = (TextView) findViewById(R.id.levelText);
 
         planetService = new PlanetService();
+        loginService = new LoginService();
         weatherService = new WeatherService();
         FillPlanets(player.getPlanets());
 
@@ -276,6 +280,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         if (mLocation != null) {
             latitude = String.valueOf(mLocation.getLatitude());
             longitude = String.valueOf(mLocation.getLongitude());
+            loginService.SetLastPosition(latitude, longitude, player, this);
             //weatherService.GetWeather(latitude, longitude, this);
         } else {
             // no se puedo detectar la ubicacion

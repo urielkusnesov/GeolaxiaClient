@@ -10,6 +10,7 @@ public class Planet implements Serializable{
 
     private int Id;
     private String Name;
+    private int Order;
     private Player Conqueror;
     private int Metal;
     private int Crystal;
@@ -26,10 +27,11 @@ public class Planet implements Serializable{
 
     }
 
-    public Planet(int id, String name, Player conqueror, int metal, int crystal, int darkMatter, int energy, boolean isOrigin,
+    public Planet(int id, String name, int order, Player conqueror, int metal, int crystal, int darkMatter, int energy, boolean isOrigin,
                   SolarSystem solarSystem, int positionX, int positionY, int positionZ, int planetType){
         this.Id = id;
         this.Name = name;
+        this.Order = order;
         this.Conqueror = conqueror;
         this.Metal = metal;
         this.Crystal = crystal;
@@ -57,6 +59,14 @@ public class Planet implements Serializable{
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public int getOrder() {
+        return Order;
+    }
+
+    public void setOrder(int order) {
+        Order = order;
     }
 
     public Player getConqueror() {
@@ -154,6 +164,6 @@ public class Planet implements Serializable{
     @Override
     public String toString()
     {
-        return Name + " - " + String.valueOf(PositionX) + ":" + String.valueOf(PositionY) + ":" + String.valueOf(PositionZ);
+        return String.valueOf(Order) + " - " + Name;
     }
 }

@@ -50,14 +50,14 @@
 
             <NumberPicker
                 android:id="@+id/galaxy"
-                android:background="#AAAAAA"
+                android:background="#80000000"
                 android:descendantFocusability="blocksDescendants"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <NumberPicker
                 android:id="@+id/solarSystem"
-                android:background="#AAAAAA"
+                android:background="#80000000"
                 android:descendantFocusability="blocksDescendants"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
 
             <NumberPicker
                 android:id="@+id/planet"
-                android:background="#AAAAAA"
+                android:background="#80000000"
                 android:descendantFocusability="blocksDescendants"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,14 +106,14 @@
 
             <NumberPicker
                 android:id="@+id/x"
-                android:background="#AAAAAA"
+                android:background="#80000000"
                 android:descendantFocusability="blocksDescendants"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <NumberPicker
                 android:id="@+id/y"
-                android:background="#AAAAAA"
+                android:background="#80000000"
                 android:descendantFocusability="blocksDescendants"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
 
             <NumberPicker
                 android:id="@+id/z"
-                android:background="#AAAAAA"
+                android:background="#80000000"
                 android:descendantFocusability="blocksDescendants"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,9 +152,7 @@
             style="@style/Widget.AppCompat.Button"
             android:background="#80000000"
             android:textColor="#FFFFFF"
-            android:layout_toRightOf="@id/estimateText"
-            android:layout_toEndOf="@id/estimateText"
-            android:layout_alignBaseline="@id/estimateText"
+            android:layout_below="@id/estimateText"
             android:layout_alignParentRight="true"
             />
 

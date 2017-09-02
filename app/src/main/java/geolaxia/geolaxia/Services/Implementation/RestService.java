@@ -691,6 +691,35 @@ public class RestService implements IRestService {
         Request response = Volley.newRequestQueue(act).add(req);
     }
 
+    @Override
+    public void SetLastPosition(final String latitude, final String longitude, final Player player, final HomeActivity act) {
+        String url = Constants.SetLastPositionServiceUrl();
+
+        JSONObject jsonPlayer = player.toJSONObject();
+        JsonObjectRequest req = new JsonObjectRequest(url, jsonPlayer,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", player.getUsername());
+                headers.put("token", player.getToken());
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
     public void GetWeather(final String latitude, final String longitude, final HomeActivity act) {
         String url = Constants.getWeatherServiceUrl(latitude, longitude);
         JsonObjectRequest req = new JsonObjectRequest(url, null,

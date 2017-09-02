@@ -152,9 +152,7 @@
             style="@style/Widget.AppCompat.Button"
             android:background="#80000000"
             android:textColor="#FFFFFF"
-            android:layout_toRightOf="@id/estimateText"
-            android:layout_toEndOf="@id/estimateText"
-            android:layout_alignBaseline="@id/estimateText"
+            android:layout_below="@id/estimateText"
             android:layout_alignParentRight="true"
             />
 
