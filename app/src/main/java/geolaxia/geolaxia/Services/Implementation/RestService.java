@@ -27,6 +27,7 @@ import geolaxia.geolaxia.Model.Dto.BaseDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
 import geolaxia.geolaxia.Model.Dto.PlayerDTO;
+import geolaxia.geolaxia.Model.Dto.PlayersDTO;
 import geolaxia.geolaxia.Model.Dto.ShipsDTO;
 import geolaxia.geolaxia.Model.Dto.SolarSystemsDTO;
 import geolaxia.geolaxia.Model.Planet;
@@ -712,6 +713,44 @@ public class RestService implements IRestService {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("username", player.getUsername());
                 headers.put("token", player.getToken());
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    public void GetCloserPlayers(final String username, final String token, final AttackActivity.CloseAttackFragment fr, final AttackActivity act){
+        String url = Constants.getCloserPlayersServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            PlayersDTO playersContainer = new Gson().fromJson(response.toString(), PlayersDTO.class);
+                            if(Constants.OK_RESPONSE.equals(playersContainer.getStatus().getResult())) {
+                                fr.FillUsers(playersContainer.getData());
+                            } else {
+                                act.handleUnexpectedError(playersContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
                 return headers;
             }
         };

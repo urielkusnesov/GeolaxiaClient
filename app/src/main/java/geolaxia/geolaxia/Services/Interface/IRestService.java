@@ -39,6 +39,7 @@ public interface IRestService {
     void GetPlanetFleet(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int planetId);
 
     void SetLastPosition(String latitude, String longitude, Player player, HomeActivity act);
+    void GetCloserPlayers(String username, String token, AttackActivity.CloseAttackFragment context, AttackActivity act);
     void GetWeather(String latitude, String longitude, final HomeActivity act);
 
     void Attack(String username, String token, AttackActivity context, Attack planetId);

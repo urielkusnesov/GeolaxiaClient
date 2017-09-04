@@ -29,6 +29,7 @@ import java.util.HashMap;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Adapters.PlanetListAdapter;
+import geolaxia.geolaxia.Model.Adapters.UserListAdapter;
 import geolaxia.geolaxia.Model.Attack;
 import geolaxia.geolaxia.Model.Galaxy;
 import geolaxia.geolaxia.Model.Helpers;
@@ -41,9 +42,12 @@ import geolaxia.geolaxia.Model.ShipZ;
 import geolaxia.geolaxia.Model.SolarSystem;
 import geolaxia.geolaxia.R;
 import geolaxia.geolaxia.Services.Implementation.AttackService;
+import geolaxia.geolaxia.Services.Implementation.LoginService;
 import geolaxia.geolaxia.Services.Implementation.PlanetService;
 import geolaxia.geolaxia.Services.Interface.IAttackService;
 import geolaxia.geolaxia.Services.Interface.IPlanetService;
+
+import static geolaxia.geolaxia.R.id.planetList;
 
 public class AttackActivity extends MenuActivity {
     private Player player;
@@ -564,13 +568,17 @@ public class AttackActivity extends MenuActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class CloseAttackFragment extends Fragment {
+        RecyclerView userList;
+        LinearLayoutManager userListManager;
+        UserListAdapter userListAdapter;
+
+        private PlanetService planetService;
+        private LoginService loginService;
+        private AttackActivity act;
+
         public CloseAttackFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static CloseAttackFragment newInstance() {
             CloseAttackFragment fragment = new CloseAttackFragment();
             return fragment;
@@ -579,15 +587,27 @@ public class AttackActivity extends MenuActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_attack, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_attack_close, container, false);
+
+            planetService = new PlanetService();
+            loginService = new LoginService();
+            act = (AttackActivity) getActivity();
+
+            userList = (RecyclerView) rootView.findViewById(R.id.userList);
+            userListManager = new LinearLayoutManager(act);
+            userList.setLayoutManager(userListManager);
+
+            loginService.GetCloserPlayers(act.player.getUsername(), act.player.getToken(), this, act);
+
             return rootView;
+        }
+
+        public void FillUsers(ArrayList<Player> players){
+            userListAdapter = new UserListAdapter(players, this);
+            userList.setAdapter(userListAdapter);
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {

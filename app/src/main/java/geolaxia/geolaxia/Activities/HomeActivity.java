@@ -280,6 +280,8 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         if (mLocation != null) {
             latitude = String.valueOf(mLocation.getLatitude());
             longitude = String.valueOf(mLocation.getLongitude());
+            player.setLastLatitude(latitude);
+            player.setLastLongitude(longitude);
             loginService.SetLastPosition(latitude, longitude, player, this);
             //weatherService.GetWeather(latitude, longitude, this);
         } else {

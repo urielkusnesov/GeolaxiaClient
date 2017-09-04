@@ -2,6 +2,7 @@ package geolaxia.geolaxia.Services.Implementation;
 
 import org.json.JSONException;
 
+import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -34,5 +35,10 @@ public class LoginService implements ILoginService {
     @Override
     public void SetLastPosition(String latitud, String longitude, Player player, HomeActivity context) {
         restService.SetLastPosition(latitud, longitude, player, context);
+    }
+
+    @Override
+    public void GetCloserPlayers(String username, String token, AttackActivity.CloseAttackFragment context, AttackActivity act){
+        restService.GetCloserPlayers(username, token, context, act);
     }
 }

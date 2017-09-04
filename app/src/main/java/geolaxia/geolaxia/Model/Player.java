@@ -149,6 +149,9 @@ public class Player implements Serializable {
 
     public JSONObject toJSONObject(){
         HashMap<String,String> params = new HashMap<String,String>();
+        if(this.Id > 0){
+            params.put("id", String.valueOf(this.Id));
+        }
         params.put("level", String.valueOf(this.Level));
         params.put("resourcesUsed", String.valueOf(this.ResourcesUsed));
         if (this.UserName != null){

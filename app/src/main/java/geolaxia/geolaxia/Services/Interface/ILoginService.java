@@ -2,6 +2,7 @@ package geolaxia.geolaxia.Services.Interface;
 
 import org.json.JSONException;
 
+import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -16,4 +17,5 @@ public interface ILoginService {
     void FacebookLogIn(Player player, String token, LoginActivity context) throws JSONException;
     void Register(Player player, RegisterActivity context) throws JSONException;
     void SetLastPosition(String latitud, String longitude, Player player, HomeActivity context);
+    void GetCloserPlayers(String username, String token, AttackActivity.CloseAttackFragment context, AttackActivity act);
 }

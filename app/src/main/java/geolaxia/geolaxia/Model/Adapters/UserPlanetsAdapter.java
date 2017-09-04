@@ -11,17 +11,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Model.Galaxy;
 import geolaxia.geolaxia.Model.Planet;
+import geolaxia.geolaxia.Model.SolarSystem;
 import geolaxia.geolaxia.R;
 
 /**
  * Created by uriel on 26/8/2017.
  */
 
-public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.ViewHolder> {
+public class UserPlanetsAdapter extends RecyclerView.Adapter<UserPlanetsAdapter.ViewHolder> {
     private ArrayList<Planet> planets;
-    private AttackActivity.CoordinatesFragment context;
-    private int selectedPostion;
+    private AttackActivity context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -32,20 +33,19 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
 
         public ViewHolder(View v) {
             super(v);
-            v.setClickable(true);
             name = (TextView) v.findViewById(R.id.name);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public PlanetListAdapter(ArrayList<Planet> planets, AttackActivity.CoordinatesFragment context)
+    public UserPlanetsAdapter(ArrayList<Planet> planets, AttackActivity context)
     {
         this.planets = planets;
         this.context = context;
     }
 
     @Override
-    public PlanetListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UserPlanetsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.planet_list, parent, false);
         ViewHolder vh = new ViewHolder(v);
@@ -57,26 +57,11 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        if(planets.get(position).getConqueror() != null){
-            holder.name.setText(planets.get(position).getName() + " - " + planets.get(position).getConqueror().getUsername());
-        }else{
-            holder.name.setText(planets.get(position).getName() + " - No Colonizado");
-        }
-
-        if(selectedPostion == position){
-
-        }
-        holder.itemView.setBackgroundColor(Color.TRANSPARENT);
-        holder.itemView.setClickable(true);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setBackgroundColor(Color.WHITE);
-                holder.name.setTextColor(Color.BLACK);
-                context.selectTargetPlanet(planets.get(position));
-                selectedPostion = position;
-            }
-        });
+        Planet planet = planets.get(position);
+        SolarSystem solarSystem = planet.getSolarSystem();
+        Galaxy galaxy = solarSystem.getGalaxy();
+        holder.name.setText(galaxy.getName() + " - " + solarSystem.getName() + " - " + planet.getName());
+        holder.name.setTextColor(Color.BLACK);
     }
 
     @Override
