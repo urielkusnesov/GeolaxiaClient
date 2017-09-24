@@ -49,6 +49,7 @@ public class MenuActivity extends BaseActivity {
                         Intent homeIntent = new Intent(context, HomeActivity.class);
                         homeIntent.putExtra("player", player);
                         startActivity(homeIntent);
+                        break;
                     case R.id.attack:
                         drawerLayout.closeDrawers();
                         Intent attackIntent = new Intent(context, AttackActivity.class);
@@ -70,6 +71,10 @@ public class MenuActivity extends BaseActivity {
                         break;
                     case R.id.help:
                         drawerLayout.closeDrawers();
+                        Intent helpIntent = new Intent(context, HelpActivity.class);
+                        helpIntent.putExtra("player", player);
+                        helpIntent.putExtra("planet", planet);
+                        startActivity(helpIntent);
                         break;
                 }
                 return true;
