@@ -64,6 +64,7 @@
                 <include layout="@layout/content_help_diferenciasentrerecursos" />
                 <include layout="@layout/content_help_diferenciasentreplanetas" />
                 <include layout="@layout/content_help_explotacionderecursos" />
+                <include layout="@layout/content_help_construccionminas" />
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

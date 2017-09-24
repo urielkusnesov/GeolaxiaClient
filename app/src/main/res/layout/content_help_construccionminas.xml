@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_help_construccionminas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="geolaxia.geolaxia.Activities.HelpActivity"
+    tools:showIn="@layout/activity_help"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <ScrollView
+        android:id="@+id/register_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5pt"
+                android:background="#FFFFFF"
+                android:text="Construcción de Minas"
+                android:textStyle="bold"
+                android:textSize="12pt"
+                android:textColor="#000000"
+                android:textAlignment="center"/>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5pt"
+                android:text="Mina de Cristal"
+                android:typeface="normal"
+                android:textSize="10pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/cristal"
+                android:layout_gravity="center"/>
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dip" >
+                    <TextView android:text="Nivel"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView  android:text="Costo de Construcción"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView  android:text="Costo de Energía (por hora)"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView  android:text="Tiempo de Construcción (en minutos)"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView  android:text="Cantidad de recurso (por hora)"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dip" >
+                    <TextView android:text="1"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <TextView  android:text="Metal 100 Cristal 100"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <TextView  android:text="50"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <TextView  android:text="1"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                    <TextView  android:text="50"
+                        android:textColor="#FFFFFF"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </TableRow>
+            </TableLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5pt"
+                android:text="Azules"
+                android:typeface="normal"
+                android:textSize="10pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/planeta_azul"
+                android:layout_gravity="center"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Abundancia: Mayor concentración de Metal en ubicaciones con  distancia media del sol (planetas del medio del sistema solar)."
+                android:typeface="normal"
+                android:textSize="8pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Obtención en mina del tipo abundante: Planeta 4 - 10% más de producción. Planeta 5 - 10% más de producción. Planeta 6 - 10% más de producción."
+                android:typeface="normal"
+                android:textSize="8pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Relación otros Recursos: Cristal: producción normal según nivel de  mina. Materia Oscura: producción normal según nivel de  mina."
+                android:typeface="normal"
+                android:textSize="8pt"
+                android:textColor="#FFFFFF"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5pt"
+                android:text="Oscuros"
+                android:typeface="normal"
+                android:textSize="10pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/planeta_oscuro"
+                android:layout_gravity="center"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Abundancia: Mayor concentración de Materia Oscura en ubicaciones lejanas al sol (últimos 3 planetas del sistema solar)."
+                android:typeface="normal"
+                android:textSize="8pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Obtención en mina del tipo abundante: Planeta 7 - 5% más de producción. Planeta 8 - 10% más de producción. Planeta 9 - 15% más de producción."
+                android:typeface="normal"
+                android:textSize="8pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Relación otros Recursos: Cristal: 50% menos de producción. Metal: producción normal según nivel de  mina."
+                android:typeface="normal"
+                android:textSize="8pt"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
