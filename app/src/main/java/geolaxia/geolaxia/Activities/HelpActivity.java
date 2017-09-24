@@ -4,22 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import org.json.JSONException;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.R;
-import geolaxia.geolaxia.Services.Implementation.LoginService;
-import geolaxia.geolaxia.Services.Interface.ILoginService;
 
 public class HelpActivity extends MenuActivity {
     private Player player;
@@ -41,5 +35,39 @@ public class HelpActivity extends MenuActivity {
         Intent intent = getIntent();
         player = (Player) intent.getExtras().getSerializable("player");
         planet = (Planet) intent.getExtras().getSerializable("planet");
+
+        //this.FillHelp();
     }
+
+    /*public void FillHelp(){
+        Spinner dropdown = (Spinner)findViewById(R.id.helpSpinner);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        String[] items = new String[]{"1", "2", "three"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+
+        // Specify the layout to use when the list of choices appears
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        // Whatever you want to happen when the first item gets selected
+                        break;
+                    case 1:
+                        // Whatever you want to happen when the second item gets selected
+                        break;
+                    case 2:
+                        // Whatever you want to happen when the thrid item gets selected
+                        break;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+    }*/
 }

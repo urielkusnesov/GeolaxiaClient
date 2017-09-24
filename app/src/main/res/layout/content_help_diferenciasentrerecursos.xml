@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_help_diferenciasentreplanetas"
+    android:id="@+id/content_help_diferenciasentrerecursos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="geolaxia.geolaxia.Activities.HelpActivity"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5pt"
                 android:background="#FFFFFF"
-                android:text="Diferencias entre Planetas"
+                android:text="Diferencias entre Recursos"
                 android:textStyle="bold"
                 android:textSize="12pt"
                 android:textColor="#000000"
@@ -40,22 +40,22 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/PlanetaBlancoTipo"
+                android:id="@+id/RecursosCristal"
                 android:layout_marginTop="5pt"
-                android:text="Blancos"
+                android:text="Cristal"
                 android:typeface="normal"
                 android:textSize="10pt"
                 android:textColor="#FFFFFF"/>
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/planeta_blanco"
+                app:srcCompat="@drawable/cristal"
                 android:layout_gravity="center"/>
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/PlanetaBlancoDescripcion"
-                android:text="Poseen abundancia de recurso básico Cristal pero una producción normal de Metal y una baja producción de Materia Oscura."
+                android:id="@+id/RecursosCristalDescripcion"
+                android:text="Material base para todo tipo de construcción. Mayor concentración en los planetas azules."
                 android:typeface="normal"
                 android:textSize="8pt"
                 android:textColor="#FFFFFF"/>
@@ -63,22 +63,22 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/PlanetaAzulTipo"
+                android:id="@+id/RecursosMetal"
                 android:layout_marginTop="5pt"
-                android:text="Azules"
+                android:text="Metal"
                 android:typeface="normal"
                 android:textSize="10pt"
                 android:textColor="#FFFFFF"/>
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/planeta_azul"
+                app:srcCompat="@drawable/metal"
                 android:layout_gravity="center"/>
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/PlanetaAzulDescripcion"
-                android:text="Poseen abundancia de recurso básico Metal pero una producción normal de Cristal y Materia Oscura."
+                android:id="@+id/RecursosMetalDescripcion"
+                android:text="Material base para todo tipo de construcción. Mayor concentración en los planetas blancos."
                 android:typeface="normal"
                 android:textSize="8pt"
                 android:textColor="#FFFFFF"/>
@@ -86,22 +86,22 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/PlanetaOscuroTipo"
+                android:id="@+id/RecursosMateriaOscura"
                 android:layout_marginTop="5pt"
-                android:text="Oscuros"
+                android:text="MateriaOscura"
                 android:typeface="normal"
                 android:textSize="10pt"
                 android:textColor="#FFFFFF"/>
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/planeta_oscuro"
+                app:srcCompat="@drawable/materia_oscura"
                 android:layout_gravity="center"/>
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/PlanetaOscuroDescripcion"
-                android:text="Poseen abundancia de recurso básico Materia Oscura pero una producción normal de Metal y una baja producción de Cristal."
+                android:id="@+id/RecursosMateriaOscuraDescripcion"
+                android:text="Combustible para todo tipo de nave. Mayor concentración en los planetas negros."
                 android:typeface="normal"
                 android:textSize="8pt"
                 android:textColor="#FFFFFF"/>
