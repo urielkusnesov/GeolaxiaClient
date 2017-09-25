@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Model.Dialogs.UserPlanetsDialog;
 import geolaxia.geolaxia.Model.Galaxy;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.SolarSystem;
@@ -22,7 +23,7 @@ import geolaxia.geolaxia.R;
 
 public class UserPlanetsAdapter extends RecyclerView.Adapter<UserPlanetsAdapter.ViewHolder> {
     private ArrayList<Planet> planets;
-    private AttackActivity context;
+    private AttackActivity.CloseAttackFragment context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -38,7 +39,7 @@ public class UserPlanetsAdapter extends RecyclerView.Adapter<UserPlanetsAdapter.
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public UserPlanetsAdapter(ArrayList<Planet> planets, AttackActivity context)
+    public UserPlanetsAdapter(ArrayList<Planet> planets, AttackActivity.CloseAttackFragment context)
     {
         this.planets = planets;
         this.context = context;
@@ -57,11 +58,20 @@ public class UserPlanetsAdapter extends RecyclerView.Adapter<UserPlanetsAdapter.
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Planet planet = planets.get(position);
+        final Planet planet = planets.get(position);
         SolarSystem solarSystem = planet.getSolarSystem();
         Galaxy galaxy = solarSystem.getGalaxy();
         holder.name.setText(galaxy.getName() + " - " + solarSystem.getName() + " - " + planet.getName());
-        holder.name.setTextColor(Color.BLACK);
+        holder.name.setTextColor(Color.WHITE);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.name.setBackgroundColor(Color.WHITE);
+                holder.name.setTextColor(Color.BLACK);
+                context.selectTargetPlanet(planet);
+            }
+        });
     }
 
     @Override

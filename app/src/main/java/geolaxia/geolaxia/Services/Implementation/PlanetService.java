@@ -63,4 +63,9 @@ public class PlanetService implements IPlanetService {
     public void GetFleet(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int planetId) {
         restService.GetPlanetFleet(username, token, act, context, planetId);
     }
+
+    @Override
+    public void GetFleet(String username, String token, AttackActivity act, AttackActivity.CloseAttackFragment context, int planetId) {
+        restService.GetPlanetFleet(username, token, act, context, planetId);
+    }
 }

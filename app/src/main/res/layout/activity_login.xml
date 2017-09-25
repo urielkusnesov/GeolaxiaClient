@@ -47,6 +47,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <AutoCompleteTextView
+                android:text="Uriel"
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,6 +59,7 @@
                 android:singleLine="true" />
 
             <EditText
+                android:text="pass1"
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

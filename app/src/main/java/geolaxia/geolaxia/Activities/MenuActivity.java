@@ -49,6 +49,7 @@ public class MenuActivity extends BaseActivity {
                         Intent homeIntent = new Intent(context, HomeActivity.class);
                         homeIntent.putExtra("player", player);
                         startActivity(homeIntent);
+                        break;
                     case R.id.attack:
                         drawerLayout.closeDrawers();
                         Intent attackIntent = new Intent(context, AttackActivity.class);

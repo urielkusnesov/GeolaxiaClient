@@ -3,6 +3,7 @@ package geolaxia.geolaxia.Services.Interface;
 import org.json.JSONException;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.ConstructionsActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -23,10 +24,12 @@ public interface IRestService {
     public final static String LOGIN_LOCATION = "com.example.uriel.ordertracker.App.Services.RestService.LOGIN_LOCATION";
     public final static String LOGIN_IMAGE = "com.example.uriel.ordertracker.App.Services.RestService.LOGIN_IMAGE";
 
+    //Login
     void LogIn(final String username, final String password, final LoginActivity act);
     void FacebookLogIn(Player player, String token, LoginActivity context) throws JSONException;
     void Register(Player player, final RegisterActivity act);
 
+    //Attack
     //void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act);
     //void GetPlanet(final int planetId, final String username, final String token, final HomeActivity act);
     void GetAllGalaxies(String username, String token, AttackActivity act, AttackActivity.AttackFragment context);
@@ -37,10 +40,17 @@ public interface IRestService {
     void GetPlanetsBySolarSystem(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int solarSystemId);
     void GetPlanetFleet(String username, String token, AttackActivity act, AttackActivity.AttackFragment context, int planetId);
     void GetPlanetFleet(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int planetId);
+    void GetPlanetFleet(String username, String token, AttackActivity act, AttackActivity.CloseAttackFragment context, int planetId);
+    void Attack(String username, String token, AttackActivity context, Attack planetId);
 
+    //home
     void SetLastPosition(String latitude, String longitude, Player player, HomeActivity act);
     void GetCloserPlayers(String username, String token, AttackActivity.CloseAttackFragment context, AttackActivity act);
     void GetWeather(String latitude, String longitude, final HomeActivity act);
 
-    void Attack(String username, String token, AttackActivity context, Attack planetId);
+    //construction
+    void GetMinesToBuild(String username, String token, int planetId, ConstructionsActivity context, ConstructionsActivity.MinesFragment fragment);
+    void BuildCrystalMine(String username, String token, int planetId, ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment);
+    void BuildMetalMine(String username, String token, int planetId, ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment);
+    void BuildDarkMatterMine(String username, String token, int planetId, ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment);
 }

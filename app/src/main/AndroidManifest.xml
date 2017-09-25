@@ -55,6 +55,10 @@
         <activity
             android:name=".Activities.AttackActivity"
             android:label="@string/title_activity_attack"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.ConstructionsActivity"
+            android:label="@string/title_activity_constructions"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

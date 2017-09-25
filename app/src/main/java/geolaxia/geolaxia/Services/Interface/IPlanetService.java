@@ -20,4 +20,5 @@ public interface IPlanetService {
     void GetPlanetsBySolarSystem(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int solarSystemId);
     void GetFleet(String username, String token, AttackActivity act, AttackActivity.AttackFragment context, int planetId);
     void GetFleet(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int planetId);
+    void GetFleet(String username, String token, AttackActivity act, AttackActivity.CloseAttackFragment context, int planetId);
 }

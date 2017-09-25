@@ -331,4 +331,21 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
     public void onLocationChanged(Location location) {
 
     }
+
+    @Override
+    public void onBackPressed() {
+        SweetAlertDialog dialog = Helpers.getConfirmationDialog(this, "Salir", "Esta seguro que desea cerrar sesion?", "Cerrar sesion", "Cancelar");
+
+        dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                Intent intent = new Intent(context, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                sweetAlertDialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
 }

@@ -45,6 +45,7 @@ import geolaxia.geolaxia.Services.Implementation.AttackService;
 import geolaxia.geolaxia.Services.Implementation.LoginService;
 import geolaxia.geolaxia.Services.Implementation.PlanetService;
 import geolaxia.geolaxia.Services.Interface.IAttackService;
+import geolaxia.geolaxia.Services.Interface.ILoginService;
 import geolaxia.geolaxia.Services.Interface.IPlanetService;
 
 import static geolaxia.geolaxia.R.id.planetList;
@@ -84,7 +85,6 @@ public class AttackActivity extends MenuActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
     public Date calculateArrivalTime(ArrayList<Ship> fleet, Planet target){
@@ -108,9 +108,6 @@ public class AttackActivity extends MenuActivity {
         dialog.show();
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class AttackFragment extends Fragment {
 
         private IPlanetService planetService;
@@ -242,6 +239,8 @@ public class AttackActivity extends MenuActivity {
                 long minutes = (totalDifferenceInSeconds%3600)/60;
                 long seconds = totalDifferenceInSeconds - (hours*3600) - (minutes*60);
 
+                estimateArrival.setText("El ataque llegara en: " +
+                        String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds));
             }else{
                 estimateArrival.setText("El ataque llegar en: ");
             }
@@ -365,10 +364,6 @@ public class AttackActivity extends MenuActivity {
 
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static CoordinatesFragment newInstance() {
             CoordinatesFragment fragment = new CoordinatesFragment();
             return fragment;
@@ -564,17 +559,19 @@ public class AttackActivity extends MenuActivity {
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class CloseAttackFragment extends Fragment {
         RecyclerView userList;
         LinearLayoutManager userListManager;
         UserListAdapter userListAdapter;
 
-        private PlanetService planetService;
-        private LoginService loginService;
+        private IPlanetService planetService;
+        private ILoginService loginService;
+        private IAttackService attackService;
         private AttackActivity act;
+        private ArrayList<ShipX> availableFleetX = new ArrayList<>();
+        private ArrayList<ShipY> availableFleetY = new ArrayList<>();
+        private ArrayList<ShipZ> availableFleetZ = new ArrayList<>();
+        private Planet targetPlanet;
 
         public CloseAttackFragment() {
         }
@@ -587,10 +584,11 @@ public class AttackActivity extends MenuActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_attack_close, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_attack_close, container, false);
 
             planetService = new PlanetService();
             loginService = new LoginService();
+            attackService = new AttackService();
             act = (AttackActivity) getActivity();
 
             userList = (RecyclerView) rootView.findViewById(R.id.userList);
@@ -598,8 +596,120 @@ public class AttackActivity extends MenuActivity {
             userList.setLayoutManager(userListManager);
 
             loginService.GetCloserPlayers(act.player.getUsername(), act.player.getToken(), this, act);
+            planetService.GetFleet(act.player.getUsername(), act.player.getToken(), act, this, act.planet.getId());
+
+            NumberPicker xPicker = (NumberPicker) rootView.findViewById(R.id.x);
+            Helpers.setNumberPickerTextColor(xPicker, Color.WHITE);
+            xPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    if(targetPlanet != null){
+                        setArrivalTime();
+                    }
+                }
+            });
+
+            NumberPicker yPicker = (NumberPicker) rootView.findViewById(R.id.y);
+            Helpers.setNumberPickerTextColor(yPicker, Color.WHITE);
+            yPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    if(targetPlanet != null){
+                        setArrivalTime();
+                    }
+                }
+            });
+
+            NumberPicker zPicker = (NumberPicker) rootView.findViewById(R.id.z);
+            Helpers.setNumberPickerTextColor(zPicker, Color.WHITE);
+            zPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    if(targetPlanet != null){
+                        setArrivalTime();
+                    }
+                }
+            });
+
+            Button confirm = (Button)rootView.findViewById(R.id.confirm);
+            confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ArrayList<Ship> fleet = getAttackFleet();
+
+                    Date departure = Calendar.getInstance().getTime();
+                    Date arrival = act.calculateArrivalTime(fleet, targetPlanet);
+                    Attack attack = new Attack(act.player, act.planet, null, targetPlanet, fleet, departure, arrival);
+
+                    attackService.Attack(act.player.getUsername(), act.player.getToken(), act, attack);
+                }
+            });
 
             return rootView;
+        }
+
+        public void setArrivalTime(){
+            TextView estimateArrival = (TextView) getView().findViewById(R.id.estimateText);
+
+            ArrayList<Ship> fleet = getAttackFleet();
+            if(fleet.size() > 0){
+                Date arrival = act.calculateArrivalTime(fleet, this.targetPlanet);
+
+                long totalDifferenceInSeconds = (arrival.getTime() - Calendar.getInstance().getTime().getTime())/1000;
+                long hours = Math.abs(totalDifferenceInSeconds/3600);
+                long minutes = (totalDifferenceInSeconds%3600)/60;
+                long seconds = totalDifferenceInSeconds - (hours*3600) - (minutes*60);
+
+                estimateArrival.setText("El ataque llegara en: " +
+                        String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds));
+            }else{
+                estimateArrival.setText("El ataque llegar en: ");
+            }
+        }
+
+        public void selectTargetPlanet(Planet targetPlanet){
+            this.targetPlanet = targetPlanet;
+            setArrivalTime();
+        }
+
+        public ArrayList<Ship> getAttackFleet(){
+            ArrayList<Ship> fleet = new ArrayList<>();
+            NumberPicker xPicker = (NumberPicker) getView().findViewById(R.id.x);
+            int shipsX = xPicker.getValue();
+            for (int i = 0; i < shipsX; i++) {
+                fleet.add(availableFleetX.get(i));
+            }
+            NumberPicker yPicker = (NumberPicker) getView().findViewById(R.id.y);
+            int shipsY = yPicker.getValue();
+            for (int i = 0; i < shipsY; i++) {
+                fleet.add(availableFleetY.get(i));
+            }
+            NumberPicker zPicker = (NumberPicker) getView().findViewById(R.id.z);
+            int shipsZ = zPicker.getValue();
+            for (int i = 0; i < shipsZ; i++) {
+                fleet.add(availableFleetZ.get(i));
+            }
+
+            return fleet;
+        }
+
+        public void FillFleets(ArrayList<ShipX> shipsX, ArrayList<ShipY> shipsY, ArrayList<ShipZ> shipsZ){
+            availableFleetX.addAll(shipsX);
+            availableFleetY.addAll(shipsY);
+            availableFleetZ.addAll(shipsZ);
+
+            NumberPicker xPicker = (NumberPicker) getView().findViewById(R.id.x);
+            xPicker.setMinValue(0);
+            xPicker.setMaxValue(shipsX.size());
+
+            NumberPicker yPicker = (NumberPicker) getView().findViewById(R.id.y);
+            yPicker.setMinValue(0);
+            yPicker.setMaxValue(shipsY.size());
+
+            NumberPicker zPicker = (NumberPicker) getView().findViewById(R.id.z);
+            zPicker.setMinValue(0);
+            zPicker.setMaxValue(shipsZ.size());
         }
 
         public void FillUsers(ArrayList<Player> players){

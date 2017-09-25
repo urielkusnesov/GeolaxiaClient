@@ -39,7 +39,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public UserListAdapter(ArrayList<Player> planets, AttackActivity.CloseAttackFragment context)
+    public UserListAdapter(ArrayList<Player> players, AttackActivity.CloseAttackFragment context)
     {
         this.players = players;
         this.context = context;
@@ -59,12 +59,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.name.setText(players.get(position).getUsername());
+        holder.name.setTextColor(Color.WHITE);
         holder.itemView.setClickable(true);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserPlanetsDialog dialog = new UserPlanetsDialog((AttackActivity) context.getActivity(),
-                                                players.get(position).getUsername(), players.get(position).getPlanets());
+                                                players.get(position).getUsername(), players.get(position).getPlanets(), context);
 
                 dialog.show();
             }

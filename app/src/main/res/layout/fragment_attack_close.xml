@@ -50,6 +50,85 @@
 
         </android.support.v7.widget.RecyclerView>
 
+        <TextView
+            android:id="@+id/fleetText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Flota"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_below="@id/userList"/>
+
+        <View
+            android:id="@+id/fleetDivider"
+            android:layout_below="@id/fleetText"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"/>
+
+        <RelativeLayout
+            android:id="@+id/fleetPickers"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/fleetDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <NumberPicker
+                android:id="@+id/x"
+                android:background="#80000000"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <NumberPicker
+                android:id="@+id/y"
+                android:background="#80000000"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/x"
+                android:layout_toEndOf="@+id/x" />
+
+            <NumberPicker
+                android:id="@+id/z"
+                android:background="#80000000"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/y"
+                android:layout_toEndOf="@+id/y" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/estimateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="El Ataque llegar en: "
+            android:textColor="#40F000"
+            android:textSize="20dp"
+            android:layout_below="@id/fleetPickers"/>
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Atacar"
+            style="@style/Widget.AppCompat.Button"
+            android:background="#80000000"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/estimateText"
+            android:layout_alignParentRight="true"
+            />
+
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

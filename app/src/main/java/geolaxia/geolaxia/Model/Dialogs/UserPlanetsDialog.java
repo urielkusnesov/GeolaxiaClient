@@ -29,6 +29,7 @@ import static geolaxia.geolaxia.R.id.planetList;
 
 public class UserPlanetsDialog extends Dialog implements android.view.View.OnClickListener{
     public AttackActivity context;
+    public AttackActivity.CloseAttackFragment fragment;
     public Dialog d;
     public Button ok;
     public String userName;
@@ -39,11 +40,12 @@ public class UserPlanetsDialog extends Dialog implements android.view.View.OnCli
     UserPlanetsAdapter planetListAdapter;
 
 
-    public UserPlanetsDialog(AttackActivity a, String userName, ArrayList<Planet> userPlanets) {
+    public UserPlanetsDialog(AttackActivity a, String userName, ArrayList<Planet> userPlanets, AttackActivity.CloseAttackFragment fragment) {
         super(a);
         this.context = a;
         this.userName = userName;
         this.userPlanets = userPlanets;
+        this.fragment = fragment;
     }
 
     @Override
@@ -51,7 +53,7 @@ public class UserPlanetsDialog extends Dialog implements android.view.View.OnCli
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.user_planets_dialog);
-        ok = (Button) findViewById(R.id.confirm);
+        ok = (Button) findViewById(R.id.ok);
         ok.setOnClickListener(this);
 
         TextView userNameText = (TextView) findViewById(R.id.userName);
@@ -62,7 +64,7 @@ public class UserPlanetsDialog extends Dialog implements android.view.View.OnCli
         planetList.setLayoutManager(planetListManager);
 
         if(userPlanets.size() > 0){
-            planetListAdapter = new UserPlanetsAdapter(userPlanets, context);
+            planetListAdapter = new UserPlanetsAdapter(userPlanets, fragment);
             planetList.setAdapter(planetListAdapter);
         }
 

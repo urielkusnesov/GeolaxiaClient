@@ -1,8 +1,10 @@
 package geolaxia.geolaxia.Services.Implementation;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -15,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.ConstructionsActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -22,14 +25,19 @@ import geolaxia.geolaxia.Model.Attack;
 import geolaxia.geolaxia.Model.BlackPlanet;
 import geolaxia.geolaxia.Model.BluePlanet;
 import geolaxia.geolaxia.Model.Constants;
+import geolaxia.geolaxia.Model.CrystalMine;
+import geolaxia.geolaxia.Model.DarkMatterMine;
 import geolaxia.geolaxia.Model.Dto.AttackDTO;
 import geolaxia.geolaxia.Model.Dto.BaseDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
+import geolaxia.geolaxia.Model.Dto.MinesDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
 import geolaxia.geolaxia.Model.Dto.PlayerDTO;
 import geolaxia.geolaxia.Model.Dto.PlayersDTO;
 import geolaxia.geolaxia.Model.Dto.ShipsDTO;
 import geolaxia.geolaxia.Model.Dto.SolarSystemsDTO;
+import geolaxia.geolaxia.Model.MetalMine;
+import geolaxia.geolaxia.Model.Mine;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.Model.Ship;
@@ -51,6 +59,12 @@ public class RestService implements IRestService {
             ourInstance = new RestService();
         }
         return ourInstance;
+    }
+
+    private void SetRetryPolicy(JsonObjectRequest request){
+        int timeout = 10000;//10 segundos
+        RetryPolicy policy = new DefaultRetryPolicy(timeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request.setRetryPolicy(policy);
     }
 
     @Override
@@ -95,7 +109,7 @@ public class RestService implements IRestService {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError("Erro de conexion");
+                act.handleUnexpectedError("Error de conexion");
                 //handle error
             }
         })
@@ -693,6 +707,67 @@ public class RestService implements IRestService {
     }
 
     @Override
+    public void GetPlanetFleet(final String username, final String token, final AttackActivity act, final AttackActivity.CloseAttackFragment fr, final int planetId) {
+        String url = Constants.getPlanetFleetServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            ShipsDTO shipsContainer = new Gson().fromJson(response.toString(), ShipsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(shipsContainer.getStatus().getResult())) {
+                                //transformar a planetas segun herencia
+                                ArrayList<ShipX> shipsX = new ArrayList<ShipX>();
+                                ArrayList<ShipY> shipsY = new ArrayList<ShipY>();
+                                ArrayList<ShipZ> shipsZ = new ArrayList<ShipZ>();
+                                for (Ship ship: shipsContainer.getData()) {
+                                    switch (ship.getShipType()){
+                                        case Constants.SHIP_X:
+                                            ShipX newShipX = new ShipX(ship);
+                                            shipsX.add(newShipX);
+                                            break;
+                                        case Constants.SHIP_Y:
+                                            ShipY newShipY = new ShipY(ship);
+                                            shipsY.add(newShipY);
+                                            break;
+                                        case Constants.SHIP_Z:
+                                            ShipZ newShipZ = new ShipZ(ship);
+                                            shipsZ.add(newShipZ);
+                                            break;
+                                    }
+                                }
+
+                                fr.FillFleets(shipsX, shipsY, shipsZ);
+                            } else {
+                                act.handleUnexpectedError(shipsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
     public void SetLastPosition(final String latitude, final String longitude, final Player player, final HomeActivity act) {
         String url = Constants.SetLastPositionServiceUrl();
 
@@ -818,5 +893,72 @@ public class RestService implements IRestService {
         Request response = Volley.newRequestQueue(context).add(req);
     }
 
+    public void GetMinesToBuild(final String username, final String token, final int planetId, final ConstructionsActivity act, final ConstructionsActivity.MinesFragment fragment){
+        String url = Constants.getMinesToBuildServiceUrl(planetId);
 
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            MinesDTO minesContainer = new Gson().fromJson(response.toString(), MinesDTO.class);
+                            if(Constants.OK_RESPONSE.equals(minesContainer.getStatus().getResult())) {
+                                //transformar a planetas segun herencia
+                                CrystalMine crystalMine = null;
+                                MetalMine metalMine = null;
+                                DarkMatterMine darkMatterMine = null;
+                                for (Mine mine: minesContainer.getData()) {
+                                    switch (mine.getMineType()){
+                                        case Constants.MINE_CRYSTAL:
+                                            crystalMine = new CrystalMine(mine);
+                                            break;
+                                        case Constants.MINE_METAL:
+                                            metalMine = new MetalMine(mine);
+                                            break;
+                                        case Constants.SHIP_Z:
+                                            darkMatterMine = new DarkMatterMine(mine);
+                                            break;
+                                    }
+                                }
+
+                                fragment.setCosts(crystalMine, metalMine, darkMatterMine);
+                            } else {
+                                act.handleUnexpectedError(minesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    public void BuildCrystalMine(final String username, final String token, final int planetId, final ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment){
+
+    }
+
+    public void BuildMetalMine(final String username, final String token, final int planetId, final ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment){
+
+    }
+
+    public void BuildDarkMatterMine(final String username, final String token, final int planetId, final ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment){
+
+    }
 }

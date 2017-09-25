@@ -1,0 +1,364 @@
+<android.support.v4.widget.NestedScrollView android:id="@+id/scroll_form"
+    android:layout_marginTop="8dp"
+    android:layout_below="@id/bar"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/content_attack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="geolaxia.geolaxia.Activities.AttackActivity"
+        tools:showIn="@layout/activity_attack"
+        android:weightSum="1.0">
+
+        <TextView
+            android:id="@+id/cristalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Cristal"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+        <View
+            android:id="@+id/cristalDivider"
+            android:layout_below="@id/cristalText"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/cristalLevelText"
+            android:layout_below="@id/cristalDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Nivel actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/cristalProductionText"
+            android:layout_below="@id/cristalLevelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Produccion actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/cristalConsumptionText"
+            android:layout_below="@id/cristalProductionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Energia consumida actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/cristalBuildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Construir Nivel "
+            android:enabled="false"
+            style="@style/Widget.AppCompat.Button"
+            android:background="#80000000"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/cristalConsumptionText"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/cristalCostText"
+            android:layout_below="@id/cristalBuildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Costo: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/cristalEnergyCostText"
+            android:layout_below="@id/cristalCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Energia necesaria: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/cristalTimeText"
+            android:layout_below="@id/cristalEnergyCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Tiempo de finalizacion: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/cristalNewProductionText"
+            android:layout_below="@id/cristalTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Produccion por hora: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/metalText"
+            android:layout_below="@id/cristalNewProductionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Metal"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+        <View
+            android:id="@+id/metalDivider"
+            android:layout_below="@id/metalText"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/metalLevelText"
+            android:layout_below="@id/metalDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Nivel actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/metalProductionText"
+            android:layout_below="@id/metalLevelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Produccion actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/metalConsumptionText"
+            android:layout_below="@id/metalProductionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Energia consumida actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/metalBuildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Construir Nivel "
+            android:enabled="false"
+            style="@style/Widget.AppCompat.Button"
+            android:background="#80000000"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/metalConsumptionText"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/metalCostText"
+            android:layout_below="@id/metalBuildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Costo: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/metalEnergyCostText"
+            android:layout_below="@id/metalCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Energia necesaria: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/metalTimeText"
+            android:layout_below="@id/metalEnergyCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Tiempo de finalizacion: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/metalNewProductionText"
+            android:layout_below="@id/metalTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Produccion por hora: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/darkMatterText"
+            android:layout_below="@id/metalNewProductionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Metal"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+        <View
+            android:id="@+id/darkMatterDivider"
+            android:layout_below="@id/darkMatterText"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/darkMatterLevelText"
+            android:layout_below="@id/darkMatterDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Nivel actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/darkMatterProductionText"
+            android:layout_below="@id/darkMatterLevelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Produccion actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/darkMatterConsumptionText"
+            android:layout_below="@id/darkMatterProductionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Energia consumida actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/darkMatterBuildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Construir Nivel "
+            android:enabled="false"
+            style="@style/Widget.AppCompat.Button"
+            android:background="#80000000"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/darkMatterConsumptionText"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/darkMatterCostText"
+            android:layout_below="@id/darkMatterBuildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Costo: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/darkMatterEnergyCostText"
+            android:layout_below="@id/darkMatterCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Energia necesaria: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/darkMatterTimeText"
+            android:layout_below="@id/darkMatterEnergyCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Tiempo de finalizacion: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/darkMatterNewProductionText"
+            android:layout_below="@id/darkMatterTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Produccion por hora: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

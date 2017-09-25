@@ -316,5 +316,21 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
+
+    @Override
+    public void onBackPressed() {
+        SweetAlertDialog dialog = Helpers.getConfirmationDialog(this, "Salir", "Esta seguro que desea salir?", "Salir", "Cancelar");
+
+        dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                finish();
+                moveTaskToBack(true);
+                sweetAlertDialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
 }
 

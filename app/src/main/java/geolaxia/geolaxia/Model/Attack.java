@@ -111,7 +111,7 @@ public class Attack implements Serializable{
         ships = ships.substring(0, ships.length()-1);
         if (this.Fleet.size() > 0) params.put("FleetIds", ships);
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         if (this.FleetDeparture != null) params.put("FleetDeparture", String.valueOf(df.format(this.FleetDeparture.getTime())));
         if (this.FleetArrival != null) params.put("FleetArrival", String.valueOf(df.format(this.FleetArrival.getTime())));
         return new JSONObject(params);

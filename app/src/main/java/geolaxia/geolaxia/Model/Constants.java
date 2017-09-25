@@ -24,6 +24,7 @@ public class Constants {
     public static final String CLOSER_PLAYERS_SERVICE = "api/attack/closerplayers";
     public static final String WEATHER_SERVICE = "http://api.openweathermap.org/data/2.5/weather";
     public static final String ATTACK_SERVICE = "api/attack/attack";
+    public static final String MINES_BUILD_SERVICE = "api/construction/minestobuild";
     public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
 
     /*URLs*/
@@ -41,6 +42,7 @@ public class Constants {
     public static String getCloserPlayersServiceUrl() { return (HTTP + BASE_URL + PORT + CLOSER_PLAYERS_SERVICE); }
     public static String getWeatherServiceUrl(String latitude, String longitude) { return (WEATHER_SERVICE + "?lat=" + latitude + "&lon=" + longitude + "&units=metric&APPID=a6e31252461e3c4a9ccaf2bcb32740c5"); }
     public static String getAttackServiceUrl() { return (HTTP + BASE_URL + PORT + ATTACK_SERVICE); }
+    public static String getMinesToBuildServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
 
     //
     public static final String ERROR_RESPONSE = "error";
@@ -63,4 +65,7 @@ public class Constants {
     public static final int SHIP_X = 0;
     public static final int SHIP_Y = 1;
     public static final int SHIP_Z = 2;
+    public static final int MINE_CRYSTAL = 0;
+    public static final int MINE_METAL = 1;
+    public static final int MINE_DARKMATTER = 2;
 }
