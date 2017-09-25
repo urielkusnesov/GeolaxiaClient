@@ -128,8 +128,10 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                                 try {
                                     Player player = new Player();
                                     player.setUsername(object.getString("name"));
-                                    player.setFirstName(object.getString("first_name"));
-                                    player.setLastName(object.getString("last_name"));
+                                    player.setFirstName(object.getString(""));
+                                    player.setLastName(object.getString(""));
+                                    /*player.setFirstName(object.getString("first_name"));
+                                    player.setLastName(object.getString("last_name"));*/
                                     player.setEmail(""/*object.getString("email")*/);
                                     player.setFacebookId(userId);
 

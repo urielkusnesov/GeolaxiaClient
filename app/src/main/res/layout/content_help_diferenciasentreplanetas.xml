@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_help_diferenciasentreplanetas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="geolaxia.geolaxia.Activities.HelpActivity"
+    tools:showIn="@layout/activity_help"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <ScrollView
+        android:id="@+id/register_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5pt"
+                android:background="#FFFFFF"
+                android:text="Diferencias entre Planetas"
+                android:textStyle="bold"
+                android:textSize="12pt"
+                android:textColor="#000000"
+                android:textAlignment="center"/>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/PlanetaBlancoTipo"
+                android:layout_marginTop="5pt"
+                android:text="Blancos"
+                android:typeface="normal"
+                android:textSize="10pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/planeta_blanco"
+                android:layout_gravity="center"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/PlanetaBlancoDescripcion"
+                android:text="Poseen abundancia de recurso básico Cristal pero una producción normal de Metal y una baja producción de Materia Oscura."
+                android:typeface="normal"
+                android:textSize="8pt"
+                android:textColor="#FFFFFF"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/PlanetaAzulTipo"
+                android:layout_marginTop="5pt"
+                android:text="Azules"
+                android:typeface="normal"
+                android:textSize="10pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/planeta_azul"
+                android:layout_gravity="center"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/PlanetaAzulDescripcion"
+                android:text="Poseen abundancia de recurso básico Metal pero una producción normal de Cristal y Materia Oscura."
+                android:typeface="normal"
+                android:textSize="8pt"
+                android:textColor="#FFFFFF"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/PlanetaOscuroTipo"
+                android:layout_marginTop="5pt"
+                android:text="Oscuros"
+                android:typeface="normal"
+                android:textSize="10pt"
+                android:textColor="#FFFFFF"/>
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/planeta_oscuro"
+                android:layout_gravity="center"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/PlanetaOscuroDescripcion"
+                android:text="Poseen abundancia de recurso básico Materia Oscura pero una producción normal de Metal y una baja producción de Cristal."
+                android:typeface="normal"
+                android:textSize="8pt"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

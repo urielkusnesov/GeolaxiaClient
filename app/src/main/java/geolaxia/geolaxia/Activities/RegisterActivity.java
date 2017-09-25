@@ -33,8 +33,8 @@ public class RegisterActivity extends BaseActivity {
     final Activity context = this;
     private ILoginService loginService;
 
-    EditText firstNameText;
-    EditText lastNameText;
+    /*EditText firstNameText;
+    EditText lastNameText;*/
     EditText emailText;
     EditText usernameText;
     EditText passwordText;
@@ -47,8 +47,8 @@ public class RegisterActivity extends BaseActivity {
 
         loginService = new LoginService();
 
-        firstNameText = (EditText) findViewById(R.id.first_name);
-        lastNameText = (EditText) findViewById(R.id.last_name);
+        /*firstNameText = (EditText) findViewById(R.id.first_name);
+        lastNameText = (EditText) findViewById(R.id.last_name);*/
         emailText = (EditText) findViewById(R.id.email);
         usernameText = (EditText) findViewById(R.id.username);
         passwordText = (EditText) findViewById(R.id.password);
@@ -73,16 +73,16 @@ public class RegisterActivity extends BaseActivity {
     private void Register() throws JSONException {
 
         // Reset errors.
-        firstNameText.setError(null);
-        lastNameText.setError(null);
+        /*firstNameText.setError(null);
+        lastNameText.setError(null);*/
         emailText.setError(null);
         usernameText.setError(null);
         passwordText.setError(null);
         confirmPasswordText.setError(null);
 
         // Store values at the time of the login attempt.
-        String firstname = firstNameText.getText().toString();
-        String lastname = lastNameText.getText().toString();
+        /*String firstname = firstNameText.getText().toString();
+        String lastname = lastNameText.getText().toString();*/
         String email = emailText.getText().toString();
         String username = usernameText.getText().toString();
         String password = passwordText.getText().toString();
@@ -91,7 +91,7 @@ public class RegisterActivity extends BaseActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (TextUtils.isEmpty(firstname)) {
+        /*if (TextUtils.isEmpty(firstname)) {
             this.firstNameText.setError(getString(R.string.error_field_required));
             focusView = this.firstNameText;
             cancel = true;
@@ -100,7 +100,7 @@ public class RegisterActivity extends BaseActivity {
             this.lastNameText.setError(getString(R.string.error_field_required));
             focusView = this.lastNameText;
             cancel = true;
-        }
+        }*/
         if (TextUtils.isEmpty(email)) {
             this.emailText.setError(getString(R.string.error_field_required));
             focusView = this.emailText;
@@ -130,7 +130,8 @@ public class RegisterActivity extends BaseActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            Player player = new Player(0, 1, 0, username, password, firstname, lastname, email, "", new ArrayList<Planet>(), "", "");
+            //Player player = new Player(0, 1, 0, username, password, firstname, lastname, email, "", new ArrayList<Planet>(), "", "");
+            Player player = new Player(0, 1, 0, username, password, "", "", email, "", new ArrayList<Planet>(), "", "");
             loginService.Register(player, this);
         }
     }
