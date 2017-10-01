@@ -8,20 +8,20 @@ import java.io.Serializable;
 
 public class Planet implements Serializable{
 
-    private int Id;
-    private String Name;
-    private int Order;
-    private Player Conqueror;
-    private int Metal;
-    private int Crystal;
-    private int DarkMatter;
-    private int Energy;
-    private boolean IsOrigin;
-    private SolarSystem SolarSystem;
-    private int PositionX;
-    private int PositionY;
-    private int PositionZ;
-    private int PlanetType;
+    protected int Id;
+    protected String Name;
+    protected int Order;
+    protected Player Conqueror;
+    protected int Metal;
+    protected int Crystal;
+    protected int DarkMatter;
+    protected int Energy;
+    protected boolean IsOrigin;
+    protected SolarSystem SolarSystem;
+    protected int PositionX;
+    protected int PositionY;
+    protected int PositionZ;
+    protected int PlanetType;
 
     public Planet(){
 

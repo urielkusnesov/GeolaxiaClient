@@ -5,7 +5,7 @@ package geolaxia.geolaxia.Model;
  */
 
 public class Constants {
-    public static String BASE_URL = "192.168.1.107";/*Server IP*/
+    public static String BASE_URL = "192.168.0.11";/*Server IP*/
     public static final String SERVER_URL_PROPERTY = "SERVER_URL";
     public static final String SERVER_IP_REQUEST = "http://martinhernan.xyz/ip";
     public static final String PORT = ":62078/";
@@ -24,7 +24,9 @@ public class Constants {
     public static final String CLOSER_PLAYERS_SERVICE = "api/attack/closerplayers";
     public static final String WEATHER_SERVICE = "http://api.openweathermap.org/data/2.5/weather";
     public static final String ATTACK_SERVICE = "api/attack/attack";
-    public static final String MINES_BUILD_SERVICE = "api/construction/minestobuild";
+    public static final String MINES_CURRENT_SERVICE = "api/construction/currentmines";
+    public static final String MINES_TO_BUILD_SERVICE = "api/construction/minestobuild";
+    public static final String MINES_BUILD_SERVICE = "api/construction/buildmine";
     public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
 
     /*URLs*/
@@ -42,7 +44,9 @@ public class Constants {
     public static String getCloserPlayersServiceUrl() { return (HTTP + BASE_URL + PORT + CLOSER_PLAYERS_SERVICE); }
     public static String getWeatherServiceUrl(String latitude, String longitude) { return (WEATHER_SERVICE + "?lat=" + latitude + "&lon=" + longitude + "&units=metric&APPID=a6e31252461e3c4a9ccaf2bcb32740c5"); }
     public static String getAttackServiceUrl() { return (HTTP + BASE_URL + PORT + ATTACK_SERVICE); }
-    public static String getMinesToBuildServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getCurrentMinesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getMinesToBuildServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_TO_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getBuildMineServiceUrl() { return (HTTP + BASE_URL + PORT + MINES_BUILD_SERVICE); }
 
     //
     public static final String ERROR_RESPONSE = "error";

@@ -62,6 +62,10 @@ public class MenuActivity extends BaseActivity {
                         break;
                     case R.id.constructions:
                         drawerLayout.closeDrawers();
+                        Intent constructionIntent = new Intent(context, ConstructionsActivity.class);
+                        constructionIntent.putExtra("player", player);
+                        constructionIntent.putExtra("planet", planet);
+                        startActivity(constructionIntent);
                         break;
                     case R.id.military:
                         drawerLayout.closeDrawers();

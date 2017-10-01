@@ -4,13 +4,13 @@ package geolaxia.geolaxia.Model;
  * Created by uriel on 24/9/2017.
  */
 
-public class Facility {
-    private int Id;
-    private int ConstructionTime;
-    private Cost Cost;
-    private int Level;
-    private Planet Planet;
-    private int Productivity;
+public abstract class Facility {
+    protected int Id;
+    protected int ConstructionTime;
+    protected Cost Cost;
+    protected int Level;
+    protected Planet Planet;
+    protected int Productivity;
 
     public Facility(int id, int constructionTime, Cost cost, int level, Planet planet, int productivity){
         this.Id = id;

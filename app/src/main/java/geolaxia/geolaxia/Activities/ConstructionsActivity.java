@@ -16,11 +16,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Cost;
 import geolaxia.geolaxia.Model.CrystalMine;
 import geolaxia.geolaxia.Model.DarkMatterMine;
+import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.MetalMine;
 import geolaxia.geolaxia.Model.Mine;
 import geolaxia.geolaxia.Model.Planet;
@@ -73,6 +77,10 @@ public class ConstructionsActivity extends MenuActivity {
         Button buildMetal;
         Button buildDarkMatter;
 
+        CrystalMine nextCrystal;
+        MetalMine nextMetal;
+        DarkMatterMine nextDarkMatter;
+
         public MinesFragment() {
         }
 
@@ -91,17 +99,66 @@ public class ConstructionsActivity extends MenuActivity {
             fragment = this;
             act = (ConstructionsActivity) getActivity();
             constructionService = new ConstructionService();
+            constructionService.GetCurrentMines(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
             constructionService.GetMinesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
 
-            buildCrystal = (Button) getView().findViewById(R.id.cristalBuildButton);
-            buildMetal = (Button) getView().findViewById(R.id.metalBuildButton);
-            buildDarkMatter = (Button) getView().findViewById(R.id.darkMatterBuildButton);
+            buildCrystal = (Button) rootView.findViewById(R.id.cristalBuildButton);
+            buildCrystal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    nextCrystal.setPlanet(act.planet);
+                    constructionService.Build(act.player.getUsername(), act.player.getToken(), nextCrystal, act, fragment);
+                }
+            });
+
+            buildMetal = (Button) rootView.findViewById(R.id.metalBuildButton);
+            buildMetal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    nextMetal.setPlanet(act.planet);
+                    constructionService.Build(act.player.getUsername(), act.player.getToken(), nextMetal, act, fragment);
+                }
+            });
+
+            buildDarkMatter = (Button) rootView.findViewById(R.id.darkMatterBuildButton);
+            buildDarkMatter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    nextDarkMatter.setPlanet(act.planet);
+                    constructionService.Build(act.player.getUsername(), act.player.getToken(), nextDarkMatter, act, fragment);
+                }
+            });
 
             return rootView;
         }
 
+        public void setCurrentValues(CrystalMine crystalMine, MetalMine metalMine, DarkMatterMine darkMatterMine){
+
+            TextView crystalCurrentLevel = (TextView) getView().findViewById(R.id.cristalLevelText);
+            crystalCurrentLevel.setText("Nivel Actual: " + String.valueOf(crystalMine.getLevel()));
+            TextView crystalProductivity = (TextView) getView().findViewById(R.id.cristalProductionText);
+            crystalProductivity.setText("Produccion actual: " + String.valueOf(crystalMine.getProductivity()));
+            TextView crystalEnergyConsumption = (TextView) getView().findViewById(R.id.cristalConsumptionText);
+            crystalEnergyConsumption.setText("Energia consumida actual: " + String.valueOf(crystalMine.getEnergyConsumption()));
+
+            TextView metalCurrentLevel = (TextView) getView().findViewById(R.id.metalLevelText);
+            metalCurrentLevel.setText("Nivel Actual: " + String.valueOf(metalMine.getLevel()));
+            TextView metalProductivity = (TextView) getView().findViewById(R.id.metalProductionText);
+            metalProductivity.setText("Produccion actual: " + String.valueOf(metalMine.getProductivity()));
+            TextView metalEnergyConsumption = (TextView) getView().findViewById(R.id.metalConsumptionText);
+            metalEnergyConsumption.setText("Energia consumida actual: " + String.valueOf(metalMine.getEnergyConsumption()));
+
+            TextView darkMatterCurrentLevel = (TextView) getView().findViewById(R.id.darkMatterLevelText);
+            darkMatterCurrentLevel.setText("Nivel Actual: " + String.valueOf(darkMatterMine.getLevel()));
+            TextView darkMatterProductivity = (TextView) getView().findViewById(R.id.darkMatterProductionText);
+            darkMatterProductivity.setText("Produccion actual: " + String.valueOf(darkMatterMine.getProductivity()));
+            TextView darkMatterEnergyConsumption = (TextView) getView().findViewById(R.id.darkMatterConsumptionText);
+            darkMatterEnergyConsumption.setText("Energia consumida actual: " + String.valueOf(darkMatterMine.getEnergyConsumption()));
+        }
+
         public void setCosts(CrystalMine crystalMine, MetalMine metalMine, DarkMatterMine darkMatterMine){
 
+            nextCrystal = crystalMine;
             TextView crystalCost = (TextView) getView().findViewById(R.id.cristalCostText);
             crystalCost.setText("Costo: Cristal " + String.valueOf(crystalMine.getCost().getCrystalCost()) + " Metal " +
                     String.valueOf(crystalMine.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(crystalMine.getCost().getDarkMatterCost()));
@@ -109,12 +166,15 @@ public class ConstructionsActivity extends MenuActivity {
             crystalEnergyCost.setText("Energia necesaria: " + String.valueOf(crystalMine.getEnergyConsumption()));
             TextView crystalTimeCost = (TextView) getView().findViewById(R.id.cristalTimeText);
             crystalTimeCost.setText("Tiempo finalizacion: " + String.valueOf(crystalMine.getConstructionTime()));
+            TextView crystalNewProductivity = (TextView) getView().findViewById(R.id.cristalNewProductionText);
+            crystalNewProductivity.setText("Produccion por hora: " + String.valueOf(crystalMine.getProductivity()));
             if(crystalMine.getCost().getCrystalCost() >= act.planet.getCrystal() && crystalMine.getCost().getMetalCost() >= act.planet.getMetal()
                 && crystalMine.getCost().getDarkMatterCost() >= act.planet.getDarkMatter() && crystalMine.getEnergyConsumption() >= act.planet.getEnergy()){
 
                 buildCrystal.setEnabled(true);
             }
 
+            nextMetal = metalMine;
             TextView metalCost = (TextView) getView().findViewById(R.id.metalCostText);
             metalCost.setText("Costo: Cristal " + String.valueOf(metalMine.getCost().getCrystalCost()) + " Metal " +
                     String.valueOf(metalMine.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(metalMine.getCost().getDarkMatterCost()));
@@ -122,12 +182,15 @@ public class ConstructionsActivity extends MenuActivity {
             metalEnergyCost.setText("Energia necesaria: " + String.valueOf(metalMine.getEnergyConsumption()));
             TextView metalTimeCost = (TextView) getView().findViewById(R.id.metalTimeText);
             metalTimeCost.setText("Tiempo finalizacion: " + String.valueOf(metalMine.getConstructionTime()));
+            TextView metalNewProductivity = (TextView) getView().findViewById(R.id.metalNewProductionText);
+            metalNewProductivity.setText("Produccion por hora: " + String.valueOf(metalMine.getProductivity()));
             if(metalMine.getCost().getCrystalCost() >= act.planet.getCrystal() && metalMine.getCost().getMetalCost() >= act.planet.getMetal()
                     && metalMine.getCost().getDarkMatterCost() >= act.planet.getDarkMatter() && metalMine.getEnergyConsumption() >= act.planet.getEnergy()){
 
                 buildMetal.setEnabled(true);
             }
 
+            nextDarkMatter = darkMatterMine;
             TextView darkMatterCost = (TextView) getView().findViewById(R.id.darkMatterCostText);
             darkMatterCost.setText("Costo: Cristal " + String.valueOf(darkMatterMine.getCost().getCrystalCost()) + " Metal " +
                     String.valueOf(darkMatterMine.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(darkMatterMine.getCost().getDarkMatterCost()));
@@ -135,11 +198,18 @@ public class ConstructionsActivity extends MenuActivity {
             darkMatterEnergyCost.setText("Energia necesaria: " + String.valueOf(darkMatterMine.getEnergyConsumption()));
             TextView darkMatterTimeCost = (TextView) getView().findViewById(R.id.darkMatterTimeText);
             darkMatterTimeCost.setText("Tiempo finalizacion: " + String.valueOf(darkMatterMine.getConstructionTime()));
+            TextView darkMatterNewProductivity = (TextView) getView().findViewById(R.id.darkMatterNewProductionText);
+            darkMatterNewProductivity.setText("Produccion por hora: " + String.valueOf(darkMatterMine.getProductivity()));
             if(darkMatterMine.getCost().getCrystalCost() >= act.planet.getCrystal() && darkMatterMine.getCost().getMetalCost() >= act.planet.getMetal()
                     && darkMatterMine.getCost().getDarkMatterCost() >= act.planet.getDarkMatter() && darkMatterMine.getEnergyConsumption() >= act.planet.getEnergy()){
 
                 buildDarkMatter.setEnabled(true);
             }
+        }
+
+        public void MineBuilt(){
+            SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Construccion", "La construccion de la mina ha comenzado!");
+            dialog.show();
         }
     }
 
