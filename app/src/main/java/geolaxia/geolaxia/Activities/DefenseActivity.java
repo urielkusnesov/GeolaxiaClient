@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import geolaxia.geolaxia.Model.Planet;
@@ -34,5 +35,10 @@ public class DefenseActivity extends MenuActivity {
 
         TextView cantCanonesActivos = (TextView)findViewById(R.id.defense_cant_canones_activos);
         cantCanonesActivos.setText("50");
+
+        NumberPicker np = (NumberPicker) findViewById(R.id.defense_cant_canones_construccion);
+        np.setMinValue(0);
+        np.setMaxValue(50);
+        np.setWrapSelectorWheel(true);
     }
 }

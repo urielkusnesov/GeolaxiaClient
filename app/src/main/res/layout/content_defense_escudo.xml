@@ -29,50 +29,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5pt"
                 android:background="#FFFFFF"
-                android:text="Cañones activos"
+                android:text="Estado del Escudo"
                 android:textSize="12pt"
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:textAlignment="center" />
             <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cantidad de cañones activos: "
-                android:typeface="normal"
-                android:textSize="8pt"
-                android:textColor="#FFFFFF"/>
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/defense_cant_canones_activos"
+                android:id="@+id/defense_estado_escudo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:typeface="normal"
-                android:textSize="8pt"
-                android:textColor="#FFFFFF"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5pt"
-                android:background="#FFFFFF"
-                android:text="Construccion de Cañones"
-                android:textSize="12pt"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:textAlignment="center" />
-            <NumberPicker
-                android:id="@+id/defense_cant_canones_construccion"
-                android:background="#80000000"
-                android:descendantFocusability="blocksDescendants"
-                android:solidColor="#FFFFFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/defense_cant_canones_construccion_costo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:typeface="normal"
-                android:textSize="8pt"
-                android:textColor="#FFFFFF"/>
+                android:textSize="8pt" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

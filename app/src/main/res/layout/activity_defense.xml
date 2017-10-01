@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <include layout="@layout/content_defense_canones" />
+                <include layout="@layout/content_defense_escudo" />
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>
