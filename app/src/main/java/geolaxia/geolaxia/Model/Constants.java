@@ -5,11 +5,8 @@ package geolaxia.geolaxia.Model;
  */
 
 public class Constants {
-<<<<<<< HEAD
     public static String BASE_URL = "192.168.1.102";/*Server IP*/
-=======
-    public static String BASE_URL = "192.168.0.11";/*Server IP*/
->>>>>>> b6ad2ea888d83b432943504878b37bdef477c2ff
+    //public static String BASE_URL = "192.168.0.11";/*Server IP*/
     public static final String SERVER_URL_PROPERTY = "SERVER_URL";
     public static final String SERVER_IP_REQUEST = "http://martinhernan.xyz/ip";
     public static final String PORT = ":62078/";
