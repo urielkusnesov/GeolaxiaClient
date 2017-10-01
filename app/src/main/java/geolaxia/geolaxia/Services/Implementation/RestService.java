@@ -30,6 +30,7 @@ import geolaxia.geolaxia.Model.DarkMatterMine;
 import geolaxia.geolaxia.Model.Dto.AttackDTO;
 import geolaxia.geolaxia.Model.Dto.BaseDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
+import geolaxia.geolaxia.Model.Dto.MineDTO;
 import geolaxia.geolaxia.Model.Dto.MinesDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
 import geolaxia.geolaxia.Model.Dto.PlayerDTO;
@@ -893,6 +894,63 @@ public class RestService implements IRestService {
         Request response = Volley.newRequestQueue(context).add(req);
     }
 
+    public void GetCurrentMines(final String username, final String token, final int planetId, final ConstructionsActivity act, final ConstructionsActivity.MinesFragment fragment){
+        String url = Constants.getCurrentMinesServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            MinesDTO minesContainer = new Gson().fromJson(response.toString(), MinesDTO.class);
+                            if(Constants.OK_RESPONSE.equals(minesContainer.getStatus().getResult())) {
+                                //transformar a planetas segun herencia
+                                CrystalMine crystalMine = null;
+                                MetalMine metalMine = null;
+                                DarkMatterMine darkMatterMine = null;
+                                for (Mine mine: minesContainer.getData()) {
+                                    switch (mine.getMineType()){
+                                        case Constants.MINE_CRYSTAL:
+                                            crystalMine = new CrystalMine(mine);
+                                            break;
+                                        case Constants.MINE_METAL:
+                                            metalMine = new MetalMine(mine);
+                                            break;
+                                        case Constants.SHIP_Z:
+                                            darkMatterMine = new DarkMatterMine(mine);
+                                            break;
+                                    }
+                                }
+
+                                fragment.setCurrentValues(crystalMine, metalMine, darkMatterMine);
+                            } else {
+                                act.handleUnexpectedError(minesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
     public void GetMinesToBuild(final String username, final String token, final int planetId, final ConstructionsActivity act, final ConstructionsActivity.MinesFragment fragment){
         String url = Constants.getMinesToBuildServiceUrl(planetId);
 
@@ -950,8 +1008,44 @@ public class RestService implements IRestService {
         Request response = Volley.newRequestQueue(act).add(req);
     }
 
-    public void BuildCrystalMine(final String username, final String token, final int planetId, final ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment){
+    public void BuildMine(final String username, final String token, final Mine mine, final ConstructionsActivity context, final ConstructionsActivity.MinesFragment fragment){
+        String url = Constants.getBuildMineServiceUrl();
 
+        JSONObject jsonMine = mine.toJSONObject();
+        JsonObjectRequest req = new JsonObjectRequest(url, jsonMine,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            MineDTO mineContainer = new Gson().fromJson(response.toString(), MineDTO.class);
+                            if(Constants.OK_RESPONSE.equals(mineContainer.getStatus().getResult())) {
+                                fragment.MineBuilt();
+                            } else {
+                                context.handleUnexpectedError(mineContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(context).add(req);
     }
 
     public void BuildMetalMine(final String username, final String token, final int planetId, final ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment){

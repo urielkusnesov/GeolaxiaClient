@@ -1,5 +1,10 @@
 package geolaxia.geolaxia.Model;
 
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+
 /**
  * Created by uriel on 24/9/2017.
  */
