@@ -8,7 +8,7 @@ import java.util.HashMap;
  * Created by uriel on 24/9/2017.
  */
 
-public abstract class Mine extends Facility {
+public class Mine extends Facility {
     protected int EnergyConsumption;
     protected int MineType;
 

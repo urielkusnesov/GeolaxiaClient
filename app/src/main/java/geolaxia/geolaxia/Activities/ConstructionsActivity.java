@@ -1,6 +1,8 @@
 package geolaxia.geolaxia.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 
@@ -168,9 +170,10 @@ public class ConstructionsActivity extends MenuActivity {
             crystalTimeCost.setText("Tiempo finalizacion: " + String.valueOf(crystalMine.getConstructionTime()));
             TextView crystalNewProductivity = (TextView) getView().findViewById(R.id.cristalNewProductionText);
             crystalNewProductivity.setText("Produccion por hora: " + String.valueOf(crystalMine.getProductivity()));
-            if(crystalMine.getCost().getCrystalCost() >= act.planet.getCrystal() && crystalMine.getCost().getMetalCost() >= act.planet.getMetal()
-                && crystalMine.getCost().getDarkMatterCost() >= act.planet.getDarkMatter() && crystalMine.getEnergyConsumption() >= act.planet.getEnergy()){
-
+            buildCrystal.setText("Construir Nivel " + String.valueOf(crystalMine.getLevel()));
+            if(crystalMine.getCost().getCrystalCost() <= act.planet.getCrystal() && crystalMine.getCost().getMetalCost() <= act.planet.getMetal()
+                && crystalMine.getCost().getDarkMatterCost() <= act.planet.getDarkMatter() && crystalMine.getEnergyConsumption() <= act.planet.getEnergy()){
+                buildCrystal.setPaintFlags(buildCrystal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 buildCrystal.setEnabled(true);
             }
 
@@ -184,9 +187,10 @@ public class ConstructionsActivity extends MenuActivity {
             metalTimeCost.setText("Tiempo finalizacion: " + String.valueOf(metalMine.getConstructionTime()));
             TextView metalNewProductivity = (TextView) getView().findViewById(R.id.metalNewProductionText);
             metalNewProductivity.setText("Produccion por hora: " + String.valueOf(metalMine.getProductivity()));
-            if(metalMine.getCost().getCrystalCost() >= act.planet.getCrystal() && metalMine.getCost().getMetalCost() >= act.planet.getMetal()
-                    && metalMine.getCost().getDarkMatterCost() >= act.planet.getDarkMatter() && metalMine.getEnergyConsumption() >= act.planet.getEnergy()){
-
+            buildMetal.setText("Construir Nivel " + String.valueOf(metalMine.getLevel()));
+            if(metalMine.getCost().getCrystalCost() <= act.planet.getCrystal() && metalMine.getCost().getMetalCost() <= act.planet.getMetal()
+                    && metalMine.getCost().getDarkMatterCost() <= act.planet.getDarkMatter() && metalMine.getEnergyConsumption() <= act.planet.getEnergy()){
+                buildMetal.setBackgroundColor(Color.parseColor("#80000000"));
                 buildMetal.setEnabled(true);
             }
 
@@ -200,9 +204,10 @@ public class ConstructionsActivity extends MenuActivity {
             darkMatterTimeCost.setText("Tiempo finalizacion: " + String.valueOf(darkMatterMine.getConstructionTime()));
             TextView darkMatterNewProductivity = (TextView) getView().findViewById(R.id.darkMatterNewProductionText);
             darkMatterNewProductivity.setText("Produccion por hora: " + String.valueOf(darkMatterMine.getProductivity()));
-            if(darkMatterMine.getCost().getCrystalCost() >= act.planet.getCrystal() && darkMatterMine.getCost().getMetalCost() >= act.planet.getMetal()
-                    && darkMatterMine.getCost().getDarkMatterCost() >= act.planet.getDarkMatter() && darkMatterMine.getEnergyConsumption() >= act.planet.getEnergy()){
-
+            buildDarkMatter.setText("Construir Nivel " + String.valueOf(darkMatterMine.getLevel()));
+            if(darkMatterMine.getCost().getCrystalCost() <= act.planet.getCrystal() && darkMatterMine.getCost().getMetalCost() <= act.planet.getMetal()
+                    && darkMatterMine.getCost().getDarkMatterCost() <= act.planet.getDarkMatter() && darkMatterMine.getEnergyConsumption() <= act.planet.getEnergy()){
+                buildDarkMatter.setBackgroundColor(Color.parseColor("#80000000"));
                 buildDarkMatter.setEnabled(true);
             }
         }
