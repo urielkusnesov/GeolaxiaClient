@@ -64,6 +64,10 @@
             android:name=".Activities.HelpActivity"
             android:label="Help"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.DefenseActivity"
+            android:label="Defense"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
