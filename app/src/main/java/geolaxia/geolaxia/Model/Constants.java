@@ -24,7 +24,7 @@ public class Constants {
     public static final String ATTACK_SERVICE = "api/attack/attack";
     public static final String MINES_CURRENT_SERVICE = "api/construction/currentmines";
     public static final String MINES_TO_BUILD_SERVICE = "api/construction/minestobuild";
-    public static final String MINES_BUILD_SERVICE = "api/construction/buildmine";
+    public static final String MINES_BUILD_SERVICE = "api/construction/startbuild";
     public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
 
     /*URLs*/
