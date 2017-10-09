@@ -4,6 +4,7 @@ import org.json.JSONException;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Activities.ConstructionsActivity;
+import geolaxia.geolaxia.Activities.DefenseActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -55,4 +56,9 @@ public interface IRestService {
     void BuildMine(String username, String token, Mine mine, ConstructionsActivity context, ConstructionsActivity.MinesFragment fragment);
     //void BuildMetalMine(String username, String token, int planetId, ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment);
     //void BuildDarkMatterMine(String username, String token, int planetId, ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment);
+
+    //defense
+    boolean GetShieldStatus(String username, String token, DefenseActivity context);
+    void GetCannons(String username, String token, DefenseActivity context, int planetId);
+    void BuildCannons(int cant, String username, String token, DefenseActivity context);
 }

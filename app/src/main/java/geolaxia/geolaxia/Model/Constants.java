@@ -25,6 +25,7 @@ public class Constants {
     public static final String MINES_CURRENT_SERVICE = "api/construction/currentmines";
     public static final String MINES_TO_BUILD_SERVICE = "api/construction/minestobuild";
     public static final String MINES_BUILD_SERVICE = "api/construction/startbuild";
+    public static final String DEFENSE_GETCANNONS_SERVICE = "api/defense/getCannons";
     public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
 
     /*URLs*/
@@ -45,8 +46,9 @@ public class Constants {
     public static String getCurrentMinesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getMinesToBuildServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_TO_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildMineServiceUrl() { return (HTTP + BASE_URL + PORT + MINES_BUILD_SERVICE); }
+    public static String getCannons(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETCANNONS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
 
-    //
+    //ERRORS
     public static final String ERROR_RESPONSE = "error";
     public static final String OK_RESPONSE = "ok";
 

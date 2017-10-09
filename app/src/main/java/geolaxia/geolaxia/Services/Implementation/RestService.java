@@ -18,6 +18,7 @@ import java.util.Map;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Activities.ConstructionsActivity;
+import geolaxia.geolaxia.Activities.DefenseActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -29,6 +30,7 @@ import geolaxia.geolaxia.Model.CrystalMine;
 import geolaxia.geolaxia.Model.DarkMatterMine;
 import geolaxia.geolaxia.Model.Dto.AttackDTO;
 import geolaxia.geolaxia.Model.Dto.BaseDTO;
+import geolaxia.geolaxia.Model.Dto.CannonsDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
 import geolaxia.geolaxia.Model.Dto.MineDTO;
 import geolaxia.geolaxia.Model.Dto.MinesDTO;
@@ -1046,6 +1048,56 @@ public class RestService implements IRestService {
 
         // add the request object to the queue to be executed
         Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public boolean GetShieldStatus(String username, String token, DefenseActivity context) {
+        return false;
+    }
+
+    @Override
+    public void GetCannons(final String username, final String token, final DefenseActivity context, int planetId) {
+        String url = Constants.getCannons(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            CannonsDTO cannons = new Gson().fromJson(response.toString(), CannonsDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(cannons.getStatus().getResult())) {
+                                context.CargarCanonesAhora(cannons.getData());
+                            } else {
+                                context.handleUnexpectedError(cannons.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void BuildCannons(int cant, String username, String token, DefenseActivity context) {
+
     }
 
     public void BuildMetalMine(final String username, final String token, final int planetId, final ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment){

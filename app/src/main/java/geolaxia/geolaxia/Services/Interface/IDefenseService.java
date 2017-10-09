@@ -8,6 +8,8 @@ import geolaxia.geolaxia.Activities.HomeActivity;
 
 public interface IDefenseService {
     boolean GetShieldStatus(String username, String token, DefenseActivity context);
+    void GetCannons(String username, String token, DefenseActivity context, int planetId);
+    void BuildCannons(int cant, String username, String token, DefenseActivity context);
 //    void GetByPlayer(String username, String token, HomeActivity context) throws JSONException;
 //    void GetPlanet(int planetId, String username, String token, HomeActivity context) throws JSONException;
 //    void GetAllGalaxies(String username, String token, AttackActivity act, AttackActivity.AttackFragment context);
