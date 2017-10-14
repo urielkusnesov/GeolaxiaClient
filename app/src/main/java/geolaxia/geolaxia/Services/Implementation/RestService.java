@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
@@ -596,7 +597,8 @@ public class RestService implements IRestService {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            ShipsDTO shipsContainer = new Gson().fromJson(response.toString(), ShipsDTO.class);
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ShipsDTO shipsContainer = gSon.fromJson(response.toString(), ShipsDTO.class);
                             if(Constants.OK_RESPONSE.equals(shipsContainer.getStatus().getResult())) {
                                 //transformar a planetas segun herencia
                                 ArrayList<ShipX> shipsX = new ArrayList<ShipX>();
@@ -657,7 +659,8 @@ public class RestService implements IRestService {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            ShipsDTO shipsContainer = new Gson().fromJson(response.toString(), ShipsDTO.class);
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ShipsDTO shipsContainer = gSon.fromJson(response.toString(), ShipsDTO.class);
                             if(Constants.OK_RESPONSE.equals(shipsContainer.getStatus().getResult())) {
                                 //transformar a planetas segun herencia
                                 ArrayList<ShipX> shipsX = new ArrayList<ShipX>();
@@ -718,7 +721,8 @@ public class RestService implements IRestService {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            ShipsDTO shipsContainer = new Gson().fromJson(response.toString(), ShipsDTO.class);
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ShipsDTO shipsContainer = gSon.fromJson(response.toString(), ShipsDTO.class);
                             if(Constants.OK_RESPONSE.equals(shipsContainer.getStatus().getResult())) {
                                 //transformar a planetas segun herencia
                                 ArrayList<ShipX> shipsX = new ArrayList<ShipX>();
@@ -904,7 +908,8 @@ public class RestService implements IRestService {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            MinesDTO minesContainer = new Gson().fromJson(response.toString(), MinesDTO.class);
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            MinesDTO minesContainer = gSon.fromJson(response.toString(), MinesDTO.class);
                             if(Constants.OK_RESPONSE.equals(minesContainer.getStatus().getResult())) {
                                 //transformar a planetas segun herencia
                                 CrystalMine crystalMine = null;
@@ -961,7 +966,8 @@ public class RestService implements IRestService {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            MinesDTO minesContainer = new Gson().fromJson(response.toString(), MinesDTO.class);
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            MinesDTO minesContainer = gSon.fromJson(response.toString(), MinesDTO.class);
                             if(Constants.OK_RESPONSE.equals(minesContainer.getStatus().getResult())) {
                                 //transformar a planetas segun herencia
                                 CrystalMine crystalMine = null;
@@ -1064,7 +1070,8 @@ public class RestService implements IRestService {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            CannonsDTO cannons = new Gson().fromJson(response.toString(), CannonsDTO.class);
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            CannonsDTO cannons = gSon.fromJson(response.toString(), CannonsDTO.class);
 
                             if(Constants.OK_RESPONSE.equals(cannons.getStatus().getResult())) {
                                 context.CargarCanonesAhora(cannons.getData());
@@ -1097,14 +1104,6 @@ public class RestService implements IRestService {
 
     @Override
     public void BuildCannons(int cant, String username, String token, DefenseActivity context) {
-
-    }
-
-    public void BuildMetalMine(final String username, final String token, final int planetId, final ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment){
-
-    }
-
-    public void BuildDarkMatterMine(final String username, final String token, final int planetId, final ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment){
 
     }
 }

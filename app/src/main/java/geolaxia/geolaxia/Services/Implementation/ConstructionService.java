@@ -27,15 +27,4 @@ public class ConstructionService implements IConstructionService {
     public void Build(String username, String token, Mine mine, ConstructionsActivity context, ConstructionsActivity.MinesFragment fragment) {
         restService.BuildMine(username, token, mine, context, fragment);
     }
-/*
-    @Override
-    public void BuildMetal(String username, String token, int planetId, ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment) {
-        restService.BuildMetalMine(username, token, planetId, context, level, fragment);
-    }
-
-    @Override
-    public void BuildDarkMatter(String username, String token, int planetId, ConstructionsActivity context, int level, ConstructionsActivity.MinesFragment fragment) {
-        restService.BuildDarkMatterMine(username, token, planetId, context, level, fragment);
-    }
-*/
 }

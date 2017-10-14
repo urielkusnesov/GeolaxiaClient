@@ -1,5 +1,7 @@
 package geolaxia.geolaxia.Model;
 
+import java.util.Date;
+
 /**
  * Created by uriel on 24/9/2017.
  */
@@ -11,6 +13,7 @@ public abstract class Facility {
     protected int Level;
     protected Planet Planet;
     protected int Productivity;
+    protected Date EnableDate;
 
     public Facility(int id, int constructionTime, Cost cost, int level, Planet planet, int productivity){
         this.Id = id;

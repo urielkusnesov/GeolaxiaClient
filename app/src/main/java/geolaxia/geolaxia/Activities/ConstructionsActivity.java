@@ -171,9 +171,10 @@ public class ConstructionsActivity extends MenuActivity {
             TextView crystalNewProductivity = (TextView) getView().findViewById(R.id.cristalNewProductionText);
             crystalNewProductivity.setText("Produccion por hora: " + String.valueOf(crystalMine.getProductivity()));
             buildCrystal.setText("Construir Nivel " + String.valueOf(crystalMine.getLevel()));
+            buildCrystal.setPaintFlags(buildCrystal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             if(crystalMine.getCost().getCrystalCost() <= act.planet.getCrystal() && crystalMine.getCost().getMetalCost() <= act.planet.getMetal()
                 && crystalMine.getCost().getDarkMatterCost() <= act.planet.getDarkMatter() && crystalMine.getEnergyConsumption() <= act.planet.getEnergy()){
-                buildCrystal.setPaintFlags(buildCrystal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                buildCrystal.setPaintFlags(buildCrystal.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                 buildCrystal.setEnabled(true);
             }
 
@@ -188,9 +189,10 @@ public class ConstructionsActivity extends MenuActivity {
             TextView metalNewProductivity = (TextView) getView().findViewById(R.id.metalNewProductionText);
             metalNewProductivity.setText("Produccion por hora: " + String.valueOf(metalMine.getProductivity()));
             buildMetal.setText("Construir Nivel " + String.valueOf(metalMine.getLevel()));
+            buildMetal.setPaintFlags(buildMetal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             if(metalMine.getCost().getCrystalCost() <= act.planet.getCrystal() && metalMine.getCost().getMetalCost() <= act.planet.getMetal()
                     && metalMine.getCost().getDarkMatterCost() <= act.planet.getDarkMatter() && metalMine.getEnergyConsumption() <= act.planet.getEnergy()){
-                buildMetal.setBackgroundColor(Color.parseColor("#80000000"));
+                buildMetal.setPaintFlags(buildMetal.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                 buildMetal.setEnabled(true);
             }
 
@@ -205,9 +207,10 @@ public class ConstructionsActivity extends MenuActivity {
             TextView darkMatterNewProductivity = (TextView) getView().findViewById(R.id.darkMatterNewProductionText);
             darkMatterNewProductivity.setText("Produccion por hora: " + String.valueOf(darkMatterMine.getProductivity()));
             buildDarkMatter.setText("Construir Nivel " + String.valueOf(darkMatterMine.getLevel()));
+            buildDarkMatter.setPaintFlags(buildDarkMatter.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             if(darkMatterMine.getCost().getCrystalCost() <= act.planet.getCrystal() && darkMatterMine.getCost().getMetalCost() <= act.planet.getMetal()
                     && darkMatterMine.getCost().getDarkMatterCost() <= act.planet.getDarkMatter() && darkMatterMine.getEnergyConsumption() <= act.planet.getEnergy()){
-                buildDarkMatter.setBackgroundColor(Color.parseColor("#80000000"));
+                buildDarkMatter.setPaintFlags(buildDarkMatter.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                 buildDarkMatter.setEnabled(true);
             }
         }

@@ -1,32 +1,25 @@
 package geolaxia.geolaxia.Model;
 
+import java.util.Date;
+
 /**
  * Created by uriel on 13/8/2017.
  */
 
-public class Ship {
-    private int Id;
+public class Ship extends Military{
     private int Attack;
     private int Defense;
     private int DarkMatterConsumption;
     private int Speed;
     private int ShipType;
 
-    public Ship(int id, int attack, int defense, int darkMatterConsumption, int speed, int shipType){
-        this.Id = id;
+    public Ship(int id, String name, int constructinTime, Cost cost, Planet planet, int requiredLevel, Date enableDate, int attack, int defense, int darkMatterConsumption, int speed, int shipType){
+        super(id, name, constructinTime, cost, planet, requiredLevel, enableDate);
         this.Attack = attack;
         this.Defense = defense;
         this.DarkMatterConsumption = darkMatterConsumption;
         this.Speed = speed;
         this.ShipType = shipType;
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
     }
 
     public int getAttack() {
