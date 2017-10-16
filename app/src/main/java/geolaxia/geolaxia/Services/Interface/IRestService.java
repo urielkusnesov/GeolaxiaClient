@@ -58,5 +58,5 @@ public interface IRestService {
     //defense
     void GetShieldStatus(String username, String token, DefenseActivity context, int planetId);
     void GetCannons(String username, String token, DefenseActivity context, int planetId);
-    void BuildCannons(int cant, String username, String token, DefenseActivity context);
+    void BuildCannons(String username, String token, DefenseActivity context, int planetId, int cant);
 }

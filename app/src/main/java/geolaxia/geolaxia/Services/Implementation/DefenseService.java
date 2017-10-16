@@ -23,7 +23,8 @@ public class DefenseService implements IDefenseService {
     }
 
     @Override
-    public void BuildCannons(int cant, String username, String token, DefenseActivity context) {
+    public void BuildCannons(String username, String token, DefenseActivity context, int planetId, int cant) {
+        restService.BuildCannons(username, token, context, planetId, cant);
     }
 
 //    @Override

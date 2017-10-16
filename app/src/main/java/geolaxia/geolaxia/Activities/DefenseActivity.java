@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
+import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import geolaxia.geolaxia.Model.Cannon;
 import geolaxia.geolaxia.Model.Planet;
@@ -40,7 +41,7 @@ public class DefenseActivity extends MenuActivity {
         this.Constructor();
         this.ConstructorServicios();
 
-        this.PantallaVacia();
+        this.VaciarPantalla();
 
         this.CargarCanones();
         this.CargarCanonesConstruccion();
@@ -90,7 +91,6 @@ public class DefenseActivity extends MenuActivity {
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 TextView cantCanonesCostoCristal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_cristal_valor);
                 TextView cantCanonesCostoMetal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_metal_valor);
-                Button construirBoton = (Button) findViewById(R.id.defense_cant_canones_construccion_boton);
 
                 if (newVal > 0) {
                     int valorCristal = newVal * 50;
@@ -100,12 +100,12 @@ public class DefenseActivity extends MenuActivity {
                     cantCanonesCostoMetal.setText(String.valueOf(valorMetal));
 
                     if (TieneRecursosNecesariosParaConstruir(valorMetal, valorCristal)) {
-                        construirBoton.setEnabled(true);
+                        SetearBotonConstruir(true);
                     } else {
-                        construirBoton.setEnabled(false);
+                        SetearBotonConstruir(false);
                     }
                 } else {
-                    PantallaVacia();
+                    VaciarPantalla();
                 }
             }
         });
@@ -132,7 +132,8 @@ public class DefenseActivity extends MenuActivity {
         int cantCanonesAContruir = np.getValue();
 
         if (cantCanonesAContruir > 0) {
-            this.defenseService.BuildCannons(cantCanonesAContruir, this.player.getUsername(), this.player.getToken(), this);
+            this.defenseService.BuildCannons(this.player.getUsername(), this.player.getToken(), this, this.planet.getId(), cantCanonesAContruir);
+            this.VaciarPantalla();
         }
     }
 
@@ -145,8 +146,46 @@ public class DefenseActivity extends MenuActivity {
     public void CargarCanonesAhora(ArrayList<Cannon> cannons){
         TextView cantCanonesActivos = (TextView)findViewById(R.id.defense_cant_canones_activos);
 
-        int canonesActivos = cannons.size();
-        cantCanonesActivos.setText(String.valueOf(canonesActivos));
+        if (cannons != null && !cannons.isEmpty()) {
+
+            int canonesActivos = cannons.size();
+            cantCanonesActivos.setText(String.valueOf(canonesActivos));
+        } else {
+            cantCanonesActivos.setText(String.valueOf(0));
+        }
+    }
+
+    // Respuesta del service.
+    public void CargarTiempoConstruccionCanonesAhora(){
+        //TODO: completar
+        NumberPicker np = (NumberPicker) findViewById(R.id.defense_cant_canones_construccion);
+        int cantCanonesAContruir = np.getValue();
+
+        TextView timer = (TextView) findViewById(R.id.defense_cant_canones_construccion_timer);
+
+        // TODO: obtener el tiempo total para countdown desde server haciendo fecha alta menos fecha hoy
+        new CountDownTimer(cantCanonesAContruir * 180000, 1000) {
+            TextView timer = (TextView) findViewById(R.id.defense_cant_canones_construccion_timer);
+            public void onTick(long millisUntilFinished) {
+                timer.setVisibility(View.VISIBLE);
+                timer.setText("Tiempo para finalización: " +
+                String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
+                    String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
+                    String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
+                                );
+                timer.setTextColor(Color.GREEN);
+                timer.setTypeface(null, Typeface.BOLD);
+            }
+
+            public void onFinish() {
+                timer.setVisibility(View.INVISIBLE);
+                CargarCanones();
+                VaciarPantalla();
+            }
+        }.start();
+
+        this.planet.setMetal(this.planet.getMetal() - 100 * cantCanonesAContruir);
+        this.planet.setCrystal(this.planet.getCrystal() - 50 * cantCanonesAContruir);
     }
 
     // Respuesta del service.
@@ -154,7 +193,7 @@ public class DefenseActivity extends MenuActivity {
         TextView estadoEscudo = (TextView)findViewById(R.id.defense_estado_escudo);
         estadoEscudo.setTypeface(null, Typeface.BOLD);
 
-        if(shield.getStatus()){
+        if(shield != null && shield.getStatus()){
             estadoEscudo.setText("Activado");
             estadoEscudo.setTextColor(Color.GREEN);
         } else {
@@ -173,26 +212,20 @@ public class DefenseActivity extends MenuActivity {
         return (tieneRecursosSuficientes);
     }
 
-    /*private boolean TieneRecursosNecesariosParaConstruir() {
-        boolean tieneRecursosSuficientes = true;
-        TextView cantCanonesCostoMetal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_metal_valor);
-        TextView cantCanonesCostoCristal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_cristal_valor);
-
-        if (Integer.parseInt(cantCanonesCostoMetal.getText().toString()) > this.planet.getMetal() || Integer.parseInt(cantCanonesCostoCristal.getText().toString()) > this.planet.getCrystal()) {
-            tieneRecursosSuficientes = false;
-        }
-
-        return (tieneRecursosSuficientes);
-    }*/
-
-    private void PantallaVacia(){
+    private void VaciarPantalla(){
+        NumberPicker np = (NumberPicker) findViewById(R.id.defense_cant_canones_construccion);
         TextView cantCanonesCostoCristal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_cristal_valor);
         TextView cantCanonesCostoMetal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_metal_valor);
-        Button construirBoton = (Button) findViewById(R.id.defense_cant_canones_construccion_boton);
 
+        np.setValue(0);
         cantCanonesCostoCristal.setText("-");
         cantCanonesCostoMetal.setText("-");
 
-        construirBoton.setEnabled(false);
+        this.SetearBotonConstruir(false);
+    }
+
+    private void SetearBotonConstruir(boolean activo) {
+        Button construirBoton = (Button) findViewById(R.id.defense_cant_canones_construccion_boton);
+        construirBoton.setEnabled(activo);
     }
 }

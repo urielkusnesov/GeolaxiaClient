@@ -26,6 +26,7 @@ import geolaxia.geolaxia.Activities.RegisterActivity;
 import geolaxia.geolaxia.Model.Attack;
 import geolaxia.geolaxia.Model.BlackPlanet;
 import geolaxia.geolaxia.Model.BluePlanet;
+import geolaxia.geolaxia.Model.Cannon;
 import geolaxia.geolaxia.Model.Constants;
 import geolaxia.geolaxia.Model.CrystalMine;
 import geolaxia.geolaxia.Model.DarkMatterMine;
@@ -1141,7 +1142,44 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void BuildCannons(int cant, String username, String token, DefenseActivity context) {
+    public void BuildCannons(final String username, final String token, final DefenseActivity context, int planetId, int cant) {
+        String url = Constants.BuildCannons(planetId, cant);
 
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            BaseDTO base = gSon.fromJson(response.toString(), BaseDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(base.getStatus().getResult())) {
+                                //TODO: completar
+                                context.CargarTiempoConstruccionCanonesAhora();
+                            } else {
+                                context.handleUnexpectedError(base.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
     }
 }
