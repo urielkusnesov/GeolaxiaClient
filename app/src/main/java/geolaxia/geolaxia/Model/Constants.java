@@ -5,7 +5,7 @@ package geolaxia.geolaxia.Model;
  */
 
 public class Constants {
-    public static String BASE_URL = "192.168.0.11";/*Server IP*/
+    public static String BASE_URL = "192.168.1.102";/*Server IP*/
     public static final String PORT = ":62078/";
     public static final String HTTP = "http://";
     public static final String LOGIN_SERVICE = "api/player/login";
@@ -26,6 +26,7 @@ public class Constants {
     public static final String MINES_TO_BUILD_SERVICE = "api/construction/minestobuild";
     public static final String MINES_BUILD_SERVICE = "api/construction/startbuild";
     public static final String DEFENSE_GETCANNONS_SERVICE = "api/defense/getCannons";
+    public static final String DEFENSE_GETSHIELDSTATUS_SERVICE = "api/defense/getShieldStatus";
     public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
 
     /*URLs*/
@@ -47,6 +48,7 @@ public class Constants {
     public static String getMinesToBuildServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_TO_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildMineServiceUrl() { return (HTTP + BASE_URL + PORT + MINES_BUILD_SERVICE); }
     public static String getCannons(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETCANNONS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getShieldStatus(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETSHIELDSTATUS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
 
     //ERRORS
     public static final String ERROR_RESPONSE = "error";

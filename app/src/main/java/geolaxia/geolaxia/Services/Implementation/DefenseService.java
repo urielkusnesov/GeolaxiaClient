@@ -13,8 +13,8 @@ public class DefenseService implements IDefenseService {
     private final IRestService restService = RestService.getInstance();
 
     @Override
-    public boolean GetShieldStatus(String username, String token, DefenseActivity context) {
-        return(true);
+    public void GetShieldStatus(String username, String token, DefenseActivity context, int planetId) {
+        restService.GetShieldStatus(username, token, context, planetId);
     }
 
     @Override

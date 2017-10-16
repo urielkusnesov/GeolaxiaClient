@@ -56,7 +56,7 @@ public interface IRestService {
     void BuildMine(String username, String token, Mine mine, ConstructionsActivity context, ConstructionsActivity.MinesFragment fragment);
 
     //defense
-    boolean GetShieldStatus(String username, String token, DefenseActivity context);
+    void GetShieldStatus(String username, String token, DefenseActivity context, int planetId);
     void GetCannons(String username, String token, DefenseActivity context, int planetId);
     void BuildCannons(int cant, String username, String token, DefenseActivity context);
 }

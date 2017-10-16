@@ -19,9 +19,12 @@ import java.util.ArrayList;
 import geolaxia.geolaxia.Model.Cannon;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
+import geolaxia.geolaxia.Model.Shield;
 import geolaxia.geolaxia.R;
 import geolaxia.geolaxia.Services.Implementation.DefenseService;
 import geolaxia.geolaxia.Services.Interface.IDefenseService;
+import geolaxia.geolaxia.Services.Implementation.PlanetService;
+import geolaxia.geolaxia.Services.Interface.IPlanetService;
 
 public class DefenseActivity extends MenuActivity {
     private Player player;
@@ -29,16 +32,19 @@ public class DefenseActivity extends MenuActivity {
     final Activity context = this;
 
     private IDefenseService defenseService;
+    private IPlanetService planetService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.Constructor();
+        this.ConstructorServicios();
 
-        this.Init();
+        this.PantallaVacia();
 
         this.CargarCanones();
         this.CargarCanonesConstruccion();
+        this.CargarBotonConstruir();
         this.CargarEstadoEscudo();
     }
 
@@ -57,48 +63,22 @@ public class DefenseActivity extends MenuActivity {
         player = (Player) intent.getExtras().getSerializable("player");
         planet = (Planet) intent.getExtras().getSerializable("planet");
         //FIN BASE.
-    }
 
-    private void Init(){
         this.defenseService = new DefenseService();
-        this.PantallaVacia();
-        this.CargarBotonConstruir();
+        this.planetService = new PlanetService();
     }
 
-    private void CargarBotonConstruir() {
-        Button construirBoton = (Button) findViewById(R.id.defense_cant_canones_construccion_boton);
-        construirBoton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    BotonConstruir();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    private void ConstructorServicios() {
+        this.defenseService = new DefenseService();
+        this.planetService = new PlanetService();
     }
 
-    private void BotonConstruir() throws JSONException{
-        NumberPicker np = (NumberPicker) findViewById(R.id.defense_cant_canones_construccion);
-        int cantCanonesAContruir = np.getValue();
-
-        if (cantCanonesAContruir > 0) {
-            this.defenseService.BuildCannons(cantCanonesAContruir, this.player.getUsername(), this.player.getToken(), this);
-        }
-    }
-
+    // Carga la seccion de canones del usuario.
     private void CargarCanones() {
         this.defenseService.GetCannons(this.player.getUsername(), this.player.getToken(), this, this.planet.getId());
     }
 
-    public void CargarCanonesAhora(ArrayList<Cannon> cannons){
-        TextView cantCanonesActivos = (TextView)findViewById(R.id.defense_cant_canones_activos);
-
-        int canonesActivos = cannons.size();
-        cantCanonesActivos.setText(String.valueOf(canonesActivos));
-    }
-
+    // Carga la seccion de seleccionar canones para construir.
     private void CargarCanonesConstruccion() {
         NumberPicker np = (NumberPicker) findViewById(R.id.defense_cant_canones_construccion);
         np.setMinValue(0);
@@ -121,6 +101,8 @@ public class DefenseActivity extends MenuActivity {
 
                     if (TieneRecursosNecesariosParaConstruir(valorMetal, valorCristal)) {
                         construirBoton.setEnabled(true);
+                    } else {
+                        construirBoton.setEnabled(false);
                     }
                 } else {
                     PantallaVacia();
@@ -129,13 +111,79 @@ public class DefenseActivity extends MenuActivity {
         });
     }
 
+    // Carga la seccion de seleccionar canones para construir boton construir.
+    private void CargarBotonConstruir() {
+        Button construirBoton = (Button) findViewById(R.id.defense_cant_canones_construccion_boton);
+        construirBoton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    BotonConstruir();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    // Carga la seccion de seleccionar canones para construir boton construir.
+    private void BotonConstruir() throws JSONException{
+        NumberPicker np = (NumberPicker) findViewById(R.id.defense_cant_canones_construccion);
+        int cantCanonesAContruir = np.getValue();
+
+        if (cantCanonesAContruir > 0) {
+            this.defenseService.BuildCannons(cantCanonesAContruir, this.player.getUsername(), this.player.getToken(), this);
+        }
+    }
+
+    // Carga la seccion de escudo del planeta.
+    private void CargarEstadoEscudo() {
+        this.defenseService.GetShieldStatus(this.player.getUsername(), this.player.getToken(), this, this.planet.getId());
+    }
+
+    // Respuesta del service.
+    public void CargarCanonesAhora(ArrayList<Cannon> cannons){
+        TextView cantCanonesActivos = (TextView)findViewById(R.id.defense_cant_canones_activos);
+
+        int canonesActivos = cannons.size();
+        cantCanonesActivos.setText(String.valueOf(canonesActivos));
+    }
+
+    // Respuesta del service.
+    public void CargarEstadoEscudoAhora(Shield shield) {
+        TextView estadoEscudo = (TextView)findViewById(R.id.defense_estado_escudo);
+        estadoEscudo.setTypeface(null, Typeface.BOLD);
+
+        if(shield.getStatus()){
+            estadoEscudo.setText("Activado");
+            estadoEscudo.setTextColor(Color.GREEN);
+        } else {
+            estadoEscudo.setText("Desactivado");
+            estadoEscudo.setTextColor(Color.RED);
+        }
+    }
+
     private boolean TieneRecursosNecesariosParaConstruir(int metal, int cristal) {
         boolean tieneRecursosSuficientes = true;
 
-        //TODO: obtener los recursos totales del planeta para validar
+        if (metal > this.planet.getMetal() || cristal > this.planet.getCrystal()) {
+            tieneRecursosSuficientes = false;
+        }
 
         return (tieneRecursosSuficientes);
     }
+
+    /*private boolean TieneRecursosNecesariosParaConstruir() {
+        boolean tieneRecursosSuficientes = true;
+        TextView cantCanonesCostoMetal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_metal_valor);
+        TextView cantCanonesCostoCristal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_cristal_valor);
+
+        if (Integer.parseInt(cantCanonesCostoMetal.getText().toString()) > this.planet.getMetal() || Integer.parseInt(cantCanonesCostoCristal.getText().toString()) > this.planet.getCrystal()) {
+            tieneRecursosSuficientes = false;
+        }
+
+        return (tieneRecursosSuficientes);
+    }*/
 
     private void PantallaVacia(){
         TextView cantCanonesCostoCristal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_cristal_valor);
@@ -146,18 +194,5 @@ public class DefenseActivity extends MenuActivity {
         cantCanonesCostoMetal.setText("-");
 
         construirBoton.setEnabled(false);
-    }
-
-    private void CargarEstadoEscudo() {
-        TextView estadoEscudo = (TextView)findViewById(R.id.defense_estado_escudo);
-        estadoEscudo.setTypeface(null, Typeface.BOLD);
-
-        if(this.defenseService.GetShieldStatus(this.player.getUsername(), this.player.getToken(), this)){
-            estadoEscudo.setText("Activado");
-            estadoEscudo.setTextColor(Color.GREEN);
-        } else {
-            estadoEscudo.setText("Desactivado");
-            estadoEscudo.setTextColor(Color.RED);
-        }
     }
 }

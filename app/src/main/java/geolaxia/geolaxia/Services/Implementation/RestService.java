@@ -38,12 +38,14 @@ import geolaxia.geolaxia.Model.Dto.MinesDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
 import geolaxia.geolaxia.Model.Dto.PlayerDTO;
 import geolaxia.geolaxia.Model.Dto.PlayersDTO;
+import geolaxia.geolaxia.Model.Dto.ShieldDTO;
 import geolaxia.geolaxia.Model.Dto.ShipsDTO;
 import geolaxia.geolaxia.Model.Dto.SolarSystemsDTO;
 import geolaxia.geolaxia.Model.MetalMine;
 import geolaxia.geolaxia.Model.Mine;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
+import geolaxia.geolaxia.Model.Shield;
 import geolaxia.geolaxia.Model.Ship;
 import geolaxia.geolaxia.Model.ShipX;
 import geolaxia.geolaxia.Model.ShipY;
@@ -1057,8 +1059,44 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public boolean GetShieldStatus(String username, String token, DefenseActivity context) {
-        return false;
+    public void GetShieldStatus(final String username, final String token, final DefenseActivity context, int planetId) {
+        String url = Constants.getShieldStatus(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ShieldDTO shield = gSon.fromJson(response.toString(), ShieldDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(shield.getStatus().getResult())) {
+                                context.CargarEstadoEscudoAhora(shield.getData());
+                            } else {
+                                context.handleUnexpectedError(shield.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
     }
 
     @Override
