@@ -10,6 +10,7 @@ public interface IDefenseService {
     void GetShieldStatus(String username, String token, DefenseActivity context, int planetId);
     void GetCannons(String username, String token, DefenseActivity context, int planetId);
     void BuildCannons(String username, String token, DefenseActivity context, int planetId, int cant);
+    void IsBuildingCannons(String username, String token, DefenseActivity context, int planetId);
 //    void GetByPlayer(String username, String token, HomeActivity context) throws JSONException;
 //    void GetPlanet(int planetId, String username, String token, HomeActivity context) throws JSONException;
 //    void GetAllGalaxies(String username, String token, AttackActivity act, AttackActivity.AttackFragment context);

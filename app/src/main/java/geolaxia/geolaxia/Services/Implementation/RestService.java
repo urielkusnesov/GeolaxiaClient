@@ -34,6 +34,7 @@ import geolaxia.geolaxia.Model.Dto.AttackDTO;
 import geolaxia.geolaxia.Model.Dto.BaseDTO;
 import geolaxia.geolaxia.Model.Dto.CannonsDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
+import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
 import geolaxia.geolaxia.Model.Dto.MineDTO;
 import geolaxia.geolaxia.Model.Dto.MinesDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
@@ -1158,6 +1159,47 @@ public class RestService implements IRestService {
                                 context.CargarTiempoConstruccionCanonesAhora();
                             } else {
                                 context.handleUnexpectedError(base.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void IsBuildingCannons(final String username, final String token, final DefenseActivity context, int planetId) {
+        String url = Constants.isBuldingCannons(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            IsBuildingCannonsDTO building = gSon.fromJson(response.toString(), IsBuildingCannonsDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(building.getStatus().getResult())) {
+                                context.EstaConstruyendoCanonesAhora(building);
+                            } else {
+                                context.handleUnexpectedError(building.getStatus().getDescription());
                             }
                         }catch (Exception e){
                             context.handleUnexpectedError("Ocurrio un error");

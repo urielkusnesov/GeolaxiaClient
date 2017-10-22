@@ -27,6 +27,11 @@ public class DefenseService implements IDefenseService {
         restService.BuildCannons(username, token, context, planetId, cant);
     }
 
+    @Override
+    public void IsBuildingCannons(String username, String token, DefenseActivity context, int planetId) {
+        restService.IsBuildingCannons(username, token, context, planetId);
+    }
+
 //    @Override
 //    public void GetByPlayer(String username, String token, HomeActivity context) throws JSONException {
 //        //restService.GetPlanetsByPlayer(username, token, context);
