@@ -125,6 +125,26 @@
                                 android:textSize="8pt"
                                 android:textColor="#FFFFFF"/>
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/defense_cant_canones_construccion_costo_tiempo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:typeface="normal"
+                                android:textSize="8pt"
+                                android:textColor="#FFFFFF"
+                                android:text="Tiempo construcción: "/>
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/defense_cant_canones_construccion_costo_tiempo_valor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:typeface="normal"
+                                android:textSize="8pt"
+                                android:textColor="#FFFFFF"/>
+                        </LinearLayout>
                         <Button
                             android:id="@+id/defense_cant_canones_construccion_boton"
                             style="?android:textAppearanceSmall"

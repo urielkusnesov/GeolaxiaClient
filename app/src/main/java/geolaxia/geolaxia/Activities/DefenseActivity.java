@@ -111,13 +111,16 @@ public class DefenseActivity extends MenuActivity {
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 TextView cantCanonesCostoCristal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_cristal_valor);
                 TextView cantCanonesCostoMetal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_metal_valor);
+                TextView cantCanonesCostoTiempo = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_tiempo_valor);
 
                 if (newVal > 0) {
                     int valorCristal = newVal * 50;
                     int valorMetal = newVal * 100;
+                    int valorTiempo =  newVal * 3;
 
                     cantCanonesCostoCristal.setText(String.valueOf(valorCristal));
                     cantCanonesCostoMetal.setText(String.valueOf(valorMetal));
+                    cantCanonesCostoTiempo.setText(String.valueOf(valorTiempo) + " minutos");
 
                     if (TieneRecursosNecesariosParaConstruir(valorMetal, valorCristal)) {
                         SetearBotonConstruir(true);
@@ -219,10 +222,12 @@ public class DefenseActivity extends MenuActivity {
         NumberPicker np = (NumberPicker) findViewById(R.id.defense_cant_canones_construccion);
         TextView cantCanonesCostoCristal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_cristal_valor);
         TextView cantCanonesCostoMetal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_metal_valor);
+        TextView cantCanonesCostoTiempo = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_tiempo_valor);
 
         np.setValue(0);
         cantCanonesCostoCristal.setText("-");
         cantCanonesCostoMetal.setText("-");
+        cantCanonesCostoTiempo.setText("-");
 
         this.SetearBotonConstruir(false);
     }
