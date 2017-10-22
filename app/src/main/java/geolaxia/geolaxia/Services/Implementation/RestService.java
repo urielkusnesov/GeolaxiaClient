@@ -1155,7 +1155,6 @@ public class RestService implements IRestService {
                             BaseDTO base = gSon.fromJson(response.toString(), BaseDTO.class);
 
                             if(Constants.OK_RESPONSE.equals(base.getStatus().getResult())) {
-                                //TODO: completar
                                 context.CargarTiempoConstruccionCanonesAhora();
                             } else {
                                 context.handleUnexpectedError(base.getStatus().getDescription());

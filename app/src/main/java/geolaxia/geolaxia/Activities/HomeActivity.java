@@ -115,7 +115,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
 
     private boolean checkLocation() {
         if(!isLocationEnabled()) {
-            SweetAlertDialog dialog = Helpers.getErrorDialog(this, "false", "false");
+            SweetAlertDialog dialog = Helpers.getErrorDialog(this, "No tiene activado el GPS!", "Por favor active el GPS para poder jugar.");
             dialog.show();
         }
         return isLocationEnabled();

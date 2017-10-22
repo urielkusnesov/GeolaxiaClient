@@ -139,7 +139,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <!-->TODO: timer<-->
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/defense_cant_canones_construccion_timer"
                         android:layout_width="wrap_content"
