@@ -15,13 +15,22 @@ public abstract class Facility {
     protected int Productivity;
     protected Date EnableDate;
 
-    public Facility(int id, int constructionTime, Cost cost, int level, Planet planet, int productivity){
+    public Facility(int id, int constructionTime, Cost cost, int level, Planet planet, int productivity, Date enableDate){
         this.Id = id;
         this.ConstructionTime = constructionTime;
         this.Cost = cost;
         this.Level = level;
         this.Planet = planet;
         this.Productivity = productivity;
+        this.EnableDate = enableDate;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 
     public int getProductivity() {
@@ -64,11 +73,11 @@ public abstract class Facility {
         ConstructionTime = constructionTime;
     }
 
-    public int getId() {
-        return Id;
+    public Date getEnableDate() {
+        return EnableDate;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setEnableDate(Date enableDate) {
+        EnableDate = enableDate;
     }
 }

@@ -30,8 +30,6 @@ import geolaxia.geolaxia.Services.Implementation.PlanetService;
 import geolaxia.geolaxia.Services.Interface.IPlanetService;
 
 public class DefenseActivity extends MenuActivity {
-    private Player player;
-    private Planet planet;
     final Activity context = this;
 
     private IDefenseService defenseService;

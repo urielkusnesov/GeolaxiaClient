@@ -7,7 +7,7 @@ package geolaxia.geolaxia.Model;
 public class DarkMatterMine extends Mine {
     public DarkMatterMine(Mine mine){
         super(mine.getId(), mine.getConstructionTime(), mine.getCost(), mine.getLevel(), mine.getPlanet(), mine.getProductivity(),
-                mine.getEnergyConsumption(), mine.getMineType());
+                mine.getEnergyConsumption(), mine.getMineType(), mine.getEnableDate());
 
     }
 }

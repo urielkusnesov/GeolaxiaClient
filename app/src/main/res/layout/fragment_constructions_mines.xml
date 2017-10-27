@@ -77,7 +77,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Construir Nivel "
-            android:enabled="false"
             style="@style/Widget.AppCompat.Button"
             android:background="#80000000"
             android:textColor="#FFFFFF"
@@ -134,8 +133,20 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/metalText"
+            android:id="@+id/crystal_timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/cristalNewProductionText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/metalText"
+            android:layout_below="@id/crystal_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -190,7 +201,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Construir Nivel "
-            android:enabled="false"
             style="@style/Widget.AppCompat.Button"
             android:background="#80000000"
             android:textColor="#FFFFFF"
@@ -247,8 +257,20 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/darkMatterText"
+            android:id="@+id/metal_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/metalNewProductionText"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/darkMatterText"
+            android:layout_below="@id/metal_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -303,7 +325,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Construir Nivel "
-            android:enabled="false"
             style="@style/Widget.AppCompat.Button"
             android:background="#80000000"
             android:textColor="#FFFFFF"
@@ -358,6 +379,18 @@
             android:text="Produccion por hora: "
             android:textColor="#FFFFFF"
             android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/darkMatter_timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/darkMatterNewProductionText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
 
     </RelativeLayout>
 

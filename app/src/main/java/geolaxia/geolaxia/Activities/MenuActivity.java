@@ -18,8 +18,8 @@ import geolaxia.geolaxia.R;
 public class MenuActivity extends BaseActivity {
 
     private Activity context = this;
-    private Player player;
-    private Planet planet;
+    protected Player player;
+    protected Planet planet;
     private Toolbar toolbar;                              // Declaring the Toolbar Object
     private DrawerLayout drawerLayout;                 // Declaring Action Bar Drawer Toggle
 

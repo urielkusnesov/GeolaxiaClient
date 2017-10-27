@@ -2,6 +2,7 @@ package geolaxia.geolaxia.Model;
 
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -12,8 +13,8 @@ public class Mine extends Facility {
     protected int EnergyConsumption;
     protected int MineType;
 
-    public Mine(int id, int constructionTime, Cost cost, int level, Planet planet, int productivity, int energyConsumption, int mineType){
-        super(id, constructionTime, cost, level, planet, productivity);
+    public Mine(int id, int constructionTime, Cost cost, int level, Planet planet, int productivity, int energyConsumption, int mineType, Date enableDate){
+        super(id, constructionTime, cost, level, planet, productivity, enableDate);
         this.EnergyConsumption = energyConsumption;
         this.MineType = mineType;
     }

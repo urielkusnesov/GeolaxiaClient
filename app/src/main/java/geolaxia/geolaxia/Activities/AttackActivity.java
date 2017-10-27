@@ -51,9 +51,6 @@ import geolaxia.geolaxia.Services.Interface.IPlanetService;
 import static geolaxia.geolaxia.R.id.planetList;
 
 public class AttackActivity extends MenuActivity {
-    private Player player;
-    private Planet planet;
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 

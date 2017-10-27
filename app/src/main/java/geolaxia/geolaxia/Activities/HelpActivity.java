@@ -16,8 +16,6 @@ import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.R;
 
 public class HelpActivity extends MenuActivity {
-    private Player player;
-    private Planet planet;
     final Activity context = this;
 
     @Override

@@ -147,6 +147,15 @@ public class Player implements Serializable {
         this.Planets = planets;
     }
 
+    public Planet getPlanet(int id) {
+        for (Planet planet: Planets) {
+            if(planet.getId() == id){
+                return planet;
+            }
+        }
+        return null;
+    }
+
     public JSONObject toJSONObject(){
         HashMap<String,String> params = new HashMap<String,String>();
         if(this.Id > 0){

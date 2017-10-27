@@ -57,8 +57,6 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
 
     final HomeActivity context = this;
 
-    private Player player;
-    private Planet planet;
     private IPlanetService planetService;
     private ILoginService loginService;
     private IWeatherService weatherService;
@@ -315,8 +313,9 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+        FillPlanets(player.getPlanets());
         mGoogleApiClient.connect();
     }
 

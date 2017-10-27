@@ -1029,9 +1029,10 @@ public class RestService implements IRestService {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            MineDTO mineContainer = new Gson().fromJson(response.toString(), MineDTO.class);
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            MineDTO mineContainer = gSon.fromJson(response.toString(), MineDTO.class);
                             if(Constants.OK_RESPONSE.equals(mineContainer.getStatus().getResult())) {
-                                fragment.MineBuilt();
+                                fragment.MineBuilt(mineContainer.getData());
                             } else {
                                 context.handleUnexpectedError(mineContainer.getStatus().getDescription());
                             }

@@ -65,15 +65,18 @@
                 android:textStyle="bold"
                 android:textAlignment="center" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_centerInParent="true"
                     android:gravity="center">
+
+
                     <NumberPicker
                     android:id="@+id/defense_cant_canones_construccion"
                     android:background="#80000000"
@@ -154,7 +157,7 @@
                             android:text="Construir"
                             android:textStyle="bold" />
                     </LinearLayout>
-                </LinearLayout >
+                </RelativeLayout >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -167,7 +170,7 @@
                         android:textSize="8pt"
                         android:textColor="#FFFFFF"/>
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
