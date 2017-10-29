@@ -28,7 +28,7 @@ public class ColonizeActivity extends MenuActivity {
 
     private void Constructor() {
         //INICIO BASE.
-        setContentView(R.layout.activity_defense);
+        setContentView(R.layout.activity_colonize);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
