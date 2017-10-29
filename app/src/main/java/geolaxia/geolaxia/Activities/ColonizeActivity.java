@@ -27,14 +27,15 @@ public class ColonizeActivity extends MenuActivity {
     private IDefenseService defenseService;
     private IPlanetService planetService;
 
-    private ColonizeActivity.SectionsPagerAdapter mSectionsPagerAdapter;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         this.Constructor();
-        this.ConstructorServicios();
+        //this.ConstructorServicios();
     }
 
     private void Constructor() {
@@ -78,8 +79,10 @@ public class ColonizeActivity extends MenuActivity {
         public ColonizeFragment() {
         }
 
-        public static ColonizeActivity.ColonizeFragment newInstance() {
-            ColonizeActivity.ColonizeFragment fragment = new ColonizeActivity.ColonizeFragment();
+        public static ColonizeFragment newInstance() {
+            ColonizeFragment fragment = new ColonizeFragment();
+            Bundle args = new Bundle();
+            fragment.setArguments(args);
 
             return fragment;
         }
@@ -95,14 +98,16 @@ public class ColonizeActivity extends MenuActivity {
     }
 
     public static class CoordinatesFragment extends Fragment {
-        private ColonizeActivity.CoordinatesFragment context;
+        private CoordinatesFragment context;
         private ColonizeActivity act;
 
         public CoordinatesFragment() {
         }
 
-        public static ColonizeActivity.CoordinatesFragment newInstance() {
-            ColonizeActivity.CoordinatesFragment fragment = new ColonizeActivity.CoordinatesFragment();
+        public static CoordinatesFragment newInstance() {
+            CoordinatesFragment fragment = new CoordinatesFragment();
+            Bundle args = new Bundle();
+            fragment.setArguments(args);
 
             return fragment;
         }
@@ -126,9 +131,9 @@ public class ColonizeActivity extends MenuActivity {
         public Fragment getItem(int position) {
             switch(position) {
 
-                case 0: return ColonizeActivity.ColonizeFragment.newInstance();
-                case 1: return ColonizeActivity.CoordinatesFragment.newInstance();
-                default: return ColonizeActivity.ColonizeFragment.newInstance();
+                case 0: return ColonizeFragment.newInstance();
+                case 1: return CoordinatesFragment.newInstance();
+                default: return ColonizeFragment.newInstance();
             }
         }
 
