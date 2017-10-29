@@ -5,7 +5,7 @@ package geolaxia.geolaxia.Model;
  */
 
 public class Constants {
-    public static String BASE_URL = "192.168.0.11";/*Server IP*/
+    public static String BASE_URL = "192.168.1.102";/*Server IP*/
     public static final String PORT = ":62078/";
     public static final String HTTP = "http://";
     public static final String LOGIN_SERVICE = "api/player/login";
@@ -52,11 +52,13 @@ public class Constants {
     public static final String DEFENSE_BUILD_SERVICE = "api/defense/buildCannons";
     public static final String DEFENSE_GETSHIELDSTATUS_SERVICE = "api/defense/getShieldStatus";
     public static final String DEFENSE_ISBUILDINGCANNONS_SERVICE = "api/defense/IsBuildingCannons";
+    public static final String DEFENSE_GET_RANDOM_QUESTIONS_SERVICE = "api/defense/Get3RandomQuestions";
 
     public static String getCannons(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETCANNONS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String BuildCannons(int planetId, int cant) { return (HTTP + BASE_URL + PORT + DEFENSE_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "cant=" + String.valueOf(cant)); }
     public static String getShieldStatus(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETSHIELDSTATUS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String isBuldingCannons(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_ISBUILDINGCANNONS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getRandomQuestions() { return (HTTP + BASE_URL + PORT + DEFENSE_GET_RANDOM_QUESTIONS_SERVICE); }
 
     //ERRORS
     public static final String ERROR_RESPONSE = "error";

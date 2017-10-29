@@ -5,6 +5,7 @@ import org.json.JSONException;
 import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Activities.ConstructionsActivity;
 import geolaxia.geolaxia.Activities.DefenseActivity;
+import geolaxia.geolaxia.Activities.DefenseQuestionActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -60,4 +61,5 @@ public interface IRestService {
     void GetCannons(String username, String token, DefenseActivity context, int planetId);
     void BuildCannons(String username, String token, DefenseActivity context, int planetId, int cant);
     void IsBuildingCannons(String username, String token, DefenseActivity context, int planetId);
+    void Get3RandomQuestions(String username, String token, DefenseQuestionActivity context);
 }

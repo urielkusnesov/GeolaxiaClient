@@ -20,6 +20,7 @@ import java.util.Map;
 import geolaxia.geolaxia.Activities.AttackActivity;
 import geolaxia.geolaxia.Activities.ConstructionsActivity;
 import geolaxia.geolaxia.Activities.DefenseActivity;
+import geolaxia.geolaxia.Activities.DefenseQuestionActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
@@ -40,6 +41,7 @@ import geolaxia.geolaxia.Model.Dto.MinesDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
 import geolaxia.geolaxia.Model.Dto.PlayerDTO;
 import geolaxia.geolaxia.Model.Dto.PlayersDTO;
+import geolaxia.geolaxia.Model.Dto.QuestionDTO;
 import geolaxia.geolaxia.Model.Dto.ShieldDTO;
 import geolaxia.geolaxia.Model.Dto.ShipsDTO;
 import geolaxia.geolaxia.Model.Dto.SolarSystemsDTO;
@@ -1200,6 +1202,47 @@ public class RestService implements IRestService {
                                 context.EstaConstruyendoCanonesAhora(building);
                             } else {
                                 context.handleUnexpectedError(building.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void Get3RandomQuestions(final String username, final String token, final DefenseQuestionActivity context) {
+        String url = Constants.getRandomQuestions();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            QuestionDTO questions = gSon.fromJson(response.toString(), QuestionDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(questions.getStatus().getResult())) {
+                                context.CargarPreguntasAhora(questions.getData());
+                            } else {
+                                context.handleUnexpectedError(questions.getStatus().getDescription());
                             }
                         }catch (Exception e){
                             context.handleUnexpectedError("Ocurrio un error");

@@ -62,11 +62,19 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.HelpActivity"
-            android:label="Help"
+            android:label="Ayuda"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.DefenseActivity"
-            android:label="Defense"
+            android:label="Defensa"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.ColonizeActivity"
+            android:label="Colonizar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.DefenseQuestionActivity"
+            android:label="Preguntas"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
