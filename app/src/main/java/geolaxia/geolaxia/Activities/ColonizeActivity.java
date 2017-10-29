@@ -3,7 +3,15 @@ package geolaxia.geolaxia.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
@@ -18,6 +26,9 @@ public class ColonizeActivity extends MenuActivity {
 
     private IDefenseService defenseService;
     private IPlanetService planetService;
+
+    private ColonizeActivity.SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +52,100 @@ public class ColonizeActivity extends MenuActivity {
         player = (Player) intent.getExtras().getSerializable("player");
         planet = (Planet) intent.getExtras().getSerializable("planet");
         //FIN BASE.
+
+        //INICIO FRAGMENTS.
+        mSectionsPagerAdapter = new ColonizeActivity.SectionsPagerAdapter(getSupportFragmentManager());
+
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+        //FIN FRAGMENTS.
     }
 
     private void ConstructorServicios() {
         this.defenseService = new DefenseService();
         this.planetService = new PlanetService();
+    }
+
+    // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+    public static class ColonizeFragment extends Fragment {
+        private ColonizeActivity.ColonizeFragment context;
+        private ColonizeActivity act;
+
+        public ColonizeFragment() {
+        }
+
+        public static ColonizeActivity.ColonizeFragment newInstance() {
+            ColonizeActivity.ColonizeFragment fragment = new ColonizeActivity.ColonizeFragment();
+
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            final View rootView = inflater.inflate(R.layout.fragment_colonize, container, false);
+            this.context = this;
+            this.act = (ColonizeActivity) getActivity();
+
+            return (rootView);
+        }
+    }
+
+    public static class CoordinatesFragment extends Fragment {
+        private ColonizeActivity.CoordinatesFragment context;
+        private ColonizeActivity act;
+
+        public CoordinatesFragment() {
+        }
+
+        public static ColonizeActivity.CoordinatesFragment newInstance() {
+            ColonizeActivity.CoordinatesFragment fragment = new ColonizeActivity.CoordinatesFragment();
+
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            final View rootView = inflater.inflate(R.layout.fragment_colonize_coordinates, container, false);
+            this.context = this;
+            this.act = (ColonizeActivity) getActivity();
+
+            return rootView;
+        }
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch(position) {
+
+                case 0: return ColonizeActivity.ColonizeFragment.newInstance();
+                case 1: return ColonizeActivity.CoordinatesFragment.newInstance();
+                default: return ColonizeActivity.ColonizeFragment.newInstance();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Colonizar";
+                case 1:
+                    return "Por Coordenadas";
+            }
+            return null;
+        }
     }
 }
