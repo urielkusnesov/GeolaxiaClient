@@ -21,7 +21,7 @@ import geolaxia.geolaxia.R;
 public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.ViewHolder> {
     private ArrayList<Planet> planets;
     private AttackActivity.CoordinatesFragment context;
-    private int selectedPostion;
+    private int selectedPostion = -1;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -63,20 +63,26 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
             holder.name.setText(planets.get(position).getName() + " - No Colonizado");
         }
 
-        if(selectedPostion == position){
-
-        }
         holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         holder.itemView.setClickable(true);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setBackgroundColor(Color.WHITE);
-                holder.name.setTextColor(Color.BLACK);
                 context.selectTargetPlanet(planets.get(position));
                 selectedPostion = position;
+                notifyDataSetChanged();
             }
         });
+
+        if(selectedPostion==position){
+            holder.itemView.setBackgroundColor(Color.WHITE);
+            holder.name.setTextColor(Color.BLACK);
+        }
+        else
+        {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            holder.name.setTextColor(Color.WHITE);
+        }
     }
 
     @Override

@@ -42,6 +42,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import geolaxia.geolaxia.Model.Constants;
 import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
@@ -75,6 +76,8 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
     private LocationRequest mLocationRequest;
     private String latitude;
     private String longitude;
+    private int weatherDesc;
+    private String weatherWindSpeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,7 +188,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         darkMatterQtt.setText(String.valueOf(planet.getDarkMatter()));
         energyQtt.setText(String.valueOf(planet.getEnergy()));
 
-        super.changePlanet(planet);
+        changePlanet(planet);
     }
 
     public void ParseWeather(JSONObject weatherResponse) {
@@ -202,6 +205,9 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
             String speed = wind.getString("speed");
             TextView windText = (TextView) findViewById(R.id.windText);
             windText.setText("Viento: " + speed + "km/h");
+            weatherWindSpeed = speed;
+
+            loginService.SetWeather(player.getUsername(), player.getToken(), weatherDesc, weatherWindSpeed, this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -214,42 +220,52 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
             case "clear sky":
                 description = "Soleado";
                 imageUrl = "http://openweathermap.org/img/w/01d.png";
+                weatherDesc = Constants.WEATHER_SUNNY;
                 break;
             case "few clouds":
                 description = "Parcialmente Nublado";
                 imageUrl = "http://openweathermap.org/img/w/02d.png";
+                weatherDesc = Constants.WEATHER_CLOUDY;
                 break;
             case "scattered clouds":
                 description = "Nublado";
                 imageUrl = "http://openweathermap.org/img/w/03d.png";
+                weatherDesc = Constants.WEATHER_CLOUDY;
                 break;
             case "broken clouds":
                 description = "Nublado";
                 imageUrl = "http://openweathermap.org/img/w/04d.png";
+                weatherDesc = Constants.WEATHER_CLOUDY;
                 break;
             case "shower rain":
                 description = "Llovizna";
                 imageUrl = "http://openweathermap.org/img/w/09d.png";
+                weatherDesc = Constants.WEATHER_RAINY;
                 break;
             case "rain":
                 description = "Lluvioso";
                 imageUrl = "http://openweathermap.org/img/w/10d.png";
+                weatherDesc = Constants.WEATHER_RAINY;
                 break;
             case "thunderstorm":
                 description = "Tormenta Electrica";
                 imageUrl = "http://openweathermap.org/img/w/11d.png";
+                weatherDesc = Constants.WEATHER_RAINY;
                 break;
             case "snow":
                 description = "Nevado";
                 imageUrl = "http://openweathermap.org/img/w/13d.png";
+                weatherDesc = Constants.WEATHER_RAINY;
                 break;
             case "mist":
                 description = "Ventoso";
                 imageUrl = "http://openweathermap.org/img/w/50d.png";
+                weatherDesc = Constants.WEATHER_SUNNY;
                 break;
             default:
                 description = "Soleado";
                 imageUrl = "http://openweathermap.org/img/w/01d.png";
+                weatherDesc = Constants.WEATHER_SUNNY;
                 break;
         }
 
@@ -315,7 +331,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
     @Override
     public void onResume() {
         super.onResume();
-        FillPlanets(player.getPlanets());
+        planetService.GetByPlayer(player.getUsername(), player.getToken(), this);
         mGoogleApiClient.connect();
     }
 

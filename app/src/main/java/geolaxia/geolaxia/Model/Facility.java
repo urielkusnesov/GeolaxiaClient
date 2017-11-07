@@ -15,6 +15,9 @@ public abstract class Facility {
     protected int Productivity;
     protected Date EnableDate;
 
+    public Facility(){
+    }
+
     public Facility(int id, int constructionTime, Cost cost, int level, Planet planet, int productivity, Date enableDate){
         this.Id = id;
         this.ConstructionTime = constructionTime;

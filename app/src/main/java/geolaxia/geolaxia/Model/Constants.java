@@ -19,12 +19,19 @@ public class Constants {
     public static final String PLANETSS_SERVICE = "api/attack/planetsbyss";
     public static final String FLEET_SERVICE = "api/attack/fleet";
     public static final String LAST_POSITION_SERVICE = "api/player/setposition";
+    public static final String SET_WEATHER_SERVICE = "api/player/setweather";
     public static final String CLOSER_PLAYERS_SERVICE = "api/attack/closerplayers";
+    public static final String GET_PLAYER_SERVICE = "api/player/loggedplayer";
     public static final String WEATHER_SERVICE = "http://api.openweathermap.org/data/2.5/weather";
     public static final String ATTACK_SERVICE = "api/attack/attack";
     public static final String MINES_CURRENT_SERVICE = "api/construction/currentmines";
     public static final String MINES_TO_BUILD_SERVICE = "api/construction/minestobuild";
-    public static final String MINES_BUILD_SERVICE = "api/construction/startbuild";
+    public static final String MINES_BUILD_SERVICE = "api/construction/startbuildmine";
+    public static final String ENERGY_CURRENT_SERVICE = "api/construction/currentenergyfacilities";
+    public static final String ENERGY_TO_BUILD_SERVICE = "api/construction/energyfacilitiestobuild";
+    public static final String ENERGY_BUILD_SERVICE = "api/construction/startbuildenergyfacility";
+    public static final String SOLAR_PANEL_BUILD_SERVICE = "api/construction/startbuildsolarpanel";
+    public static final String WIND_TURBINE_BUILD_SERVICE = "api/construction/startbuildwindturbine";
 
     public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
 
@@ -40,12 +47,19 @@ public class Constants {
     public static String getPlanetsbySolarSystemService(int solarSystemId) { return (HTTP + BASE_URL + PORT + PLANETSS_SERVICE + "?solarSystemId=" + String.valueOf(solarSystemId)); }
     public static String getPlanetFleetServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + FLEET_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String SetLastPositionServiceUrl() { return (HTTP + BASE_URL + PORT + LAST_POSITION_SERVICE); }
+    public static String SetWeatherServiceUrl(int weatherDesc, String weatherWindSpeed) { return (HTTP + BASE_URL + PORT + SET_WEATHER_SERVICE + "?weatherDesc=" + String.valueOf(weatherDesc) + "&windSpeed=" + weatherWindSpeed); }
     public static String getCloserPlayersServiceUrl() { return (HTTP + BASE_URL + PORT + CLOSER_PLAYERS_SERVICE); }
+    public static String getPlayerServiceUrl() { return (HTTP + BASE_URL + PORT + GET_PLAYER_SERVICE); }
     public static String getWeatherServiceUrl(String latitude, String longitude) { return (WEATHER_SERVICE + "?lat=" + latitude + "&lon=" + longitude + "&units=metric&APPID=a6e31252461e3c4a9ccaf2bcb32740c5"); }
     public static String getAttackServiceUrl() { return (HTTP + BASE_URL + PORT + ATTACK_SERVICE); }
     public static String getCurrentMinesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getMinesToBuildServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_TO_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildMineServiceUrl() { return (HTTP + BASE_URL + PORT + MINES_BUILD_SERVICE); }
+    public static String getCurrentEnergyFacilitiesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + ENERGY_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getEnergyFacilitiesToBuildServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + ENERGY_TO_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getBuildEnergyFacilityServiceUrl() { return (HTTP + BASE_URL + PORT + ENERGY_BUILD_SERVICE); }
+    public static String getBuildSolarPanelsServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + SOLAR_PANEL_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
+    public static String getBuildWindTurbinesServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + WIND_TURBINE_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
 
     //Defense
     public static final String DEFENSE_GETCANNONS_SERVICE = "api/defense/getCannons";
@@ -73,6 +87,9 @@ public class Constants {
 
     //Common
     public static final String TITLES[] = {"Principal","Ataque","Defensa","Construcciones","Construcciones militares", "Ayuda"};
+    public static final int WEATHER_CLOUDY = 0;
+    public static final int WEATHER_SUNNY = 1;
+    public static final int WEATHER_RAINY = 2;
     public static final int WHITE_PLANET = 0;
     public static final int BLUE_PLANET = 1;
     public static final int BLACK_PLANET = 2;
@@ -82,4 +99,8 @@ public class Constants {
     public static final int MINE_CRYSTAL = 0;
     public static final int MINE_METAL = 1;
     public static final int MINE_DARKMATTER = 2;
+    public static final int EF_ENERGY_CENTRAL = 0;
+    public static final int EF_ENERGY_FUEL_CENTRAL = 1;
+    public static final int EF_SOLAR_PANEL = 2;
+    public static final int EF_WIND_TURBINE = 3;
 }

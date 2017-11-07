@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -31,11 +32,17 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Cost;
 import geolaxia.geolaxia.Model.CrystalMine;
 import geolaxia.geolaxia.Model.DarkMatterMine;
+import geolaxia.geolaxia.Model.EnergyCentral;
+import geolaxia.geolaxia.Model.EnergyFacility;
+import geolaxia.geolaxia.Model.EnergyFuelCentral;
+import geolaxia.geolaxia.Model.Facility;
 import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.MetalMine;
 import geolaxia.geolaxia.Model.Mine;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
+import geolaxia.geolaxia.Model.SolarPanel;
+import geolaxia.geolaxia.Model.WindTurbine;
 import geolaxia.geolaxia.R;
 import geolaxia.geolaxia.Services.Implementation.ConstructionService;
 import geolaxia.geolaxia.Services.Interface.IConstructionService;
@@ -148,7 +155,7 @@ public class ConstructionsActivity extends MenuActivity {
             dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    constructionService.Build(act.player.getUsername(), act.player.getToken(), mineToAdd, act, fragment);
+                    constructionService.BuildMine(act.player.getUsername(), act.player.getToken(), mineToAdd, act, fragment);
                     act.crystalUsed = mineToAdd.getCost().getCrystalCost();
                     act.metalUsed = mineToAdd.getCost().getMetalCost();
                     sweetAlertDialog.cancel();
@@ -157,23 +164,24 @@ public class ConstructionsActivity extends MenuActivity {
 
             dialog.show();
         }
+
+        public void InConstruction(Button buildButton, TextView timer, Facility facility){
+            buildButton.setPaintFlags(buildButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            buildButton.setEnabled(false);
+            SetConstructionTimer(timer, facility.getEnableDate().getTime());
+        }
+
         public void setCurrentValues(CrystalMine crystalMine, MetalMine metalMine, DarkMatterMine darkMatterMine){
             Date currentDate = Calendar.getInstance().getTime();
             if(currentDate.compareTo(crystalMine.getEnableDate()) == -1){
-                buildCrystal.setPaintFlags(buildCrystal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                buildCrystal.setEnabled(false);
-                SetConstructionTimer((TextView)getView().findViewById(R.id.crystal_timer), crystalMine.getEnableDate().getTime());
+                InConstruction(buildCrystal, (TextView)getView().findViewById(R.id.crystal_timer), crystalMine);
             }
             if(currentDate.compareTo(metalMine.getEnableDate()) == -1){
-                buildMetal.setPaintFlags(buildMetal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                buildMetal.setEnabled(false);
-                SetConstructionTimer((TextView)getView().findViewById(R.id.metal_timer), metalMine.getEnableDate().getTime());
+                InConstruction(buildMetal, (TextView)getView().findViewById(R.id.metal_timer), metalMine);
             }
             if(currentDate.compareTo(darkMatterMine.getEnableDate()) == -1){
-                buildDarkMatter.setPaintFlags(buildDarkMatter.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                buildDarkMatter.setEnabled(false);
-                SetConstructionTimer((TextView)getView().findViewById(R.id.darkMatter_timer), darkMatterMine.getEnableDate().getTime());
-            }
+                InConstruction(buildDarkMatter, (TextView)getView().findViewById(R.id.darkMatter_timer), darkMatterMine);
+           }
 
             TextView crystalCurrentLevel = (TextView) getView().findViewById(R.id.cristalLevelText);
             crystalCurrentLevel.setText("Nivel Actual: " + String.valueOf(crystalMine.getLevel()));
@@ -243,7 +251,6 @@ public class ConstructionsActivity extends MenuActivity {
                 buildCrystal.setEnabled(false);
             } else {
                 buildCrystal.setPaintFlags(0);
-                //buildCrystal.setPaintFlags(buildCrystal.getPaintFlags() | (~ Paint.STRIKE_THRU_TEXT_FLAG));
                 buildCrystal.setEnabled(true);
             }
 
@@ -251,7 +258,6 @@ public class ConstructionsActivity extends MenuActivity {
                 buildMetal.setPaintFlags(buildMetal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 buildMetal.setEnabled(false);
             } else{
-                //buildMetal.setPaintFlags(buildMetal.getPaintFlags() | (~ Paint.STRIKE_THRU_TEXT_FLAG));
                 buildMetal.setPaintFlags(0);
                 buildMetal.setEnabled(true);
             }
@@ -260,7 +266,6 @@ public class ConstructionsActivity extends MenuActivity {
                 buildDarkMatter.setPaintFlags(buildDarkMatter.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 buildDarkMatter.setEnabled(false);
             } else{
-                //buildDarkMatter.setPaintFlags(buildDarkMatter.getPaintFlags() | (~ Paint.STRIKE_THRU_TEXT_FLAG));
                 buildDarkMatter.setPaintFlags(0);
                 buildDarkMatter.setEnabled(true);
             }
@@ -310,6 +315,20 @@ public class ConstructionsActivity extends MenuActivity {
     }
 
     public static class EnergyFragment extends Fragment {
+        private ConstructionsActivity act;
+        private IConstructionService constructionService;
+        private EnergyFragment fragment;
+
+        Button buildEnergyCentral;
+        Button buildEnergyFuelCentral;
+        Button buildSolarPanel;
+        Button buildWindTurbine;
+        TextView timerView;
+
+        EnergyCentral nextEnergyCentral;
+        EnergyFuelCentral nextEnergyFuelCentral;
+        int solarPanelsQttToBuild;
+        int windTurbinesQttToBuild;
 
         public EnergyFragment() {
         }
@@ -324,9 +343,324 @@ public class ConstructionsActivity extends MenuActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_constructions_mines, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_constructions_energy, container, false);
+
+            fragment = this;
+            act = (ConstructionsActivity) getActivity();
+            constructionService = new ConstructionService();
+            constructionService.GetCurrentEnergyFacilities(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+            constructionService.GetEnergyFacilitiesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+
+            buildEnergyCentral = (Button) rootView.findViewById(R.id.energyCentralBuildButton);
+            buildEnergyCentral.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    timerView = (TextView) rootView.findViewById(R.id.energyCentral_timer);
+                    confirmConstruction(nextEnergyCentral);
+                }
+            });
+
+            buildEnergyFuelCentral = (Button) rootView.findViewById(R.id.energyFuelCentralBuildButton);
+            buildEnergyFuelCentral.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    timerView = (TextView) rootView.findViewById(R.id.energyFuelCentral_timer);
+                    confirmConstruction(nextEnergyFuelCentral);
+                }
+            });
+
+            buildSolarPanel = (Button) rootView.findViewById(R.id.solarPanelBuildButton);
+            buildSolarPanel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    timerView = (TextView) rootView.findViewById(R.id.solarPanel_timer);
+                    solarPanelsQttToBuild = ((NumberPicker)rootView.findViewById(R.id.solarPanel)).getValue();
+                    confirmConstructionSolarPanel(solarPanelsQttToBuild);
+                }
+            });
+
+            buildWindTurbine = (Button) rootView.findViewById(R.id.windTurbineBuildButton);
+            buildWindTurbine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    timerView = (TextView) rootView.findViewById(R.id.windTurbine_timer);
+                    windTurbinesQttToBuild = ((NumberPicker)rootView.findViewById(R.id.windTurbine)).getValue();
+                    confirmConstructionWindTurbine(windTurbinesQttToBuild);
+                }
+            });
+
+            LoadConstructionSolarPanels(rootView);
+            LoadConstructionWindTurbines(rootView);
 
             return rootView;
+        }
+
+        private void LoadConstructionSolarPanels(View rootView) {
+            NumberPicker np = (NumberPicker) rootView.findViewById(R.id.solarPanel);
+            Helpers.setNumberPickerTextColor(np, Color.WHITE);
+            np.setMinValue(0);
+            np.setMaxValue(50);
+            np.setWrapSelectorWheel(true);
+
+            np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    TextView solarPanelCostText = (TextView) fragment.getView().findViewById(R.id.solarPanelCostText);
+                    TextView solarPanelTimeText = (TextView) fragment.getView().findViewById(R.id.solarPanelTimeText);
+
+                    if (newVal > 0) {
+                        int crystalCost = newVal * 5;
+                        int metalCost = newVal * 20;
+                        int timeCost =  newVal * 2;
+
+                        solarPanelCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
+                        solarPanelTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+
+                        if (hasResources(crystalCost, metalCost, 0)) {
+                            buildSolarPanel.setPaintFlags(0);
+                            buildSolarPanel.setEnabled(true);
+                        } else {
+                            buildSolarPanel.setPaintFlags(buildSolarPanel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            buildSolarPanel.setEnabled(false);
+                        }
+                    } else {
+                        buildSolarPanel.setPaintFlags(buildSolarPanel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        buildSolarPanel.setEnabled(false);
+                        solarPanelTimeText.setText("Costo: ");
+                    }
+                }
+            });
+        }
+
+        private void LoadConstructionWindTurbines(View rootView) {
+            NumberPicker np = (NumberPicker) rootView.findViewById(R.id.windTurbine);
+            Helpers.setNumberPickerTextColor(np, Color.WHITE);
+            np.setMinValue(0);
+            np.setMaxValue(50);
+            np.setWrapSelectorWheel(true);
+
+            np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    TextView windTurbineCostText = (TextView) fragment.getView().findViewById(R.id.windTurbineCostText);
+                    TextView windTurbineTimeText = (TextView) fragment.getView().findViewById(R.id.windTurbineTimeText);
+
+                    if (newVal > 0) {
+                        int crystalCost = newVal * 5;
+                        int metalCost = newVal * 20;
+                        int timeCost =  newVal * 2;
+
+                        windTurbineCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
+                        windTurbineTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+
+                        if (hasResources(crystalCost, metalCost, 0)) {
+                            buildWindTurbine.setPaintFlags(0);
+                            buildWindTurbine.setEnabled(true);
+                        } else {
+                            buildWindTurbine.setPaintFlags(buildWindTurbine.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            buildWindTurbine.setEnabled(false);
+                        }
+                    } else {
+                        buildWindTurbine.setPaintFlags(buildWindTurbine.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        buildWindTurbine.setEnabled(false);
+                        windTurbineTimeText.setText("Costo: ");
+                    }
+                }
+            });
+        }
+
+        public void confirmConstruction(EnergyFacility energyFacility){
+            energyFacility.setPlanet(act.planet);
+            final EnergyFacility energyFacilityToAdd = energyFacility;
+            SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Confirmar", "Esta seguro que desea comenzar la construccion?", "Construir", "Cancelar");
+            dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    constructionService.BuildEnergyFacility(act.player.getUsername(), act.player.getToken(), energyFacilityToAdd, act, fragment);
+                    act.crystalUsed = energyFacilityToAdd.getCost().getCrystalCost();
+                    act.metalUsed = energyFacilityToAdd.getCost().getMetalCost();
+                    sweetAlertDialog.cancel();
+                }
+            });
+
+            dialog.show();
+        }
+
+        public void confirmConstructionSolarPanel(final int qtt){
+            SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Confirmar", "Esta seguro que desea comenzar la construccion?", "Construir", "Cancelar");
+            dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    constructionService.BuildSolarPanels(act.player.getUsername(), act.player.getToken(), act, fragment, act.planet.getId(), qtt);
+                    act.crystalUsed = qtt * 5;
+                    act.metalUsed = qtt * 20;
+                    sweetAlertDialog.cancel();
+                }
+            });
+
+            dialog.show();
+        }
+
+        public void confirmConstructionWindTurbine(final int qtt){
+            SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Confirmar", "Esta seguro que desea comenzar la construccion?", "Construir", "Cancelar");
+            dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    constructionService.BuildWindTurbines(act.player.getUsername(), act.player.getToken(), act, fragment, act.planet.getId(), qtt);
+                    act.crystalUsed = qtt * 5;
+                    act.metalUsed = qtt * 20;
+                    sweetAlertDialog.cancel();
+                }
+            });
+
+            dialog.show();
+        }
+
+        public void InConstruction(Button buildButton, TextView timer, Facility facility){
+            buildButton.setPaintFlags(buildButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            buildButton.setEnabled(false);
+            SetConstructionTimer(timer, facility.getEnableDate().getTime());
+        }
+
+        public void setCurrentValues(EnergyCentral energyCentral, EnergyFuelCentral energyFuelCentral, ArrayList<SolarPanel> solarPanels, ArrayList<WindTurbine> windTurbines){
+            Date currentDate = Calendar.getInstance().getTime();
+            if(currentDate.compareTo(energyCentral.getEnableDate()) == -1){
+                InConstruction(buildEnergyCentral, (TextView)getView().findViewById(R.id.energyCentral_timer), energyCentral);
+            }
+            if(currentDate.compareTo(energyFuelCentral.getEnableDate()) == -1){
+                InConstruction(buildEnergyFuelCentral, (TextView)getView().findViewById(R.id.energyFuelCentral_timer), energyFuelCentral);
+            }
+            SolarPanel lastSolarPanelToEnable = null;
+            for (SolarPanel solarPanel: solarPanels) {
+                if(lastSolarPanelToEnable == null || lastSolarPanelToEnable.getEnableDate().compareTo(solarPanel.getEnableDate()) == -1)
+                {
+                    lastSolarPanelToEnable = solarPanel;
+                }
+            }
+            if(lastSolarPanelToEnable != null){
+                if(currentDate.compareTo(lastSolarPanelToEnable.getEnableDate()) == -1) {
+                    InConstruction(buildSolarPanel, (TextView) getView().findViewById(R.id.solarPanel_timer), lastSolarPanelToEnable);
+                }
+            }
+
+            WindTurbine lastWindTurbineToEnable = null;
+            for (WindTurbine windTurbine: windTurbines) {
+                if(lastWindTurbineToEnable == null || lastSolarPanelToEnable.getEnableDate().compareTo(windTurbine.getEnableDate()) == -1)
+                {
+                    lastWindTurbineToEnable = windTurbine;
+                }
+            }
+            if(lastWindTurbineToEnable != null){
+                if(currentDate.compareTo(lastWindTurbineToEnable.getEnableDate()) == -1) {
+                    InConstruction(buildWindTurbine, (TextView) getView().findViewById(R.id.windTurbine_timer), lastWindTurbineToEnable);
+                }
+            }
+
+            TextView energyCentralCurrentLevel = (TextView) getView().findViewById(R.id.energyCentralLevelText);
+            energyCentralCurrentLevel.setText("Nivel Actual: " + String.valueOf(energyCentral.getLevel()));
+            TextView energyCentralProductivity = (TextView) getView().findViewById(R.id.energyCentralProductionText);
+            energyCentralProductivity.setText("Produccion actual: " + String.valueOf(energyCentral.getProductivity()));
+            TextView energyFuelCentralCurrentLevel = (TextView) getView().findViewById(R.id.energyFuelCentralLevelText);
+            energyFuelCentralCurrentLevel.setText("Nivel Actual: " + String.valueOf(energyFuelCentral.getLevel()));
+            TextView energyFuelCentralProductivity = (TextView) getView().findViewById(R.id.energyFuelCentralProductionText);
+            energyFuelCentralProductivity.setText("Produccion actual: " + String.valueOf(energyFuelCentral.getProductivity()));
+            TextView energyFuelCentralDarkMatter = (TextView) getView().findViewById(R.id.energyFuelCentralDarkMatterText);
+            energyFuelCentralDarkMatter.setText("Materia oscura consumida actual: " + String.valueOf(energyFuelCentral.getDarkMatterConsumption()));
+
+            TextView solarPanelQtt = (TextView) getView().findViewById(R.id.solarPanelQttText);
+            solarPanelQtt.setText("Cantidad Actual: " + String.valueOf(solarPanels.size()));
+
+            TextView windTurbineQtt = (TextView) getView().findViewById(R.id.windTurbineQttText);
+            windTurbineQtt.setText("Cantidad Actual: " + String.valueOf(windTurbines.size()));
+        }
+
+        public void setCosts(EnergyCentral energyCentral, EnergyFuelCentral energyFuelCentral){
+            nextEnergyCentral = energyCentral;
+            TextView energyCentralCost = (TextView) getView().findViewById(R.id.energyCentralCostText);
+            energyCentralCost.setText("Costo: Cristal " + String.valueOf(energyCentral.getCost().getCrystalCost()) + " Metal " + String.valueOf(energyCentral.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(energyCentral.getCost().getDarkMatterCost()));
+            TextView energyCentralTimeCost = (TextView) getView().findViewById(R.id.energyCentralTimeText);
+            energyCentralTimeCost.setText("Tiempo finalizacion: " + String.valueOf(energyCentral.getConstructionTime()));
+            TextView energyCentralNewProductivity = (TextView) getView().findViewById(R.id.energyCentralNewProductionText);
+            energyCentralNewProductivity.setText("Produccion por hora: " + String.valueOf(energyCentral.getProductivity()));
+            buildEnergyCentral.setText("Construir Nivel " + String.valueOf(energyCentral.getLevel()));
+
+            nextEnergyFuelCentral = energyFuelCentral;
+            TextView energyFuelCentralCost = (TextView) getView().findViewById(R.id.energyFuelCentralCostText);
+            energyFuelCentralCost.setText("Costo: Cristal " + String.valueOf(energyFuelCentral.getCost().getCrystalCost()) + " Metal " + String.valueOf(energyFuelCentral.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(energyFuelCentral.getCost().getDarkMatterCost()));
+            TextView energyFuelCentralTimeCost = (TextView) getView().findViewById(R.id.energyFuelCentralTimeText);
+            energyFuelCentralTimeCost.setText("Tiempo finalizacion: " + String.valueOf(energyFuelCentral.getConstructionTime()));
+            TextView energyFuelCentralNewProductivity = (TextView) getView().findViewById(R.id.energyFuelCentralNewProductionText);
+            energyFuelCentralNewProductivity.setText("Produccion por hora: " + String.valueOf(energyFuelCentral.getProductivity()));
+            TextView energyFuelCentralNewDarkMatter = (TextView) getView().findViewById(R.id.energyFuelCentralNextDarkMatterText);
+            energyFuelCentralNewDarkMatter.setText("Consumo materia oscura: " + String.valueOf(energyFuelCentral.getDarkMatterConsumption()));
+            buildEnergyFuelCentral.setText("Construir Nivel " + String.valueOf(energyFuelCentral.getLevel()));
+
+            TextView solarPanelCost = (TextView) getView().findViewById(R.id.solarPanelCostText);
+            solarPanelCost.setText("Costo: Cristal 5 Metal 20");
+
+            TextView windTurbineCost = (TextView) getView().findViewById(R.id.windTurbineCostText);
+            windTurbineCost.setText("Costo: Cristal 5 Metal 20");
+
+            checkAvailability(energyCentral, energyFuelCentral);
+        }
+
+        public void checkAvailability(EnergyCentral energyCentral, EnergyFuelCentral energyFuelCentral){
+            if(!hasResources(energyCentral.getCost().getCrystalCost(), energyCentral.getCost().getMetalCost() ,energyCentral.getCost().getDarkMatterCost())){
+                buildEnergyCentral.setPaintFlags(buildEnergyCentral.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                buildEnergyCentral.setEnabled(false);
+            } else {
+                buildEnergyCentral.setPaintFlags(0);
+                buildEnergyCentral.setEnabled(true);
+            }
+
+            if(!hasResources(energyFuelCentral.getCost().getCrystalCost(), energyFuelCentral.getCost().getMetalCost() ,energyFuelCentral.getCost().getDarkMatterCost())){
+                buildEnergyFuelCentral.setPaintFlags(buildEnergyFuelCentral.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                buildEnergyFuelCentral.setEnabled(false);
+            } else{
+                buildEnergyFuelCentral.setPaintFlags(0);
+                buildEnergyFuelCentral.setEnabled(true);
+            }
+        }
+
+        public boolean hasResources(int crystal, int metal, int darkMatter){
+            if(crystal <= act.planet.getCrystal() && metal <= act.planet.getMetal() && darkMatter <= act.planet.getDarkMatter()){
+                return true;
+            }
+            return false;
+        }
+
+        public void EnergyFacilityBuilt(EnergyFacility energyFacility){
+            SetConstructionTimer(timerView, energyFacility.getEnableDate().getTime());
+            act.player.getPlanet(act.planet.getId()).setCrystal(act.planet.getCrystal() - act.crystalUsed);
+            act.player.getPlanet(act.planet.getId()).setMetal(act.planet.getMetal() - act.metalUsed);
+            constructionService.GetCurrentEnergyFacilities(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+            constructionService.GetEnergyFacilitiesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+            SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Construccion", "La construccion de las instalaciones ha comenzado!");
+            dialog.show();
+        }
+
+        private void SetConstructionTimer(final TextView timer, long fechaFinalizacion) {
+            long tiempoRestante = fechaFinalizacion - System.currentTimeMillis();
+
+            new CountDownTimer(tiempoRestante, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    timer.setVisibility(View.VISIBLE);
+                    timer.setText("Tiempo para finalización: " +
+                            String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
+                            String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
+                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
+                    );
+                    timer.setTextColor(Color.GREEN);
+                    timer.setTypeface(null, Typeface.BOLD);
+                }
+
+                public void onFinish() {
+                    timer.setVisibility(View.INVISIBLE);
+                    constructionService.GetCurrentEnergyFacilities(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+                    constructionService.GetEnergyFacilitiesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+                }
+
+            }.start();
         }
     }
 

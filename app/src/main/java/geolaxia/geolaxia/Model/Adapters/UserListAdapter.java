@@ -59,7 +59,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.name.setText(players.get(position).getUsername());
-        holder.name.setTextColor(Color.WHITE);
         holder.itemView.setClickable(true);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

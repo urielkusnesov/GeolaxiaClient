@@ -10,8 +10,8 @@ import geolaxia.geolaxia.Activities.HomeActivity;
  */
 
 public interface IPlanetService {
-    void GetByPlayer(String username, String token, HomeActivity context) throws JSONException;
-    void GetPlanet(int planetId, String username, String token, HomeActivity context) throws JSONException;
+    void GetByPlayer(String username, String token, HomeActivity context);
+    void GetPlanet(int planetId, String username, String token, HomeActivity context);
     void GetAllGalaxies(String username, String token, AttackActivity act, AttackActivity.AttackFragment context);
     void GetAllGalaxies(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context);
     void GetSolarSystemsByGalaxy(String username, String token, AttackActivity act, AttackActivity.AttackFragment context, int galaxyId);

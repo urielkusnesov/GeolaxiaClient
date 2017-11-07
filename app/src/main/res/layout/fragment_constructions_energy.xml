@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/content_attack"
@@ -22,26 +22,26 @@
         android:weightSum="1.0">
 
         <TextView
-            android:id="@+id/centralText"
+            android:id="@+id/energyCentralText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Central de energia"
+            android:text="Central de Energia"
             android:textColor="#FFFFFF"
             android:textSize="30dp" />
 
         <View
-            android:id="@+id/centralDivider"
-            android:layout_below="@id/centralText"
+            android:id="@+id/energyCentralDivider"
+            android:layout_below="@id/energyCentralText"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_marginBottom="10dp"
             android:background="#FFFFFF"/>
 
         <TextView
-            android:id="@+id/centralLevelText"
-            android:layout_below="@id/centralDivider"
+            android:id="@+id/energyCentralLevelText"
+            android:layout_below="@id/energyCentralDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -51,8 +51,8 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/centralProductionText"
-            android:layout_below="@id/centralLevelText"
+            android:id="@+id/energyCentralProductionText"
+            android:layout_below="@id/energyCentralLevelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -61,32 +61,21 @@
             android:textColor="#FFFFFF"
             android:textSize="15dp" />
 
-        <TextView
-            android:id="@+id/centralConsumptionText"
-            android:layout_below="@id/centralProductionText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Energia consumida actual: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
         <Button
-            android:id="@+id/centralBuildButton"
+            android:id="@+id/energyCentralBuildButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Construir Nivel "
             style="@style/Widget.AppCompat.Button"
             android:background="#80000000"
             android:textColor="#FFFFFF"
-            android:layout_below="@id/centralConsumptionText"
+            android:layout_below="@id/energyCentralProductionText"
             android:layout_centerInParent="true"
             />
 
         <TextView
-            android:id="@+id/centralCostText"
-            android:layout_below="@id/centralBuildButton"
+            android:id="@+id/energyCentralCostText"
+            android:layout_below="@id/energyCentralBuildButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -97,8 +86,8 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/centralTimeText"
-            android:layout_below="@id/centralCostText"
+            android:id="@+id/energyCentralTimeText"
+            android:layout_below="@id/energyCentralCostText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -109,8 +98,8 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/centralNewProductionText"
-            android:layout_below="@id/centralTimeText"
+            android:id="@+id/energyCentralNewProductionText"
+            android:layout_below="@id/energyCentralTimeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -121,27 +110,39 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/fuelText"
-            android:layout_below="@id/centralNewProductionText"
+            android:id="@+id/energyCentral_timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/energyCentralNewProductionText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/energyFuelCentralText"
+            android:layout_below="@id/energyCentral_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Central de energia por combustible"
+            android:text="Central de Energia por Combustible"
             android:textColor="#FFFFFF"
             android:textSize="30dp" />
 
         <View
-            android:id="@+id/fuelDivider"
-            android:layout_below="@id/fuelText"
+            android:id="@+id/energyFuelCentralDivider"
+            android:layout_below="@id/energyFuelCentralText"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_marginBottom="10dp"
             android:background="#FFFFFF"/>
 
         <TextView
-            android:id="@+id/fuelLevelText"
-            android:layout_below="@id/fuelDivider"
+            android:id="@+id/energyFuelCentralLevelText"
+            android:layout_below="@id/energyFuelCentralDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -151,8 +152,8 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/fuelProductionText"
-            android:layout_below="@id/fuelLevelText"
+            android:id="@+id/energyFuelCentralProductionText"
+            android:layout_below="@id/energyFuelCentralLevelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -162,31 +163,30 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/fuelConsumptionText"
-            android:layout_below="@id/fuelProductionText"
+            android:id="@+id/energyFuelCentralDarkMatterText"
+            android:layout_below="@id/energyFuelCentralProductionText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Energia consumida actual: "
+            android:text="Materia oscura consumida actual: "
             android:textColor="#FFFFFF"
             android:textSize="15dp" />
 
         <Button
-            android:id="@+id/fuelBuildButton"
+            android:id="@+id/energyFuelCentralBuildButton"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Construir Nivel "
-            style="@style/Widget.AppCompat.Button"
-            android:background="#80000000"
-            android:textColor="#FFFFFF"
-            android:layout_below="@id/fuelConsumptionText"
+            android:layout_below="@id/energyFuelCentralDarkMatterText"
             android:layout_centerInParent="true"
-            />
+            android:background="#80000000"
+            android:text="Construir Nivel "
+            android:textColor="#FFFFFF" />
 
         <TextView
-            android:id="@+id/fuelCostText"
-            android:layout_below="@id/fuelBuildButton"
+            android:id="@+id/energyFuelCentralCostText"
+            android:layout_below="@id/energyFuelCentralBuildButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -197,8 +197,20 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/fuelTimeText"
-            android:layout_below="@id/fuelCostText"
+            android:id="@+id/energyFuelCentralNextDarkMatterText"
+            android:layout_below="@id/energyFuelCentralCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Consumo Materia Oscura: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/energyFuelCentralTimeText"
+            android:layout_below="@id/energyFuelCentralNextDarkMatterText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -209,8 +221,8 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/fuelNewProductionText"
-            android:layout_below="@id/fuelTimeText"
+            android:id="@+id/energyFuelCentralNewProductionText"
+            android:layout_below="@id/energyFuelCentralTimeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -219,15 +231,27 @@
             android:text="Produccion por hora: "
             android:textColor="#FFFFFF"
             android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/energyFuelCentral_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/energyFuelCentralNewProductionText"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/solarPanelText"
-            android:layout_below="@id/fuelNewProductionText"
+            android:layout_below="@id/energyFuelCentral_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Metal"
+            android:text="Paneles Solares"
             android:textColor="#FFFFFF"
             android:textSize="30dp" />
 
@@ -240,7 +264,7 @@
             android:background="#FFFFFF"/>
 
         <TextView
-            android:id="@+id/solarPanels"
+            android:id="@+id/solarPanelQttText"
             android:layout_below="@id/solarPanelDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -251,19 +275,19 @@
             android:textSize="15dp" />
 
         <RelativeLayout
-            android:id="@+id/solarPanelPickers"
+            android:id="@+id/solarPanelPicker"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/solarPanelDivider"
+            android:layout_below="@id/solarPanelQttText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <NumberPicker
-                android:id="@+id/solarPanelsQtt"
-                android:background="#80000000"
-                android:descendantFocusability="blocksDescendants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                    android:id="@+id/solarPanel"
+                    android:background="#80000000"
+                    android:descendantFocusability="blocksDescendants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/solarPanelBuildButton"
@@ -273,17 +297,17 @@
                 style="@style/Widget.AppCompat.Button"
                 android:background="#80000000"
                 android:textColor="#FFFFFF"
-                android:layout_toRightOf="@id/solarPanelsQtt"
-                android:layout_toEndOf="@id/solarPanelsQtt"
-                android:layout_marginLeft="10dp"
-                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/solarPanel"
+                android:layout_toEndOf="@id/solarPanel"
                 />
 
         </RelativeLayout>
 
         <TextView
             android:id="@+id/solarPanelCostText"
-            android:layout_below="@id/solarPanels"
+            android:layout_below="@id/solarPanelPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -306,27 +330,39 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/eolicText"
+            android:id="@+id/solarPanel_timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/solarPanelTimeText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/windTurbineText"
+            android:layout_below="@id/solarPanel_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Metal"
+            android:text="Turbinas Eolicas"
             android:textColor="#FFFFFF"
             android:textSize="30dp" />
 
         <View
-            android:id="@+id/eolicDivider"
-            android:layout_below="@id/eolicText"
+            android:id="@+id/windTurbineDivider"
+            android:layout_below="@id/windTurbineText"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_marginBottom="10dp"
             android:background="#FFFFFF"/>
 
         <TextView
-            android:id="@+id/eolics"
-            android:layout_below="@id/eolicDivider"
+            android:id="@+id/windTurbineQttText"
+            android:layout_below="@id/windTurbineDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -336,39 +372,39 @@
             android:textSize="15dp" />
 
         <RelativeLayout
-            android:id="@+id/eolicPickers"
+            android:id="@+id/windTurbinePicker"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/eolicDivider"
+            android:layout_below="@id/windTurbineQttText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <NumberPicker
-                android:id="@+id/eolicsQtt"
-                android:background="#80000000"
-                android:descendantFocusability="blocksDescendants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <NumberPicker
+                    android:id="@+id/windTurbine"
+                    android:background="#80000000"
+                    android:descendantFocusability="blocksDescendants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/eolicBuildButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Construir"
-                style="@style/Widget.AppCompat.Button"
-                android:background="#80000000"
-                android:textColor="#FFFFFF"
-                android:layout_toRightOf="@id/eolicsQtt"
-                android:layout_toEndOf="@id/eolicsQtt"
-                android:layout_marginLeft="10dp"
-                android:layout_centerInParent="true"
-                />
+                <Button
+                    android:id="@+id/windTurbineBuildButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Construir"
+                    style="@style/Widget.AppCompat.Button"
+                    android:background="#80000000"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/windTurbine"
+                    android:layout_toEndOf="@id/windTurbine"
+                    />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/eolicCostText"
-            android:layout_below="@id/solarPanels"
+            android:id="@+id/windTurbineCostText"
+            android:layout_below="@id/windTurbinePicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -379,8 +415,8 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/eolicTimeText"
-            android:layout_below="@id/solarPanelCostText"
+            android:id="@+id/windTurbineTimeText"
+            android:layout_below="@id/windTurbineCostText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -390,6 +426,17 @@
             android:textColor="#FFFFFF"
             android:textSize="15dp" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/windTurbine_timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/windTurbineTimeText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
 
+</RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

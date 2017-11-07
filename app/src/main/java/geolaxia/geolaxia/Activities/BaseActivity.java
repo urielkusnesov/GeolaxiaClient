@@ -54,9 +54,9 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void handleUnexpectedError(String error){
+    public void handleUnexpectedError(String title, String error){
         showProgress(false);
-        SweetAlertDialog dialog = Helpers.getErrorDialog(this, error, error);
+        SweetAlertDialog dialog = Helpers.getErrorDialog(this, title, error);
         dialog.show();
     }
 }

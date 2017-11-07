@@ -24,6 +24,7 @@ import geolaxia.geolaxia.R;
 public class UserPlanetsAdapter extends RecyclerView.Adapter<UserPlanetsAdapter.ViewHolder> {
     private ArrayList<Planet> planets;
     private AttackActivity.CloseAttackFragment context;
+    private int selectedPostion = -1;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -62,16 +63,25 @@ public class UserPlanetsAdapter extends RecyclerView.Adapter<UserPlanetsAdapter.
         SolarSystem solarSystem = planet.getSolarSystem();
         Galaxy galaxy = solarSystem.getGalaxy();
         holder.name.setText(galaxy.getName() + " - " + solarSystem.getName() + " - " + planet.getName());
-        holder.name.setTextColor(Color.WHITE);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.name.setBackgroundColor(Color.WHITE);
-                holder.name.setTextColor(Color.BLACK);
                 context.selectTargetPlanet(planet);
+                selectedPostion = position;
+                notifyDataSetChanged();
             }
         });
+
+        if(selectedPostion==position){
+            holder.itemView.setBackgroundColor(Color.WHITE);
+            holder.name.setTextColor(Color.BLACK);
+        }
+        else
+        {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            holder.name.setTextColor(Color.WHITE);
+        }
     }
 
     @Override

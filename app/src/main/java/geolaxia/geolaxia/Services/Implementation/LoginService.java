@@ -38,6 +38,11 @@ public class LoginService implements ILoginService {
     }
 
     @Override
+    public void SetWeather(String username, String token, int weatherDesc, String weatherWindSpeed, HomeActivity act) {
+        restService.SetWeather(username, token, weatherDesc, weatherWindSpeed, act);
+    }
+
+    @Override
     public void GetCloserPlayers(String username, String token, AttackActivity.CloseAttackFragment context, AttackActivity act){
         restService.GetCloserPlayers(username, token, context, act);
     }

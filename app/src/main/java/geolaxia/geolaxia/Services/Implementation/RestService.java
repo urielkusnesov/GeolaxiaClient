@@ -33,6 +33,9 @@ import geolaxia.geolaxia.Model.DarkMatterMine;
 import geolaxia.geolaxia.Model.Dto.AttackDTO;
 import geolaxia.geolaxia.Model.Dto.BaseDTO;
 import geolaxia.geolaxia.Model.Dto.CannonsDTO;
+import geolaxia.geolaxia.Model.Dto.EnergyFacilitiesAllDTO;
+import geolaxia.geolaxia.Model.Dto.EnergyFacilitiesDTO;
+import geolaxia.geolaxia.Model.Dto.EnergyFacilityDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
 import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
 import geolaxia.geolaxia.Model.Dto.MineDTO;
@@ -43,6 +46,9 @@ import geolaxia.geolaxia.Model.Dto.PlayersDTO;
 import geolaxia.geolaxia.Model.Dto.ShieldDTO;
 import geolaxia.geolaxia.Model.Dto.ShipsDTO;
 import geolaxia.geolaxia.Model.Dto.SolarSystemsDTO;
+import geolaxia.geolaxia.Model.EnergyCentral;
+import geolaxia.geolaxia.Model.EnergyFacility;
+import geolaxia.geolaxia.Model.EnergyFuelCentral;
 import geolaxia.geolaxia.Model.MetalMine;
 import geolaxia.geolaxia.Model.Mine;
 import geolaxia.geolaxia.Model.Planet;
@@ -52,7 +58,10 @@ import geolaxia.geolaxia.Model.Ship;
 import geolaxia.geolaxia.Model.ShipX;
 import geolaxia.geolaxia.Model.ShipY;
 import geolaxia.geolaxia.Model.ShipZ;
+import geolaxia.geolaxia.Model.SolarPanel;
+import geolaxia.geolaxia.Model.SolarSystem;
 import geolaxia.geolaxia.Model.WhitePlanet;
+import geolaxia.geolaxia.Model.WindTurbine;
 import geolaxia.geolaxia.Services.Interface.IRestService;
 
 /**
@@ -108,16 +117,16 @@ public class RestService implements IRestService {
 
                                 act.LogIn(playersContainer.getData());
                             } else {
-                                act.handleUnexpectedError(playersContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo planetas", playersContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los planetas. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError("Error de conexion");
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -168,16 +177,16 @@ public class RestService implements IRestService {
 
                                 act.LogIn(playersContainer.getData());
                             } else {
-                                act.handleUnexpectedError(playersContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo planetas", playersContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los planetas. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -213,23 +222,23 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(baseContainer.getStatus().getResult())) {
                                 act.registerSuccesfull();
                             } else {
-                                act.handleUnexpectedError(baseContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error", baseContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo registrar el usuario. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
             }
         });
         // add the request object to the queue to be executed
         Request response = Volley.newRequestQueue(act).add(req);
     }
 
-    /*    @Override
+        @Override
         public void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act) {
             String url = Constants.getPlanetsByPlayerServiceUrl();
 
@@ -261,17 +270,16 @@ public class RestService implements IRestService {
 
                                     act.FillPlanets(planets);
                                 } else {
-                                    act.handleUnexpectedError(planetsContainer.getStatus().getDescription());
+                                    act.handleUnexpectedError("Error obteniendo planetas", planetsContainer.getStatus().getDescription());
                                 }
                             }catch (Exception e){
-                                act.handleUnexpectedError("Ocurrio un error");
+                                act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los planetas. Intente nuevamente");
                             }
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    VolleyError volleyError = new VolleyError(new String(error.networkResponse.data));
-                    act.handleUnexpectedError(error.getMessage());
+                    act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                     //handle error
                 }
             })
@@ -289,7 +297,7 @@ public class RestService implements IRestService {
             Request response = Volley.newRequestQueue(act).add(req);
         }
 
-        @Override
+        /*@Override
         public void GetPlanet(final int planetId, final String username, final String token, final HomeActivity act) {
             String url = Constants.getPlanetServiceUrl();
 
@@ -365,16 +373,16 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(galaxiesContainer.getStatus().getResult())) {
                                 fr.FillGalaxies(galaxiesContainer.getData());
                             } else {
-                                act.handleUnexpectedError(galaxiesContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo galaxias",galaxiesContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las galaxias. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -405,16 +413,16 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(galaxiesContainer.getStatus().getResult())) {
                                 fr.FillGalaxies(galaxiesContainer.getData());
                             } else {
-                                act.handleUnexpectedError(galaxiesContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo galaxias",galaxiesContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las galaxias. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -445,16 +453,16 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(solarSystemsContainer.getStatus().getResult())) {
                                 fr.FillSolarSystems(solarSystemsContainer.getData());
                             } else {
-                                act.handleUnexpectedError(solarSystemsContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo sistemas solares", solarSystemsContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los sistemas solares. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -485,16 +493,16 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(solarSystemsContainer.getStatus().getResult())) {
                                 fr.FillSolarSystems(solarSystemsContainer.getData());
                             } else {
-                                act.handleUnexpectedError(solarSystemsContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo sistemas solares", solarSystemsContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los sistemas solares. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -525,16 +533,16 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
                                 fr.FillPlanets(planetsContainer.getData());
                             } else {
-                                act.handleUnexpectedError(planetsContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo planetas", planetsContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los planetas. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -565,16 +573,16 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
                                 fr.FillPlanets(planetsContainer.getData());
                             } else {
-                                act.handleUnexpectedError(planetsContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo planetas", planetsContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los planetas. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -627,16 +635,16 @@ public class RestService implements IRestService {
 
                                 fr.FillFleets(shipsX, shipsY, shipsZ);
                             } else {
-                                act.handleUnexpectedError(shipsContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo las naves", shipsContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las naves. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -689,16 +697,16 @@ public class RestService implements IRestService {
 
                                 fr.FillFleets(shipsX, shipsY, shipsZ);
                             } else {
-                                act.handleUnexpectedError(shipsContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo las naves", shipsContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las naves. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -751,16 +759,16 @@ public class RestService implements IRestService {
 
                                 fr.FillFleets(shipsX, shipsY, shipsZ);
                             } else {
-                                act.handleUnexpectedError(shipsContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo las naves", shipsContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las naves. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -791,6 +799,7 @@ public class RestService implements IRestService {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
             }
         })
         {
@@ -799,6 +808,35 @@ public class RestService implements IRestService {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("username", player.getUsername());
                 headers.put("token", player.getToken());
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void SetWeather(final String username, final String token, final int weatherDesc, final String weatherWindSpeed, final HomeActivity act) {
+        String url = Constants.SetWeatherServiceUrl(weatherDesc, weatherWindSpeed);
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
                 return headers;
             }
         };
@@ -819,16 +857,16 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(playersContainer.getStatus().getResult())) {
                                 fr.FillUsers(playersContainer.getData());
                             } else {
-                                act.handleUnexpectedError(playersContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo jugadores cercanos", playersContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener jugadores cercanos. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError("Error de conexion");
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
             }
         })
         {
@@ -856,7 +894,7 @@ public class RestService implements IRestService {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
             }
         });
 
@@ -877,16 +915,16 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(attackContainer.getStatus().getResult())) {
                                 context.AttackSaved();
                             } else {
-                                context.handleUnexpectedError(attackContainer.getStatus().getDescription());
+                                context.handleUnexpectedError("Error realizando el ataque", attackContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            context.handleUnexpectedError("Ocurrio un error");
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo realizar el ataque. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                context.handleUnexpectedError(error.getMessage());
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -935,16 +973,16 @@ public class RestService implements IRestService {
 
                                 fragment.setCurrentValues(crystalMine, metalMine, darkMatterMine);
                             } else {
-                                act.handleUnexpectedError(minesContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Erro obteniendo minas", minesContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las minas. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -993,16 +1031,16 @@ public class RestService implements IRestService {
 
                                 fragment.setCosts(crystalMine, metalMine, darkMatterMine);
                             } else {
-                                act.handleUnexpectedError(minesContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error obteniendo minas", minesContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las minas. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                act.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -1034,16 +1072,181 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(mineContainer.getStatus().getResult())) {
                                 fragment.MineBuilt(mineContainer.getData());
                             } else {
-                                context.handleUnexpectedError(mineContainer.getStatus().getDescription());
+                                context.handleUnexpectedError("Error construyendo mina", mineContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            context.handleUnexpectedError("Ocurrio un error");
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo construir la mina. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                context.handleUnexpectedError(error.getMessage());
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    public void GetCurrentEnergyFacilities(final String username, final String token, final int planetId, final ConstructionsActivity act, final ConstructionsActivity.EnergyFragment fragment){
+        String url = Constants.getCurrentEnergyFacilitiesServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            EnergyFacilitiesAllDTO energyFacilitiesContainer = gSon.fromJson(response.toString(), EnergyFacilitiesAllDTO.class);
+                            if(Constants.OK_RESPONSE.equals(energyFacilitiesContainer.getStatus().getResult())) {
+                                //transformar segun herencia
+                                EnergyCentral energyCentral = null;
+                                EnergyFuelCentral energyFuelCentral = null;
+                                ArrayList<SolarPanel> solarPanels = new ArrayList<>();
+                                ArrayList<WindTurbine> windTurbines = new ArrayList<>();
+                                for (ArrayList<EnergyFacility> energyFacilityList: energyFacilitiesContainer.getData()) {
+                                    for (EnergyFacility energyFacility : energyFacilityList) {
+                                        switch (energyFacility.getEnergyFacilityType()){
+                                            case Constants.EF_ENERGY_CENTRAL:
+                                                energyCentral = new EnergyCentral(energyFacility);
+                                                break;
+                                            case Constants.EF_ENERGY_FUEL_CENTRAL:
+                                                int darkMatterConsumption = 25 * (energyFacility.getLevel() == 0 ? 0 : energyFacility.getLevel() - 1) + 10 * (energyFacility.getLevel() == 1 ? 1 : 0);
+                                                energyFuelCentral = new EnergyFuelCentral(energyFacility, darkMatterConsumption);
+                                                break;
+                                            case Constants.EF_SOLAR_PANEL:
+                                                SolarPanel solarPanel = new SolarPanel(energyFacility, 10, 25, 5);
+                                                solarPanels.add(solarPanel);
+                                                break;
+                                            case Constants.EF_WIND_TURBINE:
+                                                WindTurbine windTurbine = new WindTurbine(energyFacility, 15, 25, 10);
+                                                windTurbines.add(windTurbine);
+                                                break;
+                                        }
+                                    }
+                                }
+
+                                fragment.setCurrentValues(energyCentral, energyFuelCentral, solarPanels, windTurbines);
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo construcciones de energia", energyFacilitiesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las construcciones de energia. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    public void GetEnergyFacilitiesToBuild(final String username, final String token, final int planetId, final ConstructionsActivity act, final ConstructionsActivity.EnergyFragment fragment){
+        String url = Constants.getEnergyFacilitiesToBuildServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            EnergyFacilitiesDTO energyFacilitiesContainer = gSon.fromJson(response.toString(), EnergyFacilitiesDTO.class);
+                            if(Constants.OK_RESPONSE.equals(energyFacilitiesContainer.getStatus().getResult())) {
+                                //transformar segun herencia
+                                EnergyCentral energyCentral = null;
+                                EnergyFuelCentral energyFuelCentral = null;
+                                ArrayList<SolarPanel> solarPanels = new ArrayList<>();
+                                ArrayList<WindTurbine> windTurbines = new ArrayList<>();
+                                for (EnergyFacility energyFacility: energyFacilitiesContainer.getData()) {
+                                    switch (energyFacility.getEnergyFacilityType()){
+                                        case Constants.EF_ENERGY_CENTRAL:
+                                            energyCentral = new EnergyCentral(energyFacility);
+                                            break;
+                                        case Constants.EF_ENERGY_FUEL_CENTRAL:
+                                            int darkMatterConsumption = 25 * (energyFacility.getLevel() - 1) + 10 * (energyFacility.getLevel() == 1 ? 1 : 0);
+                                            energyFuelCentral = new EnergyFuelCentral(energyFacility, darkMatterConsumption);
+                                            break;
+                                    }
+                                }
+
+                                fragment.setCosts(energyCentral, energyFuelCentral);
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo construcciones de energia", energyFacilitiesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las construcciones de energia. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    public void BuildEnergyFacility(final String username, final String token, final EnergyFacility energyFacility, final ConstructionsActivity context, final ConstructionsActivity.EnergyFragment fragment){
+        String url = Constants.getBuildEnergyFacilityServiceUrl();
+
+        JSONObject jsonEnergyFacility = energyFacility.toJSONObject();
+        JsonObjectRequest req = new JsonObjectRequest(url, jsonEnergyFacility,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            EnergyFacilityDTO energyFacilitiesContainer = gSon.fromJson(response.toString(), EnergyFacilityDTO.class);
+                            if(Constants.OK_RESPONSE.equals(energyFacilitiesContainer.getStatus().getResult())) {
+                                fragment.EnergyFacilityBuilt(energyFacilitiesContainer.getData());
+                            } else {
+                                context.handleUnexpectedError("Error construyendo central de energia", energyFacilitiesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo construir la central de energia. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
                 //handle error
             }
         })
@@ -1062,6 +1265,88 @@ public class RestService implements IRestService {
     }
 
     @Override
+    public void BuildSolarPanels(final String username, final String token, final ConstructionsActivity.EnergyFragment fragment, final ConstructionsActivity context, int planetId, int qtt) {
+        String url = Constants.getBuildSolarPanelsServiceUrl(planetId, qtt);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            EnergyFacilityDTO solarPanelContainer = gSon.fromJson(response.toString(), EnergyFacilityDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(solarPanelContainer.getStatus().getResult())) {
+                                fragment.EnergyFacilityBuilt(solarPanelContainer.getData());
+                            } else {
+                                context.handleUnexpectedError("Error construyendo panel solar", solarPanelContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo construir el panel solar. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void BuildWindTurbines(final String username, final String token, final ConstructionsActivity.EnergyFragment fragment, final ConstructionsActivity context, int planetId, int qtt) {
+        String url = Constants.getBuildWindTurbinesServiceUrl(planetId, qtt);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            EnergyFacilityDTO windTurbineContainer = gSon.fromJson(response.toString(), EnergyFacilityDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(windTurbineContainer.getStatus().getResult())) {
+                                fragment.EnergyFacilityBuilt(windTurbineContainer.getData());
+                            } else {
+                                context.handleUnexpectedError("Error construyendo turbina eolica", windTurbineContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo construir la turbina eolica. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
     public void GetShieldStatus(final String username, final String token, final DefenseActivity context, int planetId) {
         String url = Constants.getShieldStatus(planetId);
 
@@ -1076,17 +1361,17 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(shield.getStatus().getResult())) {
                                 context.CargarEstadoEscudoAhora(shield.getData());
                             } else {
-                                context.handleUnexpectedError(shield.getStatus().getDescription());
+                                context.handleUnexpectedError("Error obteniendo escudo", shield.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            context.handleUnexpectedError("Ocurrio un error");
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el escudo. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                context.handleUnexpectedError(error.getMessage());
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
             }
         })
         {
@@ -1117,17 +1402,17 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(cannons.getStatus().getResult())) {
                                 context.CargarCanonesAhora(cannons.getData());
                             } else {
-                                context.handleUnexpectedError(cannons.getStatus().getDescription());
+                                context.handleUnexpectedError("Error obteniendo cañones", cannons.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            context.handleUnexpectedError("Ocurrio un error");
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los cañones. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                context.handleUnexpectedError(error.getMessage());
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
             }
         })
         {
@@ -1158,17 +1443,17 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(base.getStatus().getResult())) {
                                 context.CargarTiempoConstruccionCanonesAhora();
                             } else {
-                                context.handleUnexpectedError(base.getStatus().getDescription());
+                                context.handleUnexpectedError("Error construyendo cañon",base.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            context.handleUnexpectedError("Ocurrio un error");
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo construir el cañon. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                context.handleUnexpectedError(error.getMessage());
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
             }
         })
         {
@@ -1199,17 +1484,17 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(building.getStatus().getResult())) {
                                 context.EstaConstruyendoCanonesAhora(building);
                             } else {
-                                context.handleUnexpectedError(building.getStatus().getDescription());
+                                context.handleUnexpectedError("Error obteniendo estado cañones", building.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            context.handleUnexpectedError("Ocurrio un error");
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el estado de los cañones. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                context.handleUnexpectedError(error.getMessage());
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
             }
         })
         {

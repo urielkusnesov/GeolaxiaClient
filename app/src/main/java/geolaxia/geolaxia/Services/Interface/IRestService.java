@@ -9,6 +9,7 @@ import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
 import geolaxia.geolaxia.Model.Attack;
+import geolaxia.geolaxia.Model.EnergyFacility;
 import geolaxia.geolaxia.Model.Mine;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
@@ -32,7 +33,7 @@ public interface IRestService {
     void Register(Player player, final RegisterActivity act);
 
     //Attack
-    //void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act);
+    void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act);
     //void GetPlanet(final int planetId, final String username, final String token, final HomeActivity act);
     void GetAllGalaxies(String username, String token, AttackActivity act, AttackActivity.AttackFragment context);
     void GetAllGalaxies(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context);
@@ -47,6 +48,7 @@ public interface IRestService {
 
     //home
     void SetLastPosition(String latitude, String longitude, Player player, HomeActivity act);
+    void SetWeather(String username, String token, int weatherDesc, String weatherWindSpeed, HomeActivity act);
     void GetCloserPlayers(String username, String token, AttackActivity.CloseAttackFragment context, AttackActivity act);
     void GetWeather(String latitude, String longitude, final HomeActivity act);
 
@@ -54,6 +56,11 @@ public interface IRestService {
     void GetCurrentMines(String username, String token, int planetId, ConstructionsActivity context, ConstructionsActivity.MinesFragment fragment);
     void GetMinesToBuild(String username, String token, int planetId, ConstructionsActivity context, ConstructionsActivity.MinesFragment fragment);
     void BuildMine(String username, String token, Mine mine, ConstructionsActivity context, ConstructionsActivity.MinesFragment fragment);
+    void GetCurrentEnergyFacilities(String username, String token, int planetId, ConstructionsActivity context, ConstructionsActivity.EnergyFragment fragment);
+    void GetEnergyFacilitiesToBuild(String username, String token, int planetId, ConstructionsActivity context, ConstructionsActivity.EnergyFragment fragment);
+    void BuildEnergyFacility(String username, String token, EnergyFacility energyFacility, ConstructionsActivity context, ConstructionsActivity.EnergyFragment fragment);
+    void BuildSolarPanels(final String username, final String token, final ConstructionsActivity.EnergyFragment fragment, final ConstructionsActivity context, int planetId, int qtt);
+    void BuildWindTurbines(final String username, final String token, final ConstructionsActivity.EnergyFragment fragment, final ConstructionsActivity context, int planetId, int qtt);
 
     //defense
     void GetShieldStatus(String username, String token, DefenseActivity context, int planetId);

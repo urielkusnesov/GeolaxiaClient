@@ -44,7 +44,6 @@ public class Mine extends Facility {
         params.put("Productivity", String.valueOf(this.Productivity));
         params.put("EnergyConsumption", String.valueOf(this.EnergyConsumption));
         params.put("MineType", String.valueOf(this.MineType));
-        String ships = "";
         return new JSONObject(params);
     }
 }

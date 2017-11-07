@@ -15,12 +15,12 @@ public class PlanetService implements IPlanetService {
     private final IRestService restService = RestService.getInstance();
 
     @Override
-    public void GetByPlayer(String username, String token, HomeActivity context) throws JSONException {
-        //restService.GetPlanetsByPlayer(username, token, context);
+    public void GetByPlayer(String username, String token, HomeActivity context) {
+        restService.GetPlanetsByPlayer(username, token, context);
     }
 
     @Override
-    public void GetPlanet(int planetId, String username, String token, HomeActivity context) throws JSONException {
+    public void GetPlanet(int planetId, String username, String token, HomeActivity context) {
         //restService.GetPlanet(planetId, username, token, context);
     }
 
