@@ -1,8 +1,12 @@
 package geolaxia.geolaxia.Services.Interface;
 
+import android.app.Activity;
+import android.app.Fragment;
+
 import org.json.JSONException;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.ColonizeActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 
 /**
@@ -21,4 +25,8 @@ public interface IPlanetService {
     void GetFleet(String username, String token, AttackActivity act, AttackActivity.AttackFragment context, int planetId);
     void GetFleet(String username, String token, AttackActivity act, AttackActivity.CoordinatesFragment context, int planetId);
     void GetFleet(String username, String token, AttackActivity act, AttackActivity.CloseAttackFragment context, int planetId);
+
+    void GetAllGalaxies(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context);
+    void GetSolarSystemsByGalaxy(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int galaxyId);
+    void GetPlanetsBySolarSystem(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int solarSystemId);
 }

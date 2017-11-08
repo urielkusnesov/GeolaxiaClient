@@ -3,6 +3,7 @@ package geolaxia.geolaxia.Services.Interface;
 import org.json.JSONException;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.ColonizeActivity;
 import geolaxia.geolaxia.Activities.ConstructionsActivity;
 import geolaxia.geolaxia.Activities.DefenseActivity;
 import geolaxia.geolaxia.Activities.DefenseQuestionActivity;
@@ -62,4 +63,11 @@ public interface IRestService {
     void BuildCannons(String username, String token, DefenseActivity context, int planetId, int cant);
     void IsBuildingCannons(String username, String token, DefenseActivity context, int planetId);
     void Get3RandomQuestions(String username, String token, DefenseQuestionActivity context);
+
+    //colonize
+    void GetAllGalaxies(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context);
+    void GetSolarSystemsByGalaxy(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int galaxyId);
+    void GetPlanetsBySolarSystem(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int solarSystemId);
+    void GetColonizers(String username, String token, ColonizeActivity context, int planetId);
+    //void IsBuildingCannons(String username, String token, ColonizeActivity context, int planetId);
 }

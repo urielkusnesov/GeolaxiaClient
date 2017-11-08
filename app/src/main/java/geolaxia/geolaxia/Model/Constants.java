@@ -5,7 +5,7 @@ package geolaxia.geolaxia.Model;
  */
 
 public class Constants {
-    public static String BASE_URL = "192.168.1.102";/*Server IP*/
+    public static String BASE_URL = "192.168.1.107";/*Server IP*/
     public static final String PORT = ":62078/";
     public static final String HTTP = "http://";
     public static final String LOGIN_SERVICE = "api/player/login";
@@ -59,6 +59,11 @@ public class Constants {
     public static String getShieldStatus(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETSHIELDSTATUS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String isBuldingCannons(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_ISBUILDINGCANNONS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getRandomQuestions() { return (HTTP + BASE_URL + PORT + DEFENSE_GET_RANDOM_QUESTIONS_SERVICE); }
+
+    //Colonize
+    public static final String COLONIZE_GETCOLONIZERS_SERVICE = "api/colonize/GetColonizers";
+
+    public static String getColonizers(int planetId) { return (HTTP + BASE_URL + PORT + COLONIZE_GETCOLONIZERS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
 
     //ERRORS
     public static final String ERROR_RESPONSE = "error";

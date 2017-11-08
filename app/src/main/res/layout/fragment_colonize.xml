@@ -139,6 +139,52 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/costo_materia_oscura"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:typeface="normal"
+                                    android:textSize="8pt"
+                                    android:textColor="#FFFFFF"
+                                    android:text="Costo Combustible: "/>
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/costo_materia_oscura_valor"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:typeface="normal"
+                                    android:textSize="8pt"
+                                    android:textColor="#FFFFFF"/>
+                                </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/costo_tiempo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:typeface="normal"
+                                    android:textSize="8pt"
+                                    android:textColor="#FFFFFF"
+                                    android:text="Tiempo de Viaje: "/>
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/costo_tiempo_valor"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:typeface="normal"
+                                    android:textSize="8pt"
+                                    android:textColor="#FFFFFF"/>
+                                </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/colonization_envio_timer"
                                 android:layout_width="wrap_content"
@@ -151,7 +197,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_gravity="center_horizontal"
+                            >
                             <Button
                                 android:id="@+id/colonization_enviar_boton"
                                 style="?android:textAppearanceSmall"
