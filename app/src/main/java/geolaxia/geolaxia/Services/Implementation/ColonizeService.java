@@ -8,12 +8,17 @@ public class ColonizeService implements IColonizeService {
     private final IRestService restService = RestService.getInstance();
 
     @Override
-    public void GetColonizers(String username, String token, ColonizeActivity context, int planetId) {
-        restService.GetColonizers(username, token, context, planetId);
+    public void GetColonizers(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int planetId) {
+        restService.GetColonizers(username, token, act, context, planetId);
     }
 
-//    @Override
-//    public void IsBuildingCannons(String username, String token, ColonizeActivity context, int planetId) {
-//        restService.IsBuildingCannons(username, token, context, planetId);
-//    }
+    @Override
+    public void IsSendingColonizer(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int planetId){
+        restService.IsSendingColonizer(username, token, act, context, planetId);
+    }
+
+    @Override
+    public void SendColonizer(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int planetId, int planetIdTarget, long time) {
+        restService.SendColonizer(username, token, act, context, planetId, planetIdTarget, time);
+    }
 }

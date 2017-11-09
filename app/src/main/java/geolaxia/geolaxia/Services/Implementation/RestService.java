@@ -38,6 +38,7 @@ import geolaxia.geolaxia.Model.Dto.CannonsDTO;
 import geolaxia.geolaxia.Model.Dto.ColonizersDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
 import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
+import geolaxia.geolaxia.Model.Dto.IsSendingColonizerDTO;
 import geolaxia.geolaxia.Model.Dto.MineDTO;
 import geolaxia.geolaxia.Model.Dto.MinesDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
@@ -1397,7 +1398,7 @@ public class RestService implements IRestService {
     }
 
     @Override
-    public void GetColonizers(final String username, final String token, final ColonizeActivity context, int planetId) {
+    public void GetColonizers(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.ColonizeFragment context, int planetId) {
         String url = Constants.getColonizers(planetId);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
@@ -1411,17 +1412,17 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(colonizers.getStatus().getResult())) {
                                 context.CargarColonizadoresAhora(colonizers.getData());
                             } else {
-                                context.handleUnexpectedError(colonizers.getStatus().getDescription());
+                                act.handleUnexpectedError(colonizers.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            context.handleUnexpectedError("Ocurrio un error");
+                            act.handleUnexpectedError("Ocurrio un error");
                         }
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                context.handleUnexpectedError(error.getMessage());
+                act.handleUnexpectedError(error.getMessage());
             }
         })
         {
@@ -1434,6 +1435,88 @@ public class RestService implements IRestService {
             }
         };
 
-        Request response = Volley.newRequestQueue(context).add(req);
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void SendColonizer(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.ColonizeFragment context, final int planetId, final int planetIdTarget, final long time){
+        String url = Constants.sendColonizers(planetId, planetIdTarget, time);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            BaseDTO base = gSon.fromJson(response.toString(), BaseDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(base.getStatus().getResult())) {
+                                context.CargarTiempoEnvioColonizadorAhora();
+                            } else {
+                                act.handleUnexpectedError(base.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void IsSendingColonizer(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.ColonizeFragment context, final int planetId){
+        String url = Constants.isSendingColonizer(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            IsSendingColonizerDTO sending = gSon.fromJson(response.toString(), IsSendingColonizerDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(sending.getStatus().getResult())) {
+                                context.EstaEnviandoColonizadorAhora(sending);
+                            } else {
+                                act.handleUnexpectedError(sending.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(act).add(req);
     }
 }

@@ -62,8 +62,12 @@ public class Constants {
 
     //Colonize
     public static final String COLONIZE_GETCOLONIZERS_SERVICE = "api/colonize/GetColonizers";
+    public static final String COLONIZE_SENDCOLONIZERS_SERVICE = "api/colonize/SendColonizers";
+    public static final String DEFENSE_ISSENDINDCOLONIZER_SERVICE = "api/colonize/IsSendingColonizer";
 
     public static String getColonizers(int planetId) { return (HTTP + BASE_URL + PORT + COLONIZE_GETCOLONIZERS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String sendColonizers(int planetId, int planetIdTarget, long time) { return (HTTP + BASE_URL + PORT + COLONIZE_SENDCOLONIZERS_SERVICE + "?planetId=" + String.valueOf(planetId) + "&planetIdTarget=" + String.valueOf(planetIdTarget) + "&time=" + String.valueOf(time)); }
+    public static String isSendingColonizer(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_ISSENDINDCOLONIZER_SERVICE + "?planetId=" + String.valueOf(planetId)); }
 
     //ERRORS
     public static final String ERROR_RESPONSE = "error";
