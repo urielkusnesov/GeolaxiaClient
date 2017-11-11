@@ -1440,7 +1440,7 @@ public class RestService implements IRestService {
 
     @Override
     public void SendColonizer(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.ColonizeFragment context, final int planetId, final int planetIdTarget, final long time){
-        String url = Constants.sendColonizers(planetId, planetIdTarget, time);
+        String url = Constants.sendColonizer(planetId, planetIdTarget, time);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject> () {

@@ -231,7 +231,8 @@ public class ColonizeActivity extends MenuActivity {
         public void FillPlanets(ArrayList<Planet> planets){
             ArrayList<Planet> finalPlanets = new ArrayList<>();
             for (Planet planet: planets) {
-                if(planet.getConqueror() == null || !planet.getConqueror().getUsername().equals(act.player.getUsername())){
+                //if(planet.getConqueror() == null || !planet.getConqueror().getUsername().equals(act.player.getUsername())){
+                if(planet.getConqueror() == null){
                     finalPlanets.add(planet);
                 }
             }
@@ -301,11 +302,11 @@ public class ColonizeActivity extends MenuActivity {
 
             Planet targetPlanet = GetTargetPlanet();
             Date arrival = act.calculateArrivalTime(targetPlanet);
-            long totalDifference = (arrival.getTime() - Calendar.getInstance().getTime().getTime());
+            //long totalDifference = (arrival.getTime() - Calendar.getInstance().getTime().getTime());
 
-            this.CargarTiempoLlegada(totalDifference);
+            this.CargarTiempoLlegada(arrival.getTime());
 
-            act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
+            //act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
         }
 
         private void CargarTiempoLlegada(long fechaFinalizacion){
@@ -340,7 +341,7 @@ public class ColonizeActivity extends MenuActivity {
         }
 
         public void EstaEnviandoColonizadorAhora(IsSendingColonizerDTO tiempoLlegada){
-            if (tiempoLlegada.IsBuilding()) {
+            if (tiempoLlegada.IsSending()) {
                 this.CargarTiempoLlegada(tiempoLlegada.getData());
             }
         }

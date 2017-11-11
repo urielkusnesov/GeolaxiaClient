@@ -11,7 +11,7 @@ public class IsSendingColonizerDTO extends BaseDTO {
         this.Data = data;
     }
 
-    public boolean IsBuilding() {
+    public boolean IsSending() {
         return (Data > System.currentTimeMillis());
     }
 }
