@@ -304,9 +304,9 @@ public class ColonizeActivity extends MenuActivity {
             Date arrival = act.calculateArrivalTime(targetPlanet);
             //long totalDifference = (arrival.getTime() - Calendar.getInstance().getTime().getTime());
 
-            this.CargarTiempoLlegada(arrival.getTime());
+            act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
 
-            //act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
+            this.CargarTiempoLlegada(arrival.getTime());
         }
 
         private void CargarTiempoLlegada(long fechaFinalizacion){
