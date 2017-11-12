@@ -19,12 +19,15 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Colonizer;
 import geolaxia.geolaxia.Model.Dto.IsSendingColonizerDTO;
 import geolaxia.geolaxia.Model.Galaxy;
@@ -286,11 +289,25 @@ public class ColonizeActivity extends MenuActivity {
             boton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                        Planet targetPlanet = GetTargetPlanet();
-                        Date arrival = act.calculateArrivalTime(targetPlanet);
-                        long totalDifference = (arrival.getTime() - Calendar.getInstance().getTime().getTime());
+                    SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Enviar", "¿Está seguro que desea enviar el Colonizador?", "Si", "No");
 
-                        act.colonizeService.SendColonizer(act.player.getUsername(), act.player.getToken(), act, context, act.planet.getId(), targetPlanet.getId(), totalDifference);
+                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            //try {
+                                Planet targetPlanet = GetTargetPlanet();
+                                Date arrival = act.calculateArrivalTime(targetPlanet);
+                                long totalDifference = (arrival.getTime() - Calendar.getInstance().getTime().getTime());
+
+                                act.colonizeService.SendColonizer(act.player.getUsername(), act.player.getToken(), act, context, act.planet.getId(), targetPlanet.getId(), totalDifference);
+                                sweetAlertDialog.cancel();
+                            //} catch (JSONException e) {
+                            //    e.printStackTrace();
+                            //}
+                        }
+                    });
+
+                    dialog.show();
                 }
             });
         }

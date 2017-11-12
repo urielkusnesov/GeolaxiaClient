@@ -18,8 +18,10 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Cannon;
 import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
+import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.Model.Shield;
@@ -118,14 +120,13 @@ public class DefenseActivity extends MenuActivity {
 
                     cantCanonesCostoCristal.setText(String.valueOf(valorCristal));
                     cantCanonesCostoMetal.setText(String.valueOf(valorMetal));
-                    cantCanonesCostoTiempo.setText(String.valueOf(valorTiempo) + " minutos");
+                    cantCanonesCostoTiempo.setText(String.valueOf(valorTiempo) + " mins");
 
                     if (TieneRecursosNecesariosParaConstruir(valorMetal, valorCristal)) {
                         SetearBotonConstruir(true);
                     } else {
                         SetearBotonConstruir(false);
                     }
-
                 } else {
                     VaciarPantalla();
                 }
@@ -139,11 +140,21 @@ public class DefenseActivity extends MenuActivity {
         construirBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    BotonConstruir();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                SweetAlertDialog dialog = Helpers.getConfirmationDialog(context, "Construir", "¿Está seguro que desea construir esta cantidad de Cañones?", "Si", "No");
+
+                dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        try {
+                            BotonConstruir();
+                            sweetAlertDialog.cancel();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                dialog.show();
             }
         });
     }
