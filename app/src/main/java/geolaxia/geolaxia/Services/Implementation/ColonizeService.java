@@ -21,4 +21,19 @@ public class ColonizeService implements IColonizeService {
     public void SendColonizer(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int planetId, int planetIdTarget, long time) {
         restService.SendColonizer(username, token, act, context, planetId, planetIdTarget, time);
     }
+
+    @Override
+    public void GetColonizers(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int planetId) {
+        restService.GetColonizers(username, token, act, context, planetId);
+    }
+
+    @Override
+    public void IsSendingColonizer(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int planetId) {
+        restService.IsSendingColonizer(username, token, act, context, planetId);
+    }
+
+    @Override
+    public void SendColonizer(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int planetId, int planetIdTarget, long time) {
+        restService.SendColonizer(username, token, act, context, planetId, planetIdTarget, time);
+    }
 }

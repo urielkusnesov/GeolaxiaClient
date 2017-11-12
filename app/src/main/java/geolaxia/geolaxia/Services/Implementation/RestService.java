@@ -1519,4 +1519,248 @@ public class RestService implements IRestService {
 
         Request response = Volley.newRequestQueue(act).add(req);
     }
+
+    //-----------------
+    @Override
+    public void GetAllGalaxies(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.CoordinatesFragment context) {
+        String url = Constants.getGalaxiesServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            GalaxiesDTO galaxiesContainer = new Gson().fromJson(response.toString(), GalaxiesDTO.class);
+                            if(Constants.OK_RESPONSE.equals(galaxiesContainer.getStatus().getResult())) {
+                                context.FillGalaxies(galaxiesContainer.getData());
+                            } else {
+                                act.handleUnexpectedError(galaxiesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetSolarSystemsByGalaxy(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.CoordinatesFragment context, final int galaxyId) {
+        String url = Constants.getSolarSystemsServiceUrl(galaxyId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            SolarSystemsDTO solarSystemsContainer = new Gson().fromJson(response.toString(), SolarSystemsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(solarSystemsContainer.getStatus().getResult())) {
+                                context.FillSolarSystems(solarSystemsContainer.getData());
+                            } else {
+                                act.handleUnexpectedError(solarSystemsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetPlanetsBySolarSystem(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.CoordinatesFragment context, final int solarSystemId) {
+        String url = Constants.getPlanetsbySolarSystemService(solarSystemId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            PlanetsDTO planetsContainer = new Gson().fromJson(response.toString(), PlanetsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
+                                context.FillPlanets(planetsContainer.getData());
+                            } else {
+                                act.handleUnexpectedError(planetsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetColonizers(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.CoordinatesFragment context, final int planetId) {
+        String url = Constants.getColonizers(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ColonizersDTO colonizers = gSon.fromJson(response.toString(), ColonizersDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(colonizers.getStatus().getResult())) {
+                                context.CargarColonizadoresAhora(colonizers.getData());
+                            } else {
+                                act.handleUnexpectedError(colonizers.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void IsSendingColonizer(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.CoordinatesFragment context, final int planetId) {
+        String url = Constants.isSendingColonizer(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            IsSendingColonizerDTO sending = gSon.fromJson(response.toString(), IsSendingColonizerDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(sending.getStatus().getResult())) {
+                                context.EstaEnviandoColonizadorAhora(sending);
+                            } else {
+                                act.handleUnexpectedError(sending.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void SendColonizer(final String username, final String token, final ColonizeActivity act, final ColonizeActivity.CoordinatesFragment context, final int planetId, final int planetIdTarget, final long time) {
+        String url = Constants.sendColonizer(planetId, planetIdTarget, time);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            BaseDTO base = gSon.fromJson(response.toString(), BaseDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(base.getStatus().getResult())) {
+                                context.CargarTiempoEnvioColonizadorAhora();
+                            } else {
+                                act.handleUnexpectedError(base.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError(error.getMessage());
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
 }

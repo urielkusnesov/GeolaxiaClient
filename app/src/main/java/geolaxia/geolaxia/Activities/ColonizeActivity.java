@@ -11,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,8 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import geolaxia.geolaxia.Model.Adapters.PlanetColonizerListAdapter;
+import geolaxia.geolaxia.Model.Adapters.PlanetListAdapter;
 import geolaxia.geolaxia.Model.Colonizer;
 import geolaxia.geolaxia.Model.Dto.IsSendingColonizerDTO;
 import geolaxia.geolaxia.Model.Galaxy;
@@ -437,6 +441,14 @@ public class ColonizeActivity extends MenuActivity {
     public static class CoordinatesFragment extends Fragment {
         private CoordinatesFragment context;
         private ColonizeActivity act;
+        RecyclerView planetList;
+        LinearLayoutManager planetListManager;
+        PlanetColonizerListAdapter planetListAdapter;
+        private HashMap<Integer, Planet> availablePlanets = new HashMap<>();
+        private String[] galaxiesSelected;
+        private String[] solarSystemsSelected;
+        private Planet targetPlanet;
+        private View rootView;
 
         public CoordinatesFragment() {
         }
@@ -451,11 +463,291 @@ public class ColonizeActivity extends MenuActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_colonize_coordinates, container, false);
+            rootView = inflater.inflate(R.layout.fragment_colonize_coordinates, container, false);
             this.context = this;
             this.act = (ColonizeActivity) getActivity();
 
+            planetList = (RecyclerView) rootView.findViewById(R.id.planetList);
+            planetListManager = new LinearLayoutManager(act);
+            planetList.setLayoutManager(planetListManager);
+
+            this.CargarColonizadores();
+            act.planetService.GetAllGalaxies(act.player.getUsername(), act.player.getToken(), act, this);
+            this.CargarSelector();
+
+            EstaEnviandoColonizador();
+
+            this.VaciarPantalla();
+
             return rootView;
+        }
+
+        // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+        // Carga la seccion de Colonizadores del usuario.
+        private void CargarColonizadores() {
+            act.colonizeService.GetColonizers(act.player.getUsername(), act.player.getToken(), act, context, act.planet.getId());
+        }
+
+        public void CargarColonizadoresAhora(ArrayList<Colonizer> colonizers){
+            TextView cantColonizadoresActivos = (TextView) rootView.findViewById(R.id.colonization_cant_colonizadores_disponibles);
+
+            if (colonizers != null && !colonizers.isEmpty()) {
+
+                int canonesActivos = colonizers.size();
+                cantColonizadoresActivos.setText(String.valueOf(canonesActivos));
+            } else {
+                cantColonizadoresActivos.setText(String.valueOf(0));
+            }
+        }
+
+        // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+        // Carga los pickers de galaxia, sistema y planetas.
+        private void CargarSelector() {
+            NumberPicker galaxyPicker = (NumberPicker) rootView.findViewById(R.id.galaxy);
+            Helpers.setNumberPickerTextColor(galaxyPicker, Color.WHITE);
+            galaxyPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    act.planetService.GetSolarSystemsByGalaxy(act.player.getUsername(), act.player.getToken(), act, context, newVal);
+                }
+            });
+
+            NumberPicker solarSystemPicker = (NumberPicker) rootView.findViewById(R.id.solarSystem);
+            Helpers.setNumberPickerTextColor(solarSystemPicker, Color.WHITE);
+            solarSystemPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    act.planetService.GetPlanetsBySolarSystem(act.player.getUsername(), act.player.getToken(), act, context, newVal);
+                }
+            });
+        }
+
+        public void FillGalaxies(ArrayList<Galaxy> galaxies){
+            NumberPicker galaxyPicker = (NumberPicker) getView().findViewById(R.id.galaxy);
+            galaxyPicker.setMinValue(0);
+            galaxyPicker.setMaxValue(galaxies.size() - 1);
+
+            ArrayList<String> galaxyNames = new ArrayList<>();
+            for (Galaxy galaxy: galaxies) {
+                galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
+            }
+            galaxiesSelected = new String[galaxyNames.size()];
+            galaxiesSelected = galaxyNames.toArray(galaxiesSelected);
+            galaxyPicker.setDisplayedValues(galaxiesSelected);
+
+            act.planetService.GetSolarSystemsByGalaxy(act.player.getUsername(), act.player.getToken(), act, this, galaxies.get(0).getId());
+        }
+
+        public void FillSolarSystems(ArrayList<SolarSystem> solarSystems){
+            NumberPicker solarSystemPicker = (NumberPicker) getView().findViewById(R.id.solarSystem);
+            solarSystemPicker.setMinValue(0);
+            solarSystemPicker.setMaxValue(solarSystems.size() - 1);
+
+            ArrayList<String> solarSystemNames = new ArrayList<>();
+            for (SolarSystem solarSystem: solarSystems) {
+                solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
+            }
+            solarSystemsSelected = new String[solarSystemNames.size()];
+            solarSystemsSelected = solarSystemNames.toArray(solarSystemsSelected);
+            solarSystemPicker.setDisplayedValues(solarSystemsSelected);
+
+            act.planetService.GetPlanetsBySolarSystem(act.player.getUsername(), act.player.getToken(), act, this, solarSystems.get(0).getId());
+        }
+
+        public void FillPlanets(ArrayList<Planet> planets){
+            ArrayList<Planet> finalPlanets = new ArrayList<>();
+            for (Planet planet: planets) {
+                if(planet.getConqueror() == null){
+                    availablePlanets.put(planet.getOrder(), planet);
+                    finalPlanets.add(planet);
+                }
+            }
+
+            planetListAdapter = new PlanetColonizerListAdapter(finalPlanets, this);
+            planetList.setAdapter(planetListAdapter);
+            targetPlanet = finalPlanets.get(0);
+        }
+
+        public void selectTargetPlanet(Planet targetPlanet){
+            this.targetPlanet = targetPlanet;
+            setArrivalTime();
+        }
+
+        private void setArrivalTime(){
+            TextView estimateArrival = (TextView) getView().findViewById(R.id.costo_tiempo_valor);
+            TextView costoMO = (TextView) getView().findViewById(R.id.costo_materia_oscura_valor);
+            TextView cantColonizadores = (TextView) getView().findViewById(R.id.colonization_cant_colonizadores_disponibles);
+
+            int cantColo = (cantColonizadores.getText().toString().length() > 0) ? Integer.valueOf(cantColonizadores.getText().toString()) : 0;
+
+            if(cantColo > 0) {
+                Planet targetPlanet = this.GetTargetPlanet();
+                Date arrival = this.act.calculateArrivalTime(targetPlanet);
+
+                long totalDifferenceInSeconds = (arrival.getTime() - Calendar.getInstance().getTime().getTime()) / 1000;
+                long hours = Math.abs(totalDifferenceInSeconds / 3600);
+                long minutes = (totalDifferenceInSeconds % 3600) / 60;
+                long seconds = totalDifferenceInSeconds - (hours * 3600) - (minutes * 60);
+
+                long horasTotales = (minutes > 0 || seconds > 0) ? hours + 1 : hours;
+                long combustible = horasTotales * COSTO_COMBUSTIBLE;
+
+                if  (combustible <= this.act.planet.getDarkMatter()){
+                    this.CargarBotonEnviar();
+                    SetearBotonEnviar(true);
+                    costoMO.setText(String.valueOf(combustible));
+                    estimateArrival.setText(String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds));
+                } else {
+                    SetearBotonEnviar(false);
+                }
+            }
+        }
+
+        // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+        private void CargarBotonEnviar() {
+            Button boton = (Button) rootView.findViewById(R.id.colonization_enviar_boton);
+            boton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Enviar", "¿Está seguro que desea enviar el Colonizador?", "Si", "No");
+
+                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            Planet targetPlanet = GetTargetPlanet();
+                            Date arrival = act.calculateArrivalTime(targetPlanet);
+                            long totalDifference = (arrival.getTime() - Calendar.getInstance().getTime().getTime());
+
+                            act.colonizeService.SendColonizer(act.player.getUsername(), act.player.getToken(), act, context, act.planet.getId(), targetPlanet.getId(), totalDifference);
+                            sweetAlertDialog.cancel();
+                        }
+                    });
+
+                    dialog.show();
+                }
+            });
+        }
+
+        public void CargarTiempoEnvioColonizadorAhora(){
+            //TextView estimateArrival = (TextView) getView().findViewById(R.id.costo_tiempo_valor);
+            TextView costoMO = (TextView) getView().findViewById(R.id.costo_materia_oscura_valor);
+            //TextView cantColonizadores = (TextView) getView().findViewById(R.id.colonization_cant_colonizadores_disponibles);
+
+            Planet targetPlanet = GetTargetPlanet();
+            Date arrival = act.calculateArrivalTime(targetPlanet);
+            //long totalDifference = (arrival.getTime() - Calendar.getInstance().getTime().getTime());
+
+            act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
+
+            this.CargarTiempoLlegada(arrival.getTime());
+        }
+
+        private void CargarTiempoLlegada(long fechaFinalizacion){
+            long tiempoRestante = fechaFinalizacion - System.currentTimeMillis();
+
+            new CountDownTimer(tiempoRestante, 1000) {
+                TextView timer = (TextView) getView().findViewById(R.id.colonization_envio_timer);
+
+                public void onTick(long millisUntilFinished) {
+                    timer.setVisibility(View.VISIBLE);
+                    timer.setText("Tiempo de llegada: " +
+                            String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
+                            String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
+                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
+                    );
+                    timer.setTextColor(Color.GREEN);
+                    timer.setTypeface(null, Typeface.BOLD);
+                }
+
+                public void onFinish() {
+                    timer.setVisibility(View.INVISIBLE);
+                    CargarColonizadores();
+                }
+            }.start();
+
+            this.VaciarPantalla();
+            this.PantallaSegunEnvio();
+        }
+
+        private void EstaEnviandoColonizador() {
+            act.colonizeService.IsSendingColonizer(act.player.getUsername(), act.player.getToken(), act, this, act.planet.getId());
+        }
+
+        public void EstaEnviandoColonizadorAhora(IsSendingColonizerDTO tiempoLlegada){
+            if (tiempoLlegada.IsSending()) {
+                this.CargarTiempoLlegada(tiempoLlegada.getData());
+            }
+        }
+
+        // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+        private void VaciarPantalla(){
+            TextView estimateArrival = (TextView) rootView.findViewById(R.id.costo_tiempo_valor);
+            TextView costoMO = (TextView) rootView.findViewById(R.id.costo_materia_oscura_valor);
+
+            //this.CargarSelector();
+            estimateArrival.setText("-");
+            costoMO.setText("-");
+
+            this.SetearBotonEnviar(false);
+        }
+
+        private boolean EstaColonizando() {
+            TextView timer = (TextView) getView().findViewById(R.id.colonization_envio_timer);
+
+            if (timer.getVisibility() == View.VISIBLE) {
+                return (true);
+            }
+
+            return (false);
+        }
+
+        private void HabilitarPantalla() {
+            NumberPicker galaxyPicker = (NumberPicker) rootView.findViewById(R.id.galaxy);
+            NumberPicker solarSystemPicker = (NumberPicker) rootView.findViewById(R.id.solarSystem);
+            NumberPicker planetPicker = (NumberPicker) rootView.findViewById(R.id.planet);
+
+            galaxyPicker.setEnabled(true);
+            solarSystemPicker.setEnabled(true);
+            planetPicker.setEnabled(true);
+
+            this.SetearBotonEnviar(true);
+        }
+
+        private void DeshabilitarPantalla() {
+            NumberPicker galaxyPicker = (NumberPicker) rootView.findViewById(R.id.galaxy);
+            NumberPicker solarSystemPicker = (NumberPicker) rootView.findViewById(R.id.solarSystem);
+            NumberPicker planetPicker = (NumberPicker) rootView.findViewById(R.id.planet);
+
+            galaxyPicker.setEnabled(false);
+            solarSystemPicker.setEnabled(false);
+            planetPicker.setEnabled(false);
+
+            this.SetearBotonEnviar(false);
+        }
+
+        private void PantallaSegunEnvio() {
+            boolean estaConstruyendo = this.EstaColonizando();
+
+            if (estaConstruyendo) {
+                this.DeshabilitarPantalla();
+            } else {
+                this.HabilitarPantalla();
+            }
+        }
+
+        private Planet GetTargetPlanet() {
+            //NumberPicker planetsPicker = (NumberPicker) getView().findViewById(R.id.planet);
+            //int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+            //Planet targetPlanet = availablePlanets.get(planetOrder);
+
+            return(this.targetPlanet);
+        }
+
+        private void SetearBotonEnviar(boolean activo) {
+            Button boton = (Button) rootView.findViewById(R.id.colonization_enviar_boton);
+            boton.setEnabled(activo);
         }
     }
 

@@ -29,4 +29,7 @@ public interface IPlanetService {
     void GetAllGalaxies(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context);
     void GetSolarSystemsByGalaxy(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int galaxyId);
     void GetPlanetsBySolarSystem(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int solarSystemId);
+    void GetAllGalaxies(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context);
+    void GetSolarSystemsByGalaxy(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int galaxyId);
+    void GetPlanetsBySolarSystem(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int solarSystemId);
 }

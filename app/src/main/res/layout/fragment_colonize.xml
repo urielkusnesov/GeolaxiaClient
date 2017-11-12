@@ -101,48 +101,41 @@
                             android:layout_marginBottom="10dp"
                             android:background="#FFFFFF"/>
 
-                        <!--RelativeLayout
-                            android:id="@+id/targetPickers"
-                            android:layout_centerInParent="true"
-                            android:layout_marginTop="10dp"
-                            android:layout_below="@id/targetDivider"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"-->
                         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             xmlns:tools="http://schemas.android.com/tools"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-                        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:tools="http://schemas.android.com/tools"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true">
+                            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:tools="http://schemas.android.com/tools"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true">
 
-                            <NumberPicker
-                                android:id="@+id/galaxy"
-                                android:background="#80000000"
-                                android:descendantFocusability="blocksDescendants"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                            <NumberPicker
-                                android:id="@+id/solarSystem"
-                                android:background="#80000000"
-                                android:descendantFocusability="blocksDescendants"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_toRightOf="@+id/galaxy"
-                                android:layout_toEndOf="@+id/galaxy" />
-                            <NumberPicker
-                                android:id="@+id/planet"
-                                android:background="#80000000"
-                                android:descendantFocusability="blocksDescendants"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:layout_toRightOf="@+id/solarSystem"
-                                android:layout_toEndOf="@+id/solarSystem" />
-                        </RelativeLayout>
+                                <NumberPicker
+                                    android:id="@+id/galaxy"
+                                    android:background="#80000000"
+                                    android:descendantFocusability="blocksDescendants"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                                <NumberPicker
+                                    android:id="@+id/solarSystem"
+                                    android:background="#80000000"
+                                    android:descendantFocusability="blocksDescendants"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_toRightOf="@+id/galaxy"
+                                    android:layout_toEndOf="@+id/galaxy" />
+                                <NumberPicker
+                                    android:id="@+id/planet"
+                                    android:background="#80000000"
+                                    android:descendantFocusability="blocksDescendants"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_toRightOf="@+id/solarSystem"
+                                    android:layout_toEndOf="@+id/solarSystem" />
+                            </RelativeLayout>
                         </RelativeLayout>
 
                         <LinearLayout
