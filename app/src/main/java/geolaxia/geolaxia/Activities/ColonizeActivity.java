@@ -277,7 +277,8 @@ public class ColonizeActivity extends MenuActivity {
                 long horasTotales = (minutes > 0 || seconds > 0) ? hours + 1 : hours;
                 long combustible = horasTotales * COSTO_COMBUSTIBLE;
 
-                if  (combustible <= this.act.planet.getDarkMatter()){
+                //if  ((combustible <= this.act.planet.getDarkMatter()) && (!this.EstaColonizando())){
+                if  ((combustible <= this.act.planet.getDarkMatter())){
                     this.CargarBotonEnviar();
                     SetearBotonEnviar(true);
                     costoMO.setText(String.valueOf(combustible));
@@ -592,7 +593,8 @@ public class ColonizeActivity extends MenuActivity {
                 long horasTotales = (minutes > 0 || seconds > 0) ? hours + 1 : hours;
                 long combustible = horasTotales * COSTO_COMBUSTIBLE;
 
-                if  (combustible <= this.act.planet.getDarkMatter()){
+                //if  ((combustible <= this.act.planet.getDarkMatter()) && (!this.EstaColonizando())){
+                if  ((combustible <= this.act.planet.getDarkMatter())){
                     this.CargarBotonEnviar();
                     SetearBotonEnviar(true);
                     costoMO.setText(String.valueOf(combustible));
