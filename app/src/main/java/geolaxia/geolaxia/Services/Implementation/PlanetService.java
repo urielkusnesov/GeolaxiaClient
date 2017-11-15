@@ -1,8 +1,12 @@
 package geolaxia.geolaxia.Services.Implementation;
 
+import android.app.Activity;
+import android.app.Fragment;
+
 import org.json.JSONException;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.ColonizeActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Services.Interface.IPlanetService;
 import geolaxia.geolaxia.Services.Interface.IRestService;
@@ -67,5 +71,35 @@ public class PlanetService implements IPlanetService {
     @Override
     public void GetFleet(String username, String token, AttackActivity act, AttackActivity.CloseAttackFragment context, int planetId) {
         restService.GetPlanetFleet(username, token, act, context, planetId);
+    }
+
+    @Override
+    public void GetAllGalaxies(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context) {
+        restService.GetAllGalaxies(username, token, act, context);
+    }
+
+    @Override
+    public void GetSolarSystemsByGalaxy(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int galaxyId) {
+        restService.GetSolarSystemsByGalaxy(username, token, act, context, galaxyId);
+    }
+
+    @Override
+    public void GetPlanetsBySolarSystem(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int solarSystemId) {
+        restService.GetPlanetsBySolarSystem(username, token, act, context, solarSystemId);
+    }
+
+    @Override
+    public void GetAllGalaxies(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context) {
+        restService.GetAllGalaxies(username, token, act, context);
+    }
+
+    @Override
+    public void GetSolarSystemsByGalaxy(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int galaxyId) {
+        restService.GetSolarSystemsByGalaxy(username, token, act, context, galaxyId);
+    }
+
+    @Override
+    public void GetPlanetsBySolarSystem(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int solarSystemId) {
+        restService.GetPlanetsBySolarSystem(username, token, act, context, solarSystemId);
     }
 }

@@ -1,8 +1,6 @@
 package geolaxia.geolaxia.Model.Adapters;
 
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +18,10 @@ import geolaxia.geolaxia.R;
  * Created by uriel on 26/8/2017.
  */
 
-public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.ViewHolder> {
+public class PlanetColonizerListAdapter extends RecyclerView.Adapter<PlanetColonizerListAdapter.ViewHolder> {
     private ArrayList<Planet> planets;
-    private AttackActivity.CoordinatesFragment context;
-    private int selectedPostion = -1;
+    private ColonizeActivity.CoordinatesFragment context;
+    private int selectedPostion;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -40,14 +38,14 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public PlanetListAdapter(ArrayList<Planet> planets, AttackActivity.CoordinatesFragment context)
+    public PlanetColonizerListAdapter(ArrayList<Planet> planets, ColonizeActivity.CoordinatesFragment context)
     {
         this.planets = planets;
         this.context = context;
     }
 
     @Override
-    public PlanetListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlanetColonizerListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.planet_list, parent, false);
         ViewHolder vh = new ViewHolder(v);
@@ -65,26 +63,20 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
             holder.name.setText(planets.get(position).getName() + " - No Colonizado");
         }
 
+        if(selectedPostion == position){
+
+        }
         holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         holder.itemView.setClickable(true);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.setBackgroundColor(Color.WHITE);
+                holder.name.setTextColor(Color.BLACK);
                 context.selectTargetPlanet(planets.get(position));
                 selectedPostion = position;
-                notifyDataSetChanged();
             }
         });
-
-        if(selectedPostion==position){
-            holder.itemView.setBackgroundColor(Color.WHITE);
-            holder.name.setTextColor(Color.BLACK);
-        }
-        else
-        {
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
-            holder.name.setTextColor(Color.WHITE);
-        }
     }
 
     @Override

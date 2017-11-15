@@ -3,8 +3,10 @@ package geolaxia.geolaxia.Services.Interface;
 import org.json.JSONException;
 
 import geolaxia.geolaxia.Activities.AttackActivity;
+import geolaxia.geolaxia.Activities.ColonizeActivity;
 import geolaxia.geolaxia.Activities.ConstructionsActivity;
 import geolaxia.geolaxia.Activities.DefenseActivity;
+import geolaxia.geolaxia.Activities.DefenseQuestionActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
 import geolaxia.geolaxia.Activities.MilitaryConstructionsActivity;
@@ -83,4 +85,20 @@ public interface IRestService {
     void GetShipsCost(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context);
     void BuildShips(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context, int planetId, int qtt, int shipType);
 
+    void Get3RandomQuestions(String username, String token, DefenseQuestionActivity context);
+
+    //colonize
+    void GetAllGalaxies(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context);
+    void GetSolarSystemsByGalaxy(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int galaxyId);
+    void GetPlanetsBySolarSystem(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int solarSystemId);
+    void GetColonizers(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int planetId);
+    void IsSendingColonizer(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int planetId);
+    void SendColonizer(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context, int planetId, int planetIdTarget, long time);
+
+    void GetAllGalaxies(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context);
+    void GetSolarSystemsByGalaxy(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int galaxyId);
+    void GetPlanetsBySolarSystem(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int solarSystemId);
+    void GetColonizers(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int planetId);
+    void IsSendingColonizer(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int planetId);
+    void SendColonizer(String username, String token, ColonizeActivity act, ColonizeActivity.CoordinatesFragment context, int planetId, int planetIdTarget, long time);
 }

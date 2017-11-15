@@ -5,7 +5,7 @@ package geolaxia.geolaxia.Model;
  */
 
 public class Constants {
-    public static String BASE_URL = "192.168.0.11";/*Server IP*/
+    public static String BASE_URL = "192.168.0.12";/*Server IP*/
     public static final String PORT = ":62078/";
     public static final String HTTP = "http://";
     public static final String LOGIN_SERVICE = "api/player/login";
@@ -88,11 +88,22 @@ public class Constants {
     public static final String DEFENSE_BUILD_SERVICE = "api/defense/buildCannons";
     public static final String DEFENSE_GETSHIELDSTATUS_SERVICE = "api/defense/getShieldStatus";
     public static final String DEFENSE_ISBUILDINGCANNONS_SERVICE = "api/defense/IsBuildingCannons";
+    public static final String DEFENSE_GET_RANDOM_QUESTIONS_SERVICE = "api/defense/Get3RandomQuestions";
 
     public static String getCannons(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETCANNONS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String BuildCannons(int planetId, int cant) { return (HTTP + BASE_URL + PORT + DEFENSE_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "cant=" + String.valueOf(cant)); }
     public static String getShieldStatus(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETSHIELDSTATUS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String isBuldingCannons(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_ISBUILDINGCANNONS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getRandomQuestions() { return (HTTP + BASE_URL + PORT + DEFENSE_GET_RANDOM_QUESTIONS_SERVICE); }
+
+    //Colonize
+    public static final String COLONIZE_GETCOLONIZERS_SERVICE = "api/colonize/GetColonizers";
+    public static final String COLONIZE_SENDCOLONIZERS_SERVICE = "api/colonize/SendColonizer";
+    public static final String DEFENSE_ISSENDINDCOLONIZER_SERVICE = "api/colonize/IsSendingColonizer";
+
+    public static String getColonizers(int planetId) { return (HTTP + BASE_URL + PORT + COLONIZE_GETCOLONIZERS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String sendColonizer(int planetId, int planetIdTarget, long time) { return (HTTP + BASE_URL + PORT + COLONIZE_SENDCOLONIZERS_SERVICE + "?planetId=" + String.valueOf(planetId) + "&planetIdTarget=" + String.valueOf(planetIdTarget) + "&time=" + String.valueOf(time)); }
+    public static String isSendingColonizer(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_ISSENDINDCOLONIZER_SERVICE + "?planetId=" + String.valueOf(planetId)); }
 
     //ERRORS
     public static final String ERROR_RESPONSE = "error";

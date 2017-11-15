@@ -80,6 +80,11 @@ public class MenuActivity extends BaseActivity {
                         break;
                     case R.id.colonization:
                         drawerLayout.closeDrawers();
+                        //Intent intent = new Intent(context, DefenseQuestionActivity.class);
+                        Intent intent = new Intent(context, ColonizeActivity.class);
+                        intent.putExtra("player", player);
+                        intent.putExtra("planet", planet);
+                        startActivity(intent);
                         break;
                     case R.id.help:
                         drawerLayout.closeDrawers();
@@ -139,5 +144,13 @@ public class MenuActivity extends BaseActivity {
 
     protected void changePlanet(Planet planet){
         this.planet = planet;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("player", player);
+        intent.putExtra("planet", planet);
+        startActivity(intent);
     }
 }
