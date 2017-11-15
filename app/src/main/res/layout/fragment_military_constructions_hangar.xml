@@ -1,0 +1,103 @@
+<android.support.v4.widget.NestedScrollView android:id="@+id/scroll_form"
+    android:layout_marginTop="8dp"
+    android:layout_below="@id/bar"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/content_attack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="geolaxia.geolaxia.Activities.MilitaryConstructionsActivity"
+        tools:showIn="@layout/activity_attack"
+        android:weightSum="1.0">
+
+        <TextView
+            android:id="@+id/hangarText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Hangar"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+        <View
+            android:id="@+id/hangarDivider"
+            android:layout_below="@id/hangarText"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/buildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Construir"
+            style="@style/Widget.AppCompat.Button"
+            android:background="#80000000"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/hangarDivider"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/costText"
+            android:layout_below="@id/buildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Costo: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/timeText"
+            android:layout_below="@id/costText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Tiempo de finalizacion: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/requiredLevel"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timeText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFF00000"/>
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/requiredLevel"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -9,6 +9,7 @@ public class Cost {
     private int CrystalCost;
     private int MetalCost;
     private int DarkMatterCost;
+    private String Element;
 
     public int getId() {
         return Id;
@@ -40,5 +41,13 @@ public class Cost {
 
     public void setDarkMatterCost(int darkMatterCost) {
         DarkMatterCost = darkMatterCost;
+    }
+
+    public String getElement() {
+        return Element;
+    }
+
+    public void setElement(String element) {
+        Element = element;
     }
 }

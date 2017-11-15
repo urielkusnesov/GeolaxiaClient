@@ -59,6 +59,7 @@
         <activity
             android:name=".Activities.ConstructionsActivity"
             android:label="@string/title_activity_constructions"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.HelpActivity"
@@ -67,7 +68,13 @@
         <activity
             android:name=".Activities.DefenseActivity"
             android:label="Defense"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.MilitaryConstructionsActivity"
+            android:label="@string/title_activity_military_constructions"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

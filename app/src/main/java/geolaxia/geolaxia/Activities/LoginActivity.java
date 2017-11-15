@@ -154,7 +154,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
             @Override
             public void onError(FacebookException e) {
-                handleUnexpectedError("EL inicio de sesión con Facebook falló.");
+                handleUnexpectedError("Error", "Fallo el inicio de sesión con Facebook.");
             }
         });
 

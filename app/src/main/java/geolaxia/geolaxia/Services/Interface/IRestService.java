@@ -7,9 +7,11 @@ import geolaxia.geolaxia.Activities.ConstructionsActivity;
 import geolaxia.geolaxia.Activities.DefenseActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
+import geolaxia.geolaxia.Activities.MilitaryConstructionsActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
 import geolaxia.geolaxia.Model.Attack;
 import geolaxia.geolaxia.Model.EnergyFacility;
+import geolaxia.geolaxia.Model.Military;
 import geolaxia.geolaxia.Model.Mine;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
@@ -62,9 +64,23 @@ public interface IRestService {
     void BuildSolarPanels(final String username, final String token, final ConstructionsActivity.EnergyFragment fragment, final ConstructionsActivity context, int planetId, int qtt);
     void BuildWindTurbines(final String username, final String token, final ConstructionsActivity.EnergyFragment fragment, final ConstructionsActivity context, int planetId, int qtt);
 
+    //military construction
+    void GetCurrentHangar(String username, String token, int planetId, MilitaryConstructionsActivity context, MilitaryConstructionsActivity.HangarFragment fragment);
+    void BuildHangar(String username, String token, int planetId, MilitaryConstructionsActivity context, MilitaryConstructionsActivity.HangarFragment fragment);
+    void GetCurrentShield(String username, String token, int planetId, MilitaryConstructionsActivity context, MilitaryConstructionsActivity.OthersFragment fragment);
+    void GetCurrentProbes(String username, String token, int planetId, MilitaryConstructionsActivity context, MilitaryConstructionsActivity.OthersFragment fragment);
+    void GetCurrentTraders(String username, String token, int planetId, MilitaryConstructionsActivity context, MilitaryConstructionsActivity.OthersFragment fragment);
+    void BuildShield(String username, String token, int planetId, MilitaryConstructionsActivity context, MilitaryConstructionsActivity.OthersFragment fragment);
+    void BuildProbes(final String username, final String token, final MilitaryConstructionsActivity.OthersFragment fragment, final MilitaryConstructionsActivity context, int planetId, int qtt);
+    void BuildTraders(final String username, final String token, final MilitaryConstructionsActivity.OthersFragment fragment, final MilitaryConstructionsActivity context, int planetId, int qtt);
+
     //defense
     void GetShieldStatus(String username, String token, DefenseActivity context, int planetId);
     void GetCannons(String username, String token, DefenseActivity context, int planetId);
     void BuildCannons(String username, String token, DefenseActivity context, int planetId, int cant);
     void IsBuildingCannons(String username, String token, DefenseActivity context, int planetId);
+    void GetPlanetFleet(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context, int planetId);
+    void GetShipsCost(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context);
+    void BuildShips(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context, int planetId, int qtt, int shipType);
+
 }

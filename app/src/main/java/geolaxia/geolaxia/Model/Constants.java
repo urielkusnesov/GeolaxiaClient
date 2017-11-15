@@ -32,6 +32,17 @@ public class Constants {
     public static final String ENERGY_BUILD_SERVICE = "api/construction/startbuildenergyfacility";
     public static final String SOLAR_PANEL_BUILD_SERVICE = "api/construction/startbuildsolarpanel";
     public static final String WIND_TURBINE_BUILD_SERVICE = "api/construction/startbuildwindturbine";
+    public static final String HANGAR_CURRENT_SERVICE = "api/construction/currenthangar";
+    public static final String HANGAR_BUILD_SERVICE = "api/construction/startbuildhangar";
+    public static final String SHIP_COST_SERVICE = "api/construction/shipscost";
+    public static final String SHIP_BUILD_SERVICE = "api/construction/startbuildship";
+    public static final String SHIELD_CURRENT_SERVICE = "api/construction/currentshield";
+    public static final String PROBE_CURRENT_SERVICE = "api/construction/currentprobes";
+    public static final String TRADER_CURRENT_SERVICE = "api/construction/currenttraders";
+    public static final String SHIELD_BUILD_SERVICE = "api/construction/startbuildshield";
+    public static final String PROBE_BUILD_SERVICE = "api/construction/startbuildprobe";
+    public static final String TRADER_BUILD_SERVICE = "api/construction/startbuildtrader";
+    public static final String SHIPS_CURRENT_SERVICE = "api/construction/currentships";
 
     public static final long MINIMUM_REQUEST_IP_TIME = 5000; // 5s = 5000ms
 
@@ -60,6 +71,17 @@ public class Constants {
     public static String getBuildEnergyFacilityServiceUrl() { return (HTTP + BASE_URL + PORT + ENERGY_BUILD_SERVICE); }
     public static String getBuildSolarPanelsServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + SOLAR_PANEL_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
     public static String getBuildWindTurbinesServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + WIND_TURBINE_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
+    public static String getCurrentHangarServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + HANGAR_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getBuildHangarServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + HANGAR_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getShipsServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + SHIPS_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getShipsCostServiceUrl() { return (HTTP + BASE_URL + PORT + SHIP_COST_SERVICE); }
+    public static String getBuildShipsServiceUrl(int planetId, int qtt, int shipType) { return (HTTP + BASE_URL + PORT + SHIP_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)) + "&" + "shipType=" + String.valueOf(shipType); }
+    public static String getCurrentShieldServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + SHIELD_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getCurrentProbesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + PROBE_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getCurrentTradersServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + TRADER_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getBuildShieldServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + SHIELD_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getBuildProbesServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + PROBE_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
+    public static String getBuildTradersServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + TRADER_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
 
     //Defense
     public static final String DEFENSE_GETCANNONS_SERVICE = "api/defense/getCannons";

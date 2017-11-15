@@ -1,0 +1,321 @@
+<android.support.v4.widget.NestedScrollView android:id="@+id/scroll_form"
+    android:layout_marginTop="8dp"
+    android:layout_below="@id/bar"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/content_attack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="geolaxia.geolaxia.Activities.MilitaryConstructionsActivity"
+        tools:showIn="@layout/activity_attack"
+        android:weightSum="1.0">
+
+        <TextView
+            android:id="@+id/shieldText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Escudo"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+        <View
+            android:id="@+id/shieldDivider"
+            android:layout_below="@id/shieldText"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"/>
+
+        <Button
+            android:id="@+id/shieldBuildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Construir"
+            style="@style/Widget.AppCompat.Button"
+            android:background="#80000000"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/shieldDivider"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:id="@+id/shieldCostText"
+            android:layout_below="@id/shieldBuildButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Costo: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shieldTimeText"
+            android:layout_below="@id/shieldCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Tiempo de finalizacion: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shieldRequiredLevel"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shieldTimeText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFF00000"/>
+
+        <TextView
+            android:id="@+id/shield_timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shieldRequiredLevel"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/probeText"
+            android:layout_below="@id/shield_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Sondas"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+        <View
+            android:id="@+id/probeDivider"
+            android:layout_below="@id/probeText"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/probeQttText"
+            android:layout_below="@id/probeDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Cantidad actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <RelativeLayout
+            android:id="@+id/probePicker"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/probeQttText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <NumberPicker
+                android:id="@+id/probe"
+                android:background="#80000000"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/probeBuildButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Construir"
+                style="@style/Widget.AppCompat.Button"
+                android:background="#80000000"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/probe"
+                android:layout_toEndOf="@id/probe"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/probeCostText"
+            android:layout_below="@id/probePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Costo: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/probeTimeText"
+            android:layout_below="@id/probeCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Tiempo de finalizacion: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/probeRequiredLevelText"
+            android:layout_below="@id/probeTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Nivel Requerido: "
+            android:textColor="#FFF00000"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/probe_timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/probeRequiredLevelText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/freighterText"
+            android:layout_below="@id/probe_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Cargueros"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+        <View
+            android:id="@+id/freighterDivider"
+            android:layout_below="@id/freighterText"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/freighterQttText"
+            android:layout_below="@id/freighterDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Cantidad actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <RelativeLayout
+            android:id="@+id/freighterPicker"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/freighterQttText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <NumberPicker
+                android:id="@+id/freighter"
+                android:background="#80000000"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/freighterBuildButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Construir"
+                style="@style/Widget.AppCompat.Button"
+                android:background="#80000000"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/freighter"
+                android:layout_toEndOf="@id/freighter"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/freighterCostText"
+            android:layout_below="@id/freighterPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Costo: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/freighterTimeText"
+            android:layout_below="@id/freighterCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Tiempo de finalizacion: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/freighterRequiredLevelText"
+            android:layout_below="@id/freighterTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Nivel Requerido: "
+            android:textColor="#FFF00000"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/freighter_timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/freighterRequiredLevelText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

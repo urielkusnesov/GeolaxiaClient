@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/content_attack"
@@ -17,255 +17,31 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="geolaxia.geolaxia.Activities.ConstructionsActivity"
+        tools:context="geolaxia.geolaxia.Activities.MilitaryConstructionsActivity"
         tools:showIn="@layout/activity_attack"
         android:weightSum="1.0">
 
         <TextView
-            android:id="@+id/energyCentralText"
+            android:id="@+id/shipXText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Central de Energia"
+            android:text="Naves X"
             android:textColor="#FFFFFF"
             android:textSize="30dp" />
 
         <View
-            android:id="@+id/energyCentralDivider"
-            android:layout_below="@id/energyCentralText"
+            android:id="@+id/shipXDivider"
+            android:layout_below="@id/shipXText"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_marginBottom="10dp"
             android:background="#FFFFFF"/>
 
         <TextView
-            android:id="@+id/energyCentralLevelText"
-            android:layout_below="@id/energyCentralDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Nivel actual: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyCentralProductionText"
-            android:layout_below="@id/energyCentralLevelText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Produccion actual: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <Button
-            android:id="@+id/energyCentralBuildButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Construir Nivel "
-            style="@style/Widget.AppCompat.Button"
-            android:background="#80000000"
-            android:textColor="#FFFFFF"
-            android:layout_below="@id/energyCentralProductionText"
-            android:layout_centerInParent="true"
-            />
-
-        <TextView
-            android:id="@+id/energyCentralCostText"
-            android:layout_below="@id/energyCentralBuildButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Costo: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyCentralTimeText"
-            android:layout_below="@id/energyCentralCostText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Tiempo de finalizacion: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyCentralNewProductionText"
-            android:layout_below="@id/energyCentralTimeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Produccion por hora: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyCentral_timer"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/energyCentralNewProductionText"
-            android:layout_centerInParent="true"
-            android:typeface="normal"
-            android:textSize="8pt"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:id="@+id/energyFuelCentralText"
-            android:layout_below="@id/energyCentral_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Central de Energia por Combustible"
-            android:textColor="#FFFFFF"
-            android:textSize="30dp" />
-
-        <View
-            android:id="@+id/energyFuelCentralDivider"
-            android:layout_below="@id/energyFuelCentralText"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginBottom="10dp"
-            android:background="#FFFFFF"/>
-
-        <TextView
-            android:id="@+id/energyFuelCentralLevelText"
-            android:layout_below="@id/energyFuelCentralDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Nivel actual: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyFuelCentralProductionText"
-            android:layout_below="@id/energyFuelCentralLevelText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Produccion actual: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyFuelCentralDarkMatterText"
-            android:layout_below="@id/energyFuelCentralProductionText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Materia oscura consumida actual: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <Button
-            android:id="@+id/energyFuelCentralBuildButton"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/energyFuelCentralDarkMatterText"
-            android:layout_centerInParent="true"
-            android:background="#80000000"
-            android:text="Construir Nivel "
-            android:textColor="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/energyFuelCentralCostText"
-            android:layout_below="@id/energyFuelCentralBuildButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Costo: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyFuelCentralNextDarkMatterText"
-            android:layout_below="@id/energyFuelCentralCostText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Consumo Materia Oscura: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyFuelCentralTimeText"
-            android:layout_below="@id/energyFuelCentralNextDarkMatterText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Tiempo de finalizacion: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyFuelCentralNewProductionText"
-            android:layout_below="@id/energyFuelCentralTimeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Produccion por hora: "
-            android:textColor="#FFFFFF"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/energyFuelCentral_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/energyFuelCentralNewProductionText"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_centerInParent="true"
-            android:typeface="normal"
-            android:textSize="8pt"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:id="@+id/solarPanelText"
-            android:layout_below="@id/energyFuelCentral_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Paneles Solares"
-            android:textColor="#FFFFFF"
-            android:textSize="30dp" />
-
-        <View
-            android:id="@+id/solarPanelDivider"
-            android:layout_below="@id/solarPanelText"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginBottom="10dp"
-            android:background="#FFFFFF"/>
-
-        <TextView
-            android:id="@+id/solarPanelQttText"
-            android:layout_below="@id/solarPanelDivider"
+            android:id="@+id/shipXQttText"
+            android:layout_below="@id/shipXDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -275,22 +51,22 @@
             android:textSize="15dp" />
 
         <RelativeLayout
-            android:id="@+id/solarPanelPicker"
+            android:id="@+id/shipXPicker"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/solarPanelQttText"
+            android:layout_below="@id/shipXQttText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <NumberPicker
-                    android:id="@+id/solarPanel"
-                    android:background="#80000000"
-                    android:descendantFocusability="blocksDescendants"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                android:id="@+id/shipX"
+                android:background="#80000000"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <Button
-                android:id="@+id/solarPanelBuildButton"
+                android:id="@+id/shipXBuildButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Construir"
@@ -299,15 +75,15 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginLeft="20dp"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/solarPanel"
-                android:layout_toEndOf="@id/solarPanel"
+                android:layout_toRightOf="@id/shipX"
+                android:layout_toEndOf="@id/shipX"
                 />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/solarPanelCostText"
-            android:layout_below="@id/solarPanelPicker"
+            android:id="@+id/shipXCostText"
+            android:layout_below="@id/shipXPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -318,8 +94,8 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/solarPanelTimeText"
-            android:layout_below="@id/solarPanelCostText"
+            android:id="@+id/shipXTimeText"
+            android:layout_below="@id/shipXCostText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -330,39 +106,87 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/solarPanel_timer"
+            android:id="@+id/shipXAttackText"
+            android:layout_below="@id/shipXTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Ataque: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipXDefenseText"
+            android:layout_below="@id/shipXAttackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Defensa: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipXSpeedText"
+            android:layout_below="@id/shipXDefenseText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Velocidad: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipXRequiredLevelText"
+            android:layout_below="@id/shipXSpeedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Nivel Requerido: "
+            android:textColor="#FFF00000"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipX_timer"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/solarPanelTimeText"
+            android:layout_below="@id/shipXRequiredLevelText"
             android:layout_centerInParent="true"
             android:typeface="normal"
             android:textSize="8pt"
             android:textColor="#FFFFFF"/>
 
         <TextView
-            android:id="@+id/windTurbineText"
-            android:layout_below="@id/solarPanel_timer"
+            android:id="@+id/shipYText"
+            android:layout_below="@id/shipX_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Turbinas Eolicas"
+            android:text="Naves Y"
             android:textColor="#FFFFFF"
             android:textSize="30dp" />
 
         <View
-            android:id="@+id/windTurbineDivider"
-            android:layout_below="@id/windTurbineText"
+            android:id="@+id/shipYDivider"
+            android:layout_below="@id/shipYText"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_marginBottom="10dp"
             android:background="#FFFFFF"/>
 
         <TextView
-            android:id="@+id/windTurbineQttText"
-            android:layout_below="@id/windTurbineDivider"
+            android:id="@+id/shipYQttText"
+            android:layout_below="@id/shipYDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -372,39 +196,39 @@
             android:textSize="15dp" />
 
         <RelativeLayout
-            android:id="@+id/windTurbinePicker"
+            android:id="@+id/shipYPicker"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/windTurbineQttText"
+            android:layout_below="@id/shipYQttText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-                <NumberPicker
-                    android:id="@+id/windTurbine"
-                    android:background="#80000000"
-                    android:descendantFocusability="blocksDescendants"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+            <NumberPicker
+                android:id="@+id/shipY"
+                android:background="#80000000"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-                <Button
-                    android:id="@+id/windTurbineBuildButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Construir"
-                    style="@style/Widget.AppCompat.Button"
-                    android:background="#80000000"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginLeft="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/windTurbine"
-                    android:layout_toEndOf="@id/windTurbine"
-                    />
+            <Button
+                android:id="@+id/shipYBuildButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Construir"
+                style="@style/Widget.AppCompat.Button"
+                android:background="#80000000"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/shipY"
+                android:layout_toEndOf="@id/shipY"
+                />
 
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/windTurbineCostText"
-            android:layout_below="@id/windTurbinePicker"
+            android:id="@+id/shipYCostText"
+            android:layout_below="@id/shipYPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -415,8 +239,8 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/windTurbineTimeText"
-            android:layout_below="@id/windTurbineCostText"
+            android:id="@+id/shipYTimeText"
+            android:layout_below="@id/shipYCostText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -427,16 +251,209 @@
             android:textSize="15dp" />
 
         <TextView
-            android:id="@+id/windTurbine_timer"
+            android:id="@+id/shipYAttackText"
+            android:layout_below="@id/shipYTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Ataque: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipYDefenseText"
+            android:layout_below="@id/shipYAttackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Defensa: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipYSpeedText"
+            android:layout_below="@id/shipYDefenseText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Velocidad: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipYRequiredLevelText"
+            android:layout_below="@id/shipYSpeedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Nivel Requerido: "
+            android:textColor="#FFF00000"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipY_timer"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/windTurbineTimeText"
+            android:layout_below="@id/shipYRequiredLevelText"
             android:layout_centerInParent="true"
             android:typeface="normal"
             android:textSize="8pt"
             android:textColor="#FFFFFF"/>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/shipZText"
+            android:layout_below="@id/shipY_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Naves Z"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp" />
+
+        <View
+            android:id="@+id/shipZDivider"
+            android:layout_below="@id/shipZText"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/shipZQttText"
+            android:layout_below="@id/shipZDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Cantidad actual: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <RelativeLayout
+            android:id="@+id/shipZPicker"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/shipZQttText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <NumberPicker
+                android:id="@+id/shipZ"
+                android:background="#80000000"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/shipZBuildButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Construir"
+                style="@style/Widget.AppCompat.Button"
+                android:background="#80000000"
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/shipZ"
+                android:layout_toEndOf="@id/shipZ"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/shipZCostText"
+            android:layout_below="@id/shipZPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Costo: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipZTimeText"
+            android:layout_below="@id/shipZCostText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Tiempo de finalizacion: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipZAttackText"
+            android:layout_below="@id/shipZTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Ataque: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipZDefenseText"
+            android:layout_below="@id/shipZAttackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Defensa: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipZSpeedText"
+            android:layout_below="@id/shipZDefenseText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Velocidad: "
+            android:textColor="#FFFFFF"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipZRequiredLevelText"
+            android:layout_below="@id/shipZSpeedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Nivel Requerido: "
+            android:textColor="#FFF00000"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/shipZ_timer"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shipZRequiredLevelText"
+            android:layout_centerInParent="true"
+            android:typeface="normal"
+            android:textSize="8pt"
+            android:textColor="#FFFFFF"/>
+
+    </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

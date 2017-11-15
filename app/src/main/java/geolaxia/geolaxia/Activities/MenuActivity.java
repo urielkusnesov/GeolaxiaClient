@@ -73,6 +73,10 @@ public class MenuActivity extends BaseActivity {
                         break;
                     case R.id.military:
                         drawerLayout.closeDrawers();
+                        Intent militaryConstructionIntent = new Intent(context, MilitaryConstructionsActivity.class);
+                        militaryConstructionIntent.putExtra("player", player);
+                        militaryConstructionIntent.putExtra("planet", planet);
+                        startActivity(militaryConstructionIntent);
                         break;
                     case R.id.colonization:
                         drawerLayout.closeDrawers();

@@ -426,7 +426,8 @@ public class ConstructionsActivity extends MenuActivity {
                     } else {
                         buildSolarPanel.setPaintFlags(buildSolarPanel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildSolarPanel.setEnabled(false);
-                        solarPanelTimeText.setText("Costo: ");
+                        solarPanelCostText.setText("Costo: ");
+                        solarPanelTimeText.setText("Tiempo finalizacion: ");
                     }
                 }
             });
@@ -463,7 +464,8 @@ public class ConstructionsActivity extends MenuActivity {
                     } else {
                         buildWindTurbine.setPaintFlags(buildWindTurbine.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildWindTurbine.setEnabled(false);
-                        windTurbineTimeText.setText("Costo: ");
+                        windTurbineCostText.setText("Costo: ");
+                        windTurbineTimeText.setText("TIempo finalaizacion: ");
                     }
                 }
             });

@@ -8,15 +8,15 @@ import java.util.Date;
 
 public class Ship extends Military{
     private int Attack;
-    private int Defense;
+    private int Defence;
     private int DarkMatterConsumption;
     private int Speed;
     private int ShipType;
 
-    public Ship(int id, String name, int constructinTime, Cost cost, Planet planet, int requiredLevel, Date enableDate, int attack, int defense, int darkMatterConsumption, int speed, int shipType){
+    public Ship(int id, String name, int constructinTime, Cost cost, Planet planet, int requiredLevel, Date enableDate, int attack, int defence, int darkMatterConsumption, int speed, int shipType){
         super(id, name, constructinTime, cost, planet, requiredLevel, enableDate);
         this.Attack = attack;
-        this.Defense = defense;
+        this.Defence = defence;
         this.DarkMatterConsumption = darkMatterConsumption;
         this.Speed = speed;
         this.ShipType = shipType;
@@ -30,12 +30,12 @@ public class Ship extends Military{
         Attack = attack;
     }
 
-    public int getDefense() {
-        return Defense;
+    public int getDefence() {
+        return Defence;
     }
 
-    public void setDefense(int defense) {
-        Defense = defense;
+    public void setDefence(int defence) {
+        Defence = defence;
     }
 
     public int getDarkMatterConsumption() {

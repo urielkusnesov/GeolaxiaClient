@@ -7,6 +7,6 @@ package geolaxia.geolaxia.Model;
 public class ShipY extends Ship {
     public ShipY(Ship ship){
         super(ship.getId(), ship.getName(), ship.getConstructionTime(), ship.getCost(), ship.getPlanet(), ship.getRequiredLevel(),
-                ship.getEnableDate(), ship.getAttack(), ship.getDefense(), ship.getDarkMatterConsumption(), ship.getSpeed(), ship.getShipType());
+                ship.getEnableDate(), ship.getAttack(), ship.getDefence(), ship.getDarkMatterConsumption(), ship.getSpeed(), ship.getShipType());
     }
 }

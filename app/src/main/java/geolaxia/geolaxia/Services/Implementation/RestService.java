@@ -22,6 +22,7 @@ import geolaxia.geolaxia.Activities.ConstructionsActivity;
 import geolaxia.geolaxia.Activities.DefenseActivity;
 import geolaxia.geolaxia.Activities.HomeActivity;
 import geolaxia.geolaxia.Activities.LoginActivity;
+import geolaxia.geolaxia.Activities.MilitaryConstructionsActivity;
 import geolaxia.geolaxia.Activities.RegisterActivity;
 import geolaxia.geolaxia.Model.Attack;
 import geolaxia.geolaxia.Model.BlackPlanet;
@@ -37,19 +38,26 @@ import geolaxia.geolaxia.Model.Dto.EnergyFacilitiesAllDTO;
 import geolaxia.geolaxia.Model.Dto.EnergyFacilitiesDTO;
 import geolaxia.geolaxia.Model.Dto.EnergyFacilityDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
+import geolaxia.geolaxia.Model.Dto.HangarDTO;
 import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
 import geolaxia.geolaxia.Model.Dto.MineDTO;
 import geolaxia.geolaxia.Model.Dto.MinesDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
 import geolaxia.geolaxia.Model.Dto.PlayerDTO;
 import geolaxia.geolaxia.Model.Dto.PlayersDTO;
+import geolaxia.geolaxia.Model.Dto.ProbeDTO;
+import geolaxia.geolaxia.Model.Dto.ProbesDTO;
 import geolaxia.geolaxia.Model.Dto.ShieldDTO;
+import geolaxia.geolaxia.Model.Dto.ShipDTO;
 import geolaxia.geolaxia.Model.Dto.ShipsDTO;
 import geolaxia.geolaxia.Model.Dto.SolarSystemsDTO;
+import geolaxia.geolaxia.Model.Dto.TraderDTO;
+import geolaxia.geolaxia.Model.Dto.TradersDTO;
 import geolaxia.geolaxia.Model.EnergyCentral;
 import geolaxia.geolaxia.Model.EnergyFacility;
 import geolaxia.geolaxia.Model.EnergyFuelCentral;
 import geolaxia.geolaxia.Model.MetalMine;
+import geolaxia.geolaxia.Model.Military;
 import geolaxia.geolaxia.Model.Mine;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
@@ -1488,6 +1496,496 @@ public class RestService implements IRestService {
                             }
                         }catch (Exception e){
                             context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el estado de los cañones. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void GetCurrentHangar(final String username, final String token, final int planetId, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.HangarFragment fragment){
+        String url = Constants.getCurrentHangarServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            HangarDTO hangarContainer = gSon.fromJson(response.toString(), HangarDTO.class);
+                            if(Constants.OK_RESPONSE.equals(hangarContainer.getStatus().getResult())) {
+                                fragment.setHangarValues(hangarContainer.getData());
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo hangar", hangarContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el hangar. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void BuildHangar(final String username, final String token, final int planetId, final MilitaryConstructionsActivity context, final MilitaryConstructionsActivity.HangarFragment fragment){
+        String url = Constants.getBuildHangarServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            HangarDTO hangarContainer = gSon.fromJson(response.toString(), HangarDTO.class);
+                            if(Constants.OK_RESPONSE.equals(hangarContainer.getStatus().getResult())) {
+                                fragment.HangarBuilt(hangarContainer.getData());
+                            } else {
+                                context.handleUnexpectedError("Error construyendo hangar", hangarContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo construir el hangar de energia. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void GetPlanetFleet(final String username, final String token, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.ShipsFragment fr, final int planetId) {
+        String url = Constants.getShipsServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ShipsDTO shipsContainer = gSon.fromJson(response.toString(), ShipsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(shipsContainer.getStatus().getResult())) {
+                                //transformar a planetas segun herencia
+                                ArrayList<ShipX> shipsX = new ArrayList<ShipX>();
+                                ArrayList<ShipY> shipsY = new ArrayList<ShipY>();
+                                ArrayList<ShipZ> shipsZ = new ArrayList<ShipZ>();
+                                for (Ship ship: shipsContainer.getData()) {
+                                    switch (ship.getShipType()){
+                                        case Constants.SHIP_X:
+                                            ShipX newShipX = new ShipX(ship);
+                                            shipsX.add(newShipX);
+                                            break;
+                                        case Constants.SHIP_Y:
+                                            ShipY newShipY = new ShipY(ship);
+                                            shipsY.add(newShipY);
+                                            break;
+                                        case Constants.SHIP_Z:
+                                            ShipZ newShipZ = new ShipZ(ship);
+                                            shipsZ.add(newShipZ);
+                                            break;
+                                    }
+                                }
+
+                                fr.setCurrentValues(shipsX, shipsY, shipsZ);
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo las naves", shipsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las naves. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetShipsCost(final String username, final String token, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.ShipsFragment fr) {
+        String url = Constants.getShipsCostServiceUrl();
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ShipsDTO shipsContainer = gSon.fromJson(response.toString(), ShipsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(shipsContainer.getStatus().getResult())) {
+                                //transformar a naves segun herencia
+                                ShipX shipX = null;
+                                ShipY shipY = null;
+                                ShipZ shipZ = null;
+                                for (Ship ship: shipsContainer.getData()) {
+                                    switch (ship.getShipType()){
+                                        case Constants.SHIP_X:
+                                            shipX = new ShipX(ship);
+                                            break;
+                                        case Constants.SHIP_Y:
+                                            shipY = new ShipY(ship);
+                                            break;
+                                        case Constants.SHIP_Z:
+                                            shipZ = new ShipZ(ship);
+                                            break;
+                                    }
+                                }
+
+                                fr.setCosts(shipX, shipY, shipZ);
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo las naves", shipsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las naves. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void BuildShips(final String username, final String token, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.ShipsFragment fragment, final int planetId, final int qtt, final int shipType) {
+        String url = Constants.getBuildShipsServiceUrl(planetId, qtt, shipType);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ShipDTO shipContainer = gSon.fromJson(response.toString(), ShipDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(shipContainer.getStatus().getResult())) {
+                                fragment.ShipBuilt(shipContainer.getData());
+                            } else {
+                                act.handleUnexpectedError("Error construyendo turbina eolica", shipContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo construir la turbina eolica. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetCurrentShield(final String username, final String token, final int planetId, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.OthersFragment fragment){
+        String url = Constants.getCurrentShieldServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ShieldDTO shieldContainer = gSon.fromJson(response.toString(), ShieldDTO.class);
+                            if(Constants.OK_RESPONSE.equals(shieldContainer.getStatus().getResult())) {
+                                fragment.setShieldValues(shieldContainer.getData());
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo escudo", shieldContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el escudo. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetCurrentProbes(final String username, final String token, final int planetId, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.OthersFragment fragment){
+        String url = Constants.getCurrentProbesServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ProbesDTO probesContainer = gSon.fromJson(response.toString(), ProbesDTO.class);
+                            if(Constants.OK_RESPONSE.equals(probesContainer.getStatus().getResult())) {
+                                fragment.setProbesValues(probesContainer.getData());
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo sondas", probesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las sondas. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetCurrentTraders(final String username, final String token, final int planetId, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.OthersFragment fragment){
+        String url = Constants.getCurrentTradersServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            TradersDTO tradersContainer = gSon.fromJson(response.toString(), TradersDTO.class);
+                            if(Constants.OK_RESPONSE.equals(tradersContainer.getStatus().getResult())) {
+                                fragment.setTradersValues(tradersContainer.getData());
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo escudo", tradersContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el escudo. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void BuildShield(final String username, final String token, final int planetId, final MilitaryConstructionsActivity context, final MilitaryConstructionsActivity.OthersFragment fragment){
+        String url = Constants.getBuildShieldServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ShieldDTO shieldContainer = gSon.fromJson(response.toString(), ShieldDTO.class);
+                            if(Constants.OK_RESPONSE.equals(shieldContainer.getStatus().getResult())) {
+                                fragment.ShieldBuilt(shieldContainer.getData());
+                            } else {
+                                context.handleUnexpectedError("Error construyendo hangar", shieldContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo construir el hangar de energia. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void BuildProbes(final String username, final String token, final MilitaryConstructionsActivity.OthersFragment fragment, final MilitaryConstructionsActivity context, int planetId, int qtt) {
+        String url = Constants.getBuildProbesServiceUrl(planetId, qtt);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            ProbeDTO probeContainer = gSon.fromJson(response.toString(), ProbeDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(probeContainer.getStatus().getResult())) {
+                                fragment.ProbeBuilt(probeContainer.getData());
+                            } else {
+                                context.handleUnexpectedError("Error construyendo turbina eolica", probeContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo construir la turbina eolica. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void BuildTraders(final String username, final String token, final MilitaryConstructionsActivity.OthersFragment fragment, final MilitaryConstructionsActivity context, int planetId, int qtt) {
+        String url = Constants.getBuildTradersServiceUrl(planetId, qtt);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            TraderDTO traderContainer = gSon.fromJson(response.toString(), TraderDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(traderContainer.getStatus().getResult())) {
+                                fragment.TraderBuilt(traderContainer.getData());
+                            } else {
+                                context.handleUnexpectedError("Error construyendo cargueros", traderContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo construir el carguero. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
