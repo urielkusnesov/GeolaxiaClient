@@ -184,7 +184,8 @@
                     android:layout_height="wrap_content"
                     android:typeface="normal"
                     android:textSize="8pt"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    android:visibility="invisible"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

@@ -39,7 +39,7 @@ import geolaxia.geolaxia.Model.Dto.CannonsDTO;
 import geolaxia.geolaxia.Model.Dto.EnergyFacilitiesAllDTO;
 import geolaxia.geolaxia.Model.Dto.EnergyFacilitiesDTO;
 import geolaxia.geolaxia.Model.Dto.EnergyFacilityDTO;
-import geolaxia.geolaxia.Model.Dto.ColonizersDTO;
+//import geolaxia.geolaxia.Model.Dto.ColonizersDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
 import geolaxia.geolaxia.Model.Dto.HangarDTO;
 import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
@@ -2190,7 +2190,7 @@ public class RestService implements IRestService {
                     public void onResponse(JSONObject response) {
                         try {
                             Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-                            ColonizersDTO colonizers = gSon.fromJson(response.toString(), ColonizersDTO.class);
+                            ProbesDTO colonizers = gSon.fromJson(response.toString(), ProbesDTO.class);
 
                             if(Constants.OK_RESPONSE.equals(colonizers.getStatus().getResult())) {
                                 context.CargarColonizadoresAhora(colonizers.getData());
@@ -2434,7 +2434,7 @@ public class RestService implements IRestService {
                     public void onResponse(JSONObject response) {
                         try {
                             Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-                            ColonizersDTO colonizers = gSon.fromJson(response.toString(), ColonizersDTO.class);
+                            ProbesDTO colonizers = gSon.fromJson(response.toString(), ProbesDTO.class);
 
                             if(Constants.OK_RESPONSE.equals(colonizers.getStatus().getResult())) {
                                 context.CargarColonizadoresAhora(colonizers.getData());
