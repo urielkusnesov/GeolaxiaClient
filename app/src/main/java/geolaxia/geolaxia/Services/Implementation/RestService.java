@@ -46,6 +46,7 @@ import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
 import geolaxia.geolaxia.Model.Dto.IsSendingColonizerDTO;
 import geolaxia.geolaxia.Model.Dto.MineDTO;
 import geolaxia.geolaxia.Model.Dto.MinesDTO;
+import geolaxia.geolaxia.Model.Dto.NotificationsDTO;
 import geolaxia.geolaxia.Model.Dto.PlanetsDTO;
 import geolaxia.geolaxia.Model.Dto.PlayerDTO;
 import geolaxia.geolaxia.Model.Dto.PlayersDTO;
@@ -95,6 +96,47 @@ public class RestService implements IRestService {
         int timeout = 10000;//10 segundos
         RetryPolicy policy = new DefaultRetryPolicy(timeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request.setRetryPolicy(policy);
+    }
+
+    @Override
+    public void GetNotifications(final String username, final String token, final Player player, final HomeActivity context){
+        String url = Constants.getNotifications(player.getId());
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            NotificationsDTO notifications = gSon.fromJson(response.toString(), NotificationsDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(notifications.getStatus().getResult())) {
+                                context.CargarNotificacionesAhora(notifications.getData());
+                            } else {
+                                context.handleUnexpectedError("Error obteniendo cañones", notifications.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las notificaciones. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
     }
 
     @Override

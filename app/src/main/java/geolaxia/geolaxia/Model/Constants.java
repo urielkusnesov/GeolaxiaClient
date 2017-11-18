@@ -83,6 +83,11 @@ public class Constants {
     public static String getBuildProbesServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + PROBE_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
     public static String getBuildTradersServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + TRADER_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
 
+    //Login
+    public static final String LOGIN_GETNOTIFICATIONS_SERVICE = "api/notification/GetNotifications";
+
+    public static String getNotifications(int playerId) { return (HTTP + BASE_URL + PORT + LOGIN_GETNOTIFICATIONS_SERVICE + "?playerId=" + String.valueOf(playerId)); }
+
     //Defense
     public static final String DEFENSE_GETCANNONS_SERVICE = "api/defense/getCannons";
     public static final String DEFENSE_BUILD_SERVICE = "api/defense/buildCannons";

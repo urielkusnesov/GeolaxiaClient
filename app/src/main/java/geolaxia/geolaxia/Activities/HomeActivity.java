@@ -16,6 +16,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,8 +44,12 @@ import java.io.StringReader;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import geolaxia.geolaxia.Model.Adapters.NotificationListAdapter;
+import geolaxia.geolaxia.Model.Adapters.PlanetColonizerListAdapter;
 import geolaxia.geolaxia.Model.Constants;
+import geolaxia.geolaxia.Model.Dto.NotificationsDTO;
 import geolaxia.geolaxia.Model.Helpers;
+import geolaxia.geolaxia.Model.Notification;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.R;
@@ -78,6 +84,9 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
     private String longitude;
     private int weatherDesc;
     private String weatherWindSpeed;
+    private RecyclerView notificationList;
+    private LinearLayoutManager notificationListManager;
+    private NotificationListAdapter notificationListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +121,30 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         FillPlanets(player.getPlanets());
 
         levelText.setText("Nivel " + String.valueOf(player.getLevel()));
+
+        notificationList = (RecyclerView) findViewById(R.id.notificationlist);
+        notificationListManager = new LinearLayoutManager(this);
+        notificationList.setLayoutManager(notificationListManager);
+    }
+
+    private void CargarNotificaciones(){
+        loginService.GetNotifications(player.getUsername(), player.getToken(), player, this);
+    }
+
+    public void CargarNotificacionesAhora(ArrayList<Notification> notifications){
+        ArrayList<Notification> finalNotifications = new ArrayList<>();
+
+        for (Notification noti: notifications) {
+            //if(noti.getConqueror() == null){
+            //    availablePlanets.put(noti.getOrder(), noti);
+            //    finalNotifications.add(noti);
+            //}
+            finalNotifications.add(noti);
+        }
+
+        notificationListAdapter = new NotificationListAdapter(finalNotifications, this);
+        notificationList.setAdapter(notificationListAdapter);
+        //targetPlanet = finalPlanets.get(0);
     }
 
     private boolean checkLocation() {
@@ -333,6 +366,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         super.onResume();
         planetService.GetByPlayer(player.getUsername(), player.getToken(), this);
         mGoogleApiClient.connect();
+        this.CargarNotificaciones();
     }
 
     @Override

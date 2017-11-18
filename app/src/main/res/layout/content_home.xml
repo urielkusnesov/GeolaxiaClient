@@ -192,4 +192,31 @@
         android:layout_marginLeft="19dp"
         android:textColor="#ffffff"
         android:id="@+id/windText" />
+
+    <TextView
+        android:id="@+id/notificacionesText"
+        android:layout_below="@id/windText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Notificaciones"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+    <View
+        android:id="@+id/notificacionesDivider"
+        android:layout_below="@id/notificacionesText"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="1dp"
+        android:background="#FFFFFF"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/notificationlist"
+        android:scrollbars="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/notificacionesDivider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

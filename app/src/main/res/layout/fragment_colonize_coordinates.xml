@@ -71,7 +71,7 @@
                     android:layout_marginBottom="10dp"
                     android:text="Buscar Planetas"
                     android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"/>
 
                 <View
                     android:id="@+id/targetDivider"
