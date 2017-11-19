@@ -113,14 +113,14 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         crystalQtt = (TextView) findViewById(R.id.cristalQtt);
         darkMatterQtt = (TextView) findViewById(R.id.darkMatterQtt);
         energyQtt = (TextView) findViewById(R.id.energyQtt);
-        levelText = (TextView) findViewById(R.id.levelText);
+        //levelText = (TextView) findViewById(R.id.levelText);
 
         planetService = new PlanetService();
         loginService = new LoginService();
         weatherService = new WeatherService();
         FillPlanets(player.getPlanets());
 
-        levelText.setText("Nivel " + String.valueOf(player.getLevel()));
+        //levelText.setText("Nivel " + String.valueOf(player.getLevel()));
 
         notificationList = (RecyclerView) findViewById(R.id.notificationlist);
         notificationListManager = new LinearLayoutManager(this);
