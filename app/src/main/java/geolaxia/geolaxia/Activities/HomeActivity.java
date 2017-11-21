@@ -134,17 +134,18 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
     public void CargarNotificacionesAhora(ArrayList<Notification> notifications){
         ArrayList<Notification> finalNotifications = new ArrayList<>();
 
-        for (Notification noti: notifications) {
-            //if(noti.getConqueror() == null){
-            //    availablePlanets.put(noti.getOrder(), noti);
-            //    finalNotifications.add(noti);
-            //}
+        if (notifications.size() > 0) {
+            for (Notification noti : notifications) {
+                finalNotifications.add(noti);
+            }
+        } else {
+            Notification noti = new Notification();
+            noti.setTipoNotificacion("");
             finalNotifications.add(noti);
         }
 
         notificationListAdapter = new NotificationListAdapter(finalNotifications, this);
         notificationList.setAdapter(notificationListAdapter);
-        //targetPlanet = finalPlanets.get(0);
     }
 
     private boolean checkLocation() {

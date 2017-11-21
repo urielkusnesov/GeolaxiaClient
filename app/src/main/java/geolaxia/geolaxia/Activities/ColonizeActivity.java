@@ -3,6 +3,7 @@ package geolaxia.geolaxia.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -355,6 +356,9 @@ public class ColonizeActivity extends MenuActivity {
             act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
 
             this.CargarTiempoLlegada(arrival.getTime());
+
+            SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Colonización", "La misión de la sonda colonizadora ha comenzado!");
+            dialog.show();
         }
 
         private void CargarTiempoLlegada(long fechaFinalizacion){
@@ -462,6 +466,7 @@ public class ColonizeActivity extends MenuActivity {
         private void SetearBotonEnviar(boolean activo) {
             Button boton = (Button) rootView.findViewById(R.id.colonization_enviar_boton);
             boton.setEnabled(activo);
+            boton.setPaintFlags((!activo) ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
         }
 
         private void SetearTimerEnvio(boolean activo) {
@@ -701,6 +706,9 @@ public class ColonizeActivity extends MenuActivity {
             act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
 
             this.CargarTiempoLlegada(arrival.getTime());
+
+            SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Colonización", "La misión de la sonda colonizadora ha comenzado!");
+            dialog.show();
         }
 
         private void CargarTiempoLlegada(long fechaFinalizacion){
@@ -800,6 +808,7 @@ public class ColonizeActivity extends MenuActivity {
         private void SetearBotonEnviar(boolean activo) {
             Button boton = (Button) rootView.findViewById(R.id.colonization_enviar_boton);
             boton.setEnabled(activo);
+            boton.setPaintFlags((!activo) ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
         }
 
         private void SetearTimerEnvio(boolean activo) {

@@ -2,7 +2,10 @@ package geolaxia.geolaxia.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +18,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
 import geolaxia.geolaxia.Model.Question;
@@ -42,6 +47,45 @@ public class DefenseQuestionActivity extends MenuActivity {
 
         this.CargarPreguntas();
         this.CargarBotonDefender();
+
+        this.CargarTimer(10);
+    }
+
+    private void CargarTimer(int segundos) {
+        int countDownInterval = 1000;
+
+        CountDownTimer counterTimer = new CountDownTimer(segundos * 1000, countDownInterval) {
+            TextView timer = (TextView) findViewById(R.id.defense_preguntas_timer);
+
+            public void onFinish() {
+                //finish your activity here
+                int cantRespCorrectas = ObtenerCantRespuestasCorrectas();
+
+                SweetAlertDialog dialog = Helpers.getErrorDialog(context, "Defender", "Tiempo agotado. Has contestado " + cantRespCorrectas + " respuestas correctas.");
+                dialog.show();
+
+                BotonDefender();
+
+                DefenseQuestionActivity.this.finish();
+            }
+
+            public void onTick(long millisUntilFinished) {
+                //called every 1 sec coz countDownInterval = 1000 (1 sec)
+                int segsFaltantes = (int) (millisUntilFinished / 1000);
+
+                if (segsFaltantes > 5) {
+                    timer.setText("00:" + String.valueOf(segsFaltantes) + ":00");
+                    timer.setTextColor(Color.GREEN);
+                } else if (segsFaltantes <= 5 && segsFaltantes >= 3) {
+                    timer.setText("00:" + String.valueOf(segsFaltantes) + ":00");
+                    timer.setTextColor(Color.YELLOW);
+                } else {
+                    timer.setText("00:" + String.valueOf(segsFaltantes) + ":00");
+                    timer.setTextColor(Color.RED);
+                }
+            }
+        };
+        counterTimer.start();
     }
 
     private void Constructor() {
@@ -119,16 +163,17 @@ public class DefenseQuestionActivity extends MenuActivity {
         DefenderBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
                     BotonDefender();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    DefenseQuestionActivity.this.finish();
             }
         });
     }
 
-    private void BotonDefender() throws JSONException{
+    private void BotonDefender() {
+        //this.defenseService.Defense(this.player.getUsername(), this.player.getToken(), this, this.ObtenerCantRespuestasCorrectas());
+    }
+
+    private int ObtenerCantRespuestasCorrectas() {
         int cantRespuestasCorrectas = 0;
 
         if (respuesta1.equals(respuesta1_correcta)) {
@@ -143,7 +188,7 @@ public class DefenseQuestionActivity extends MenuActivity {
             cantRespuestasCorrectas++;
         }
 
-        //this.defenseService.Defense(this.player.getUsername(), this.player.getToken(), this, cantRespuestasCorrectas);
+        return(cantRespuestasCorrectas);
     }
 
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-

@@ -28,7 +28,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recursos"
+                    android:text="RECURSOS"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     android:textStyle="bold"/>
@@ -56,7 +56,9 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_margin="20dp"
+                            android:gravity="center_horizontal">
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -69,28 +71,29 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="vertical"
+                                android:gravity="center_horizontal">
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"
-                                    android:text="Cristal: "
+                                    android:text="Cristal"
                                     android:id="@+id/cristalText"
-                                    android:textSize="8pt"/>
+                                    android:textSize="15dp"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"
-                                    android:text="200"
                                     android:id="@+id/cristalQtt"
-                                    android:textSize="8pt"/>
+                                    android:textSize="15dp"/>
                             </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_marginLeft="25dp">
+                            android:layout_margin="20dp"
+                            android:gravity="center_horizontal">
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -103,21 +106,21 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="vertical"
+                                android:gravity="center_horizontal">
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"
-                                    android:text="Metal: "
+                                    android:text="Metal"
                                     android:id="@+id/metalText"
-                                    android:textSize="8pt"/>
+                                    android:textSize="15dp"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"
-                                    android:text="200"
                                     android:id="@+id/metalQtt"
-                                    android:textSize="8pt"/>
+                                    android:textSize="15dp"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -139,7 +142,9 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_margin="20dp"
+                            android:gravity="center_horizontal">
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -152,28 +157,29 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="vertical"
+                                android:gravity="center_horizontal">
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"
-                                    android:text="M.Oscura: "
+                                    android:text="M.Oscura"
                                     android:id="@+id/darkMatterText"
-                                    android:textSize="8pt"/>
+                                    android:textSize="15dp"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#FFFFFF"
-                                    android:text="200"
                                     android:id="@+id/darkMatterQtt"
-                                    android:textSize="8pt"/>
+                                    android:textSize="15dp"/>
                             </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:orientation="vertical">
+                            android:layout_margin="20dp"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal">
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -186,21 +192,21 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="vertical"
+                                android:gravity="center_horizontal">
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Energía: "
+                                    android:text="Energía"
                                     android:textColor="#FFFFFF"
                                     android:id="@+id/energyText"
-                                    android:textSize="8pt"/>
+                                    android:textSize="15dp"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="#00FF00"
-                                    android:text="200/500"
                                     android:id="@+id/energyQtt"
-                                    android:textSize="8pt" />
+                                    android:textSize="15dp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -220,7 +226,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Planetas"
+                    android:text="PLANETAS"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     android:textStyle="bold"/>
@@ -243,7 +249,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_centerHorizontal="true">
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="20dp">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -280,13 +287,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="19dp"
-                android:layout_marginTop="50dp"
-                android:id="@+id/weatherImage" />
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -294,16 +295,45 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="19dp"
-                    android:layout_marginTop="50dp"
-                    android:textColor="#ffffff"
-                    android:id="@+id/temperatureText" />
-                <TextView
+                    android:layout_marginTop="10dp"
+                    android:text="CLIMA"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="1dp"
+                    android:background="#FFFFFF"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="19dp"
-                    android:textColor="#ffffff"
-                    android:id="@+id/windText" />
+                    android:layout_marginTop="50dp"
+                    android:id="@+id/weatherImage" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19dp"
+                        android:layout_marginTop="50dp"
+                        android:textColor="#ffffff"
+                        android:id="@+id/temperatureText" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="19dp"
+                        android:textColor="#ffffff"
+                        android:id="@+id/windText" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -319,7 +349,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Notificaciones"
+                    android:text="NOTIFICACIONES"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp"
                     android:textStyle="bold"/>

@@ -63,12 +63,15 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         if(this.Notifications.get(position).getTipoNotificacion().equals("Ataque")){
             holder.name.setText("Ataque - Llega en " + this.ObtenerHora(this.Notifications.get(position).getTime()));
             holder.name.setTextColor(Color.GREEN);
-        }else if(this.Notifications.get(position).getTipoNotificacion().equals("Defensa")){
+        } else if(this.Notifications.get(position).getTipoNotificacion().equals("Defensa")){
             holder.name.setText("Defensa - Llega en " + this.ObtenerHora(this.Notifications.get(position).getTime()));
             holder.name.setTextColor(Color.RED);
-        }else if(this.Notifications.get(position).getTipoNotificacion().equals("Colonización")){
+        } else if(this.Notifications.get(position).getTipoNotificacion().equals("Colonización")){
             holder.name.setText("Colonización - Llega en " + this.ObtenerHora(this.Notifications.get(position).getTime()));
-            holder.name.setTextColor(Color.GREEN);
+            holder.name.setTextColor(Color.YELLOW);
+        } else {
+            holder.name.setText("No hay notificaciones.");
+            holder.name.setTextColor(Color.WHITE);
         }
 
         holder.itemView.setBackgroundColor(Color.TRANSPARENT);
