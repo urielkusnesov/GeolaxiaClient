@@ -51,6 +51,8 @@ public class DefenseActivity extends MenuActivity {
 
         this.EstaConstruyendoCanones();
 
+        this.CargarBotonDefender();
+
         this.VaciarPantalla();
     }
 
@@ -206,12 +208,13 @@ public class DefenseActivity extends MenuActivity {
         }
     }
 
-    private void CargerBotonDefender() {
-        Button defenderBoton = (Button) findViewById(R.id.defense_question_defender_boton);
+    private void CargarBotonDefender() {
+        Button defenderBoton = (Button) findViewById(R.id.defense_estado_escudo_defender);
+
         defenderBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SweetAlertDialog dialog = Helpers.getConfirmationDialog(context, "Defender", "¿Está preparado para responder 3 preguntas? Recuerde que tiene 10 segundos.", "Si", "No");
+                SweetAlertDialog dialog = Helpers.getConfirmationDialog(context, "Defender", "¿Está preparado para responder 3 preguntas? Recuerde que tiene 20 segundos.", "Si", "No");
 
                 dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
