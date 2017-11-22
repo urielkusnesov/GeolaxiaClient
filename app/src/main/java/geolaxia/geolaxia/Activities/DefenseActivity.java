@@ -3,6 +3,7 @@ package geolaxia.geolaxia.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ public class DefenseActivity extends MenuActivity {
         this.CargarEstadoEscudo();
 
         this.EstaConstruyendoCanones();
+
+        this.CargarBotonDefender();
 
         this.VaciarPantalla();
     }
@@ -102,6 +105,7 @@ public class DefenseActivity extends MenuActivity {
     // Carga la seccion de seleccionar canones para construir.
     private void CargarCanonesConstruccion() {
         NumberPicker np = (NumberPicker) findViewById(R.id.defense_cant_canones_construccion);
+        Helpers.setNumberPickerTextColor(np, Color.WHITE);
         np.setMinValue(0);
         np.setMaxValue(50);
         np.setWrapSelectorWheel(true);
@@ -178,6 +182,9 @@ public class DefenseActivity extends MenuActivity {
 
         this.planet.setMetal(this.planet.getMetal() - 100 * cantCanonesAContruir);
         this.planet.setCrystal(this.planet.getCrystal() - 50 * cantCanonesAContruir);
+
+        SweetAlertDialog dialog = Helpers.getSuccesDialog(context, "Defensa", "La construcción de los cañones ha comenzado!");
+        dialog.show();
     }
 
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -199,6 +206,30 @@ public class DefenseActivity extends MenuActivity {
             estadoEscudo.setText("Desactivado");
             estadoEscudo.setTextColor(Color.RED);
         }
+    }
+
+    private void CargarBotonDefender() {
+        Button defenderBoton = (Button) findViewById(R.id.defense_estado_escudo_defender);
+
+        defenderBoton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SweetAlertDialog dialog = Helpers.getConfirmationDialog(context, "Defender", "¿Está preparado para responder 3 preguntas? Recuerde que tiene 20 segundos.", "Si", "No");
+
+                dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    Intent defenseIntent = new Intent(context, DefenseQuestionActivity.class);
+                    defenseIntent.putExtra("player", player);
+                    defenseIntent.putExtra("planet", planet);
+                    startActivity(defenseIntent);
+                    sweetAlertDialog.cancel();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
     }
 
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -244,6 +275,7 @@ public class DefenseActivity extends MenuActivity {
     private void SetearBotonConstruir(boolean activo) {
         Button construirBoton = (Button) findViewById(R.id.defense_cant_canones_construccion_boton);
         construirBoton.setEnabled(activo);
+        construirBoton.setPaintFlags((!activo) ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
     }
 
     private void CargarTiempoConstruccion(int cantCanonesAContruir) {

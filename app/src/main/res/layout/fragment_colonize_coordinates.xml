@@ -27,18 +27,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5pt"
-                    android:background="#FFFFFF"
-                    android:text="Colonizadores"
-                    android:textSize="12pt"
-                    android:textColor="#000000"
-                    android:textStyle="bold"
-                    android:textAlignment="center" />
-
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="COLONIZAR"
+                        android:textColor="#FFFFFF"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="1dp"
+                        android:background="#FFFFFF"/>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -46,16 +54,16 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cantidad de Colonizadores disponibles: "
+                        android:text="Cant. de Sondas colonizadoras disponibles: "
                         android:typeface="normal"
-                        android:textSize="8pt"
+                        android:textSize="15dp"
                         android:textColor="#FFFFFF"/>
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/colonization_cant_colonizadores_disponibles"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:typeface="normal"
-                        android:textSize="8pt"
+                        android:textSize="15dp"
                         android:textColor="#FFFFFF"/>
                 </LinearLayout>
             </LinearLayout>
@@ -63,63 +71,91 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:id="@+id/targetText"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="Buscar Planetas"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
-
-                <View
-                    android:id="@+id/targetDivider"
-                    android:layout_below="@id/targetText"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="#FFFFFF"/>
-
-                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:tools="http://schemas.android.com/tools"
+                    android:orientation="vertical">
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true">
-
-                        <NumberPicker
-                            android:id="@+id/galaxy"
-                            android:background="#80000000"
-                            android:descendantFocusability="blocksDescendants"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <NumberPicker
-                            android:id="@+id/solarSystem"
-                            android:background="#80000000"
-                            android:descendantFocusability="blocksDescendants"
+                        android:layout_marginTop="10dp"
+                        android:text="BUSCAR PLANETAS"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20dp"
+                        android:textStyle="bold"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="1dp"
+                        android:background="#FFFFFF"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:tools="http://schemas.android.com/tools"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_toRightOf="@+id/galaxy"
-                            android:layout_toEndOf="@+id/galaxy" />
+                            android:layout_centerInParent="true">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_centerHorizontal="true">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center_horizontal"
+                                    android:layout_margin="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Galaxia"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="15dp" />
+                                    <NumberPicker
+                                        android:id="@+id/galaxy"
+                                        android:background="#80000000"
+                                        android:descendantFocusability="blocksDescendants"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center_horizontal"
+                                    android:layout_margin="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Sistema"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="15dp" />
+                                    <NumberPicker
+                                        android:id="@+id/solarSystem"
+                                        android:background="#80000000"
+                                        android:descendantFocusability="blocksDescendants"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
                     </RelativeLayout>
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/planetList"
-                    android:scrollbars="vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_below="@+id/targetPickers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/planetList"
+                        android:scrollbars="vertical"
+                        android:layout_margin="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,7 +169,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:typeface="normal"
-                        android:textSize="8pt"
+                        android:textSize="15dp"
                         android:textColor="#FFFFFF"
                         android:text="Costo Combustible: "/>
                     <android.support.v7.widget.AppCompatTextView
@@ -141,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:typeface="normal"
-                        android:textSize="8pt"
+                        android:textSize="15dp"
                         android:textColor="#FFFFFF"/>
                 </LinearLayout>
                 <LinearLayout
@@ -153,7 +189,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:typeface="normal"
-                        android:textSize="8pt"
+                        android:textSize="15dp"
                         android:textColor="#FFFFFF"
                         android:text="Tiempo de Viaje: "/>
                     <android.support.v7.widget.AppCompatTextView
@@ -161,19 +197,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:typeface="normal"
-                        android:textSize="8pt"
+                        android:textSize="15dp"
                         android:textColor="#FFFFFF"/>
                 </LinearLayout>
                 <Button
                     android:id="@+id/colonization_enviar_boton"
-                    style="?android:textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:text="Enviar"
-                    android:textStyle="bold" />
+                    style="@style/Widget.AppCompat.Button"
+                    android:background="#80000000"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="right"
+                    android:textSize="15dp"/>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,8 +222,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:typeface="normal"
-                    android:textSize="8pt"
-                    android:textColor="#FFFFFF"/>
+                    android:textSize="15dp"
+                    android:textColor="#FFFFFF"
+                    android:visibility="invisible"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

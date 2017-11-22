@@ -46,4 +46,9 @@ public class LoginService implements ILoginService {
     public void GetCloserPlayers(String username, String token, AttackActivity.CloseAttackFragment context, AttackActivity act){
         restService.GetCloserPlayers(username, token, context, act);
     }
+
+    @Override
+    public void GetNotifications(String username, String token, Player player, HomeActivity act){
+        restService.GetNotifications(username, token, player, act);
+    }
 }

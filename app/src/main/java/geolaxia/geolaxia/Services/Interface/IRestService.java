@@ -55,6 +55,7 @@ public interface IRestService {
     void SetWeather(String username, String token, int weatherDesc, String weatherWindSpeed, HomeActivity act);
     void GetCloserPlayers(String username, String token, AttackActivity.CloseAttackFragment context, AttackActivity act);
     void GetWeather(String latitude, String longitude, final HomeActivity act);
+    void GetNotifications(String username, String token, Player player, HomeActivity act);
 
     //construction
     void GetCurrentMines(String username, String token, int planetId, ConstructionsActivity context, ConstructionsActivity.MinesFragment fragment);

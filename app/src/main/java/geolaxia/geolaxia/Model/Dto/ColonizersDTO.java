@@ -1,4 +1,4 @@
-package geolaxia.geolaxia.Model.Dto;
+/*package geolaxia.geolaxia.Model.Dto;
 
 import java.util.ArrayList;
 
@@ -14,4 +14,4 @@ public class ColonizersDTO extends BaseDTO {
     public void setData(ArrayList<Colonizer> data) {
         this.Data = data;
     }
-}
+}*/

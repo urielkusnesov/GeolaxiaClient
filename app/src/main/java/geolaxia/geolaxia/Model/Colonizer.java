@@ -1,4 +1,4 @@
-package geolaxia.geolaxia.Model;
+/*package geolaxia.geolaxia.Model;
 
 import java.util.Date;
 
@@ -27,4 +27,4 @@ public class Colonizer extends Military{
     public void setSpeed(int speed) {
         Speed = speed;
     }
-}
+}*/

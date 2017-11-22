@@ -3,6 +3,7 @@ package geolaxia.geolaxia.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -32,12 +33,13 @@ import java.util.concurrent.TimeUnit;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Adapters.PlanetColonizerListAdapter;
 import geolaxia.geolaxia.Model.Adapters.PlanetListAdapter;
-import geolaxia.geolaxia.Model.Colonizer;
+//import geolaxia.geolaxia.Model.Colonizer;
 import geolaxia.geolaxia.Model.Dto.IsSendingColonizerDTO;
 import geolaxia.geolaxia.Model.Galaxy;
 import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
+import geolaxia.geolaxia.Model.Probe;
 import geolaxia.geolaxia.Model.SolarSystem;
 import geolaxia.geolaxia.R;
 import geolaxia.geolaxia.Services.Implementation.ColonizeService;
@@ -112,9 +114,11 @@ public class ColonizeActivity extends MenuActivity {
 
     public static class ColonizeFragment extends Fragment {
         private ColonizeActivity act;
-        private ColonizeActivity.ColonizeFragment context;
+        private ColonizeFragment context;
 
         private View rootView;
+        private Boolean _areLecturesLoaded = false;
+        private Boolean _activityEnabled = false;
 
         private String[] galaxiesSelected;
         private String[] solarSystemsSelected;
@@ -135,19 +139,40 @@ public class ColonizeActivity extends MenuActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            rootView = inflater.inflate(R.layout.fragment_colonize, container, false);
+            this._activityEnabled = true;
+
             this.act = (ColonizeActivity) getActivity();
             this.context = this;
-            rootView = inflater.inflate(R.layout.fragment_colonize, container, false);
 
+            this.CargarPantallaInicial();
+
+            return (rootView);
+        }
+
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser) {
+            super.setUserVisibleHint(isVisibleToUser);
+
+//            if (isVisibleToUser && !_areLecturesLoaded ) {
+//                _areLecturesLoaded = true;
+//
+//                // Code executes ONLY THE FIRST TIME fragment is viewed.
+//                int a = 0;
+//            }
+
+            if (isVisibleToUser && this._activityEnabled) {
+                //Code executes EVERY TIME user views the fragment
+                this.CargarPantallaInicial();
+            }
+        }
+
+        private void CargarPantallaInicial() {
+            this.VaciarPantalla();
             this.CargarColonizadores();
             act.planetService.GetAllGalaxies(act.player.getUsername(), act.player.getToken(), act, this);
             this.CargarSelector();
-
-            EstaEnviandoColonizador();
-
-            this.VaciarPantalla();
-
-            return (rootView);
+            this.EstaEnviandoColonizador();
         }
 
         // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -156,7 +181,7 @@ public class ColonizeActivity extends MenuActivity {
             act.colonizeService.GetColonizers(act.player.getUsername(), act.player.getToken(), act, context, act.planet.getId());
         }
 
-        public void CargarColonizadoresAhora(ArrayList<Colonizer> colonizers){
+        public void CargarColonizadoresAhora(ArrayList<Probe> colonizers){
             TextView cantColonizadoresActivos = (TextView) rootView.findViewById(R.id.colonization_cant_colonizadores_disponibles);
 
             if (colonizers != null && !colonizers.isEmpty()) {
@@ -197,6 +222,8 @@ public class ColonizeActivity extends MenuActivity {
                     setArrivalTime();
                 }
             });
+
+            //setArrivalTime();
         }
 
         public void FillGalaxies(ArrayList<Galaxy> galaxies){
@@ -238,7 +265,6 @@ public class ColonizeActivity extends MenuActivity {
         public void FillPlanets(ArrayList<Planet> planets){
             ArrayList<Planet> finalPlanets = new ArrayList<>();
             for (Planet planet: planets) {
-                //if(planet.getConqueror() == null || !planet.getConqueror().getUsername().equals(act.player.getUsername())){
                 if(planet.getConqueror() == null){
                     finalPlanets.add(planet);
                 }
@@ -249,19 +275,21 @@ public class ColonizeActivity extends MenuActivity {
             planetsPicker.setMaxValue(finalPlanets.size() - 1);
 
             ArrayList<String> planetNames = new ArrayList<>();
+
             for (Planet planet: finalPlanets) {
                 availablePlanets.put(planet.getOrder(), planet);
                 planetNames.add(planet.getOrder() + "-" + planet.getName());
             }
+
             planetsSelected = new String[planetNames.size()];
             planetsSelected = planetNames.toArray(planetsSelected);
             planetsPicker.setDisplayedValues(planetsSelected);
         }
 
         private void setArrivalTime(){
-            TextView estimateArrival = (TextView) getView().findViewById(R.id.costo_tiempo_valor);
-            TextView costoMO = (TextView) getView().findViewById(R.id.costo_materia_oscura_valor);
-            TextView cantColonizadores = (TextView) getView().findViewById(R.id.colonization_cant_colonizadores_disponibles);
+            TextView estimateArrival = (TextView) rootView.findViewById(R.id.costo_tiempo_valor);
+            TextView costoMO = (TextView) rootView.findViewById(R.id.costo_materia_oscura_valor);
+            TextView cantColonizadores = (TextView) rootView.findViewById(R.id.colonization_cant_colonizadores_disponibles);
 
             int cantColo = (cantColonizadores.getText().toString().length() > 0) ? Integer.valueOf(cantColonizadores.getText().toString()) : 0;
 
@@ -277,7 +305,6 @@ public class ColonizeActivity extends MenuActivity {
                 long horasTotales = (minutes > 0 || seconds > 0) ? hours + 1 : hours;
                 long combustible = horasTotales * COSTO_COMBUSTIBLE;
 
-                //if  ((combustible <= this.act.planet.getDarkMatter()) && (!this.EstaColonizando())){
                 if  ((combustible <= this.act.planet.getDarkMatter())){
                     this.CargarBotonEnviar();
                     SetearBotonEnviar(true);
@@ -329,6 +356,9 @@ public class ColonizeActivity extends MenuActivity {
             act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
 
             this.CargarTiempoLlegada(arrival.getTime());
+
+            SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Colonización", "La misión de la sonda colonizadora ha comenzado!");
+            dialog.show();
         }
 
         private void CargarTiempoLlegada(long fechaFinalizacion){
@@ -354,7 +384,6 @@ public class ColonizeActivity extends MenuActivity {
                 }
             }.start();
 
-            this.VaciarPantalla();
             this.PantallaSegunEnvio();
         }
 
@@ -374,15 +403,14 @@ public class ColonizeActivity extends MenuActivity {
             TextView estimateArrival = (TextView) rootView.findViewById(R.id.costo_tiempo_valor);
             TextView costoMO = (TextView) rootView.findViewById(R.id.costo_materia_oscura_valor);
 
-            //this.CargarSelector();
             estimateArrival.setText("-");
             costoMO.setText("-");
 
-            this.SetearBotonEnviar(false);
+            this.SetearTimerEnvio(false);
         }
 
         private boolean EstaColonizando() {
-            TextView timer = (TextView) getView().findViewById(R.id.colonization_envio_timer);
+            TextView timer = (TextView) rootView.findViewById(R.id.colonization_envio_timer);
 
             if (timer.getVisibility() == View.VISIBLE) {
                 return (true);
@@ -413,6 +441,8 @@ public class ColonizeActivity extends MenuActivity {
             planetPicker.setEnabled(false);
 
             this.SetearBotonEnviar(false);
+
+            this.VaciarPantalla();
         }
 
         private void PantallaSegunEnvio() {
@@ -436,6 +466,17 @@ public class ColonizeActivity extends MenuActivity {
         private void SetearBotonEnviar(boolean activo) {
             Button boton = (Button) rootView.findViewById(R.id.colonization_enviar_boton);
             boton.setEnabled(activo);
+            boton.setPaintFlags((!activo) ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
+        }
+
+        private void SetearTimerEnvio(boolean activo) {
+            TextView timer = (TextView) rootView.findViewById(R.id.colonization_envio_timer);
+
+            if (activo) {
+                timer.setVisibility(View.VISIBLE);
+            } else {
+                timer.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -450,6 +491,8 @@ public class ColonizeActivity extends MenuActivity {
         private String[] solarSystemsSelected;
         private Planet targetPlanet;
         private View rootView;
+        private Boolean _areLecturesLoaded = false;
+        private Boolean _activityEnabled = false;
 
         public CoordinatesFragment() {
         }
@@ -465,6 +508,8 @@ public class ColonizeActivity extends MenuActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             rootView = inflater.inflate(R.layout.fragment_colonize_coordinates, container, false);
+            this._activityEnabled = true;
+
             this.context = this;
             this.act = (ColonizeActivity) getActivity();
 
@@ -472,15 +517,34 @@ public class ColonizeActivity extends MenuActivity {
             planetListManager = new LinearLayoutManager(act);
             planetList.setLayoutManager(planetListManager);
 
+            this.CargarPantallaInicial();
+
+            return rootView;
+        }
+
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser) {
+            super.setUserVisibleHint(isVisibleToUser);
+
+//            if (isVisibleToUser && !_areLecturesLoaded ) {
+//                _areLecturesLoaded = true;
+//
+//                // Code executes ONLY THE FIRST TIME fragment is viewed.
+//                int a = 0;
+//            }
+
+            if (isVisibleToUser && this._activityEnabled) {
+                //Code executes EVERY TIME user views the fragment
+                this.CargarPantallaInicial();
+            }
+        }
+
+        private void CargarPantallaInicial(){
+            this.VaciarPantalla();
             this.CargarColonizadores();
             act.planetService.GetAllGalaxies(act.player.getUsername(), act.player.getToken(), act, this);
             this.CargarSelector();
-
-            EstaEnviandoColonizador();
-
-            this.VaciarPantalla();
-
-            return rootView;
+            this.EstaEnviandoColonizador();
         }
 
         // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -489,7 +553,7 @@ public class ColonizeActivity extends MenuActivity {
             act.colonizeService.GetColonizers(act.player.getUsername(), act.player.getToken(), act, context, act.planet.getId());
         }
 
-        public void CargarColonizadoresAhora(ArrayList<Colonizer> colonizers){
+        public void CargarColonizadoresAhora(ArrayList<Probe> colonizers){
             TextView cantColonizadoresActivos = (TextView) rootView.findViewById(R.id.colonization_cant_colonizadores_disponibles);
 
             if (colonizers != null && !colonizers.isEmpty()) {
@@ -570,14 +634,16 @@ public class ColonizeActivity extends MenuActivity {
         }
 
         public void selectTargetPlanet(Planet targetPlanet){
-            this.targetPlanet = targetPlanet;
-            setArrivalTime();
+            if (!EstaColonizando()) {
+                this.targetPlanet = targetPlanet;
+                setArrivalTime();
+            }
         }
 
         private void setArrivalTime(){
-            TextView estimateArrival = (TextView) getView().findViewById(R.id.costo_tiempo_valor);
-            TextView costoMO = (TextView) getView().findViewById(R.id.costo_materia_oscura_valor);
-            TextView cantColonizadores = (TextView) getView().findViewById(R.id.colonization_cant_colonizadores_disponibles);
+            TextView estimateArrival = (TextView) rootView.findViewById(R.id.costo_tiempo_valor);
+            TextView costoMO = (TextView) rootView.findViewById(R.id.costo_materia_oscura_valor);
+            TextView cantColonizadores = (TextView) rootView.findViewById(R.id.colonization_cant_colonizadores_disponibles);
 
             int cantColo = (cantColonizadores.getText().toString().length() > 0) ? Integer.valueOf(cantColonizadores.getText().toString()) : 0;
 
@@ -632,17 +698,17 @@ public class ColonizeActivity extends MenuActivity {
         }
 
         public void CargarTiempoEnvioColonizadorAhora(){
-            //TextView estimateArrival = (TextView) getView().findViewById(R.id.costo_tiempo_valor);
             TextView costoMO = (TextView) getView().findViewById(R.id.costo_materia_oscura_valor);
-            //TextView cantColonizadores = (TextView) getView().findViewById(R.id.colonization_cant_colonizadores_disponibles);
 
             Planet targetPlanet = GetTargetPlanet();
             Date arrival = act.calculateArrivalTime(targetPlanet);
-            //long totalDifference = (arrival.getTime() - Calendar.getInstance().getTime().getTime());
 
             act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
 
             this.CargarTiempoLlegada(arrival.getTime());
+
+            SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Colonización", "La misión de la sonda colonizadora ha comenzado!");
+            dialog.show();
         }
 
         private void CargarTiempoLlegada(long fechaFinalizacion){
@@ -668,7 +734,6 @@ public class ColonizeActivity extends MenuActivity {
                 }
             }.start();
 
-            this.VaciarPantalla();
             this.PantallaSegunEnvio();
         }
 
@@ -688,15 +753,14 @@ public class ColonizeActivity extends MenuActivity {
             TextView estimateArrival = (TextView) rootView.findViewById(R.id.costo_tiempo_valor);
             TextView costoMO = (TextView) rootView.findViewById(R.id.costo_materia_oscura_valor);
 
-            //this.CargarSelector();
             estimateArrival.setText("-");
             costoMO.setText("-");
 
-            this.SetearBotonEnviar(false);
+            this.SetearTimerEnvio(false);
         }
 
         private boolean EstaColonizando() {
-            TextView timer = (TextView) getView().findViewById(R.id.colonization_envio_timer);
+            TextView timer = (TextView) rootView.findViewById(R.id.colonization_envio_timer);
 
             if (timer.getVisibility() == View.VISIBLE) {
                 return (true);
@@ -708,11 +772,9 @@ public class ColonizeActivity extends MenuActivity {
         private void HabilitarPantalla() {
             NumberPicker galaxyPicker = (NumberPicker) rootView.findViewById(R.id.galaxy);
             NumberPicker solarSystemPicker = (NumberPicker) rootView.findViewById(R.id.solarSystem);
-            NumberPicker planetPicker = (NumberPicker) rootView.findViewById(R.id.planet);
 
             galaxyPicker.setEnabled(true);
             solarSystemPicker.setEnabled(true);
-            planetPicker.setEnabled(true);
 
             this.SetearBotonEnviar(true);
         }
@@ -720,13 +782,13 @@ public class ColonizeActivity extends MenuActivity {
         private void DeshabilitarPantalla() {
             NumberPicker galaxyPicker = (NumberPicker) rootView.findViewById(R.id.galaxy);
             NumberPicker solarSystemPicker = (NumberPicker) rootView.findViewById(R.id.solarSystem);
-            NumberPicker planetPicker = (NumberPicker) rootView.findViewById(R.id.planet);
 
             galaxyPicker.setEnabled(false);
             solarSystemPicker.setEnabled(false);
-            planetPicker.setEnabled(false);
 
             this.SetearBotonEnviar(false);
+
+            this.VaciarPantalla();
         }
 
         private void PantallaSegunEnvio() {
@@ -740,16 +802,23 @@ public class ColonizeActivity extends MenuActivity {
         }
 
         private Planet GetTargetPlanet() {
-            //NumberPicker planetsPicker = (NumberPicker) getView().findViewById(R.id.planet);
-            //int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
-            //Planet targetPlanet = availablePlanets.get(planetOrder);
-
             return(this.targetPlanet);
         }
 
         private void SetearBotonEnviar(boolean activo) {
             Button boton = (Button) rootView.findViewById(R.id.colonization_enviar_boton);
             boton.setEnabled(activo);
+            boton.setPaintFlags((!activo) ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
+        }
+
+        private void SetearTimerEnvio(boolean activo) {
+            TextView timer = (TextView) rootView.findViewById(R.id.colonization_envio_timer);
+
+            if (activo) {
+                timer.setVisibility(View.VISIBLE);
+            } else {
+                timer.setVisibility(View.INVISIBLE);
+            }
         }
     }
 

@@ -19,4 +19,5 @@ public interface ILoginService {
     void SetLastPosition(String latitud, String longitude, Player player, HomeActivity context);
     void SetWeather(String username, String token, int weatherDesc, String weatherWindSpeed, HomeActivity act);
     void GetCloserPlayers(String username, String token, AttackActivity.CloseAttackFragment context, AttackActivity act);
+    void GetNotifications(String username, String token, Player player, HomeActivity act);
 }

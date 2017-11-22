@@ -24,17 +24,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5pt"
-                android:background="#FFFFFF"
-                android:text="Preguntas"
-                android:textStyle="bold"
-                android:textSize="12pt"
-                android:textColor="#000000"
-                android:textAlignment="center"/>
-
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="TIEMPO FINALIZACIÓN"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="1dp"
+                    android:background="#FFFFFF"/>
+                <TextView
+                    android:id="@+id/defense_preguntas_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:typeface="normal"
+                    android:textSize="25dp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="PREGUNTAS"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="1dp"
+                    android:background="#FFFFFF"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,7 +81,7 @@
                     android:layout_marginTop="5pt"
                     android:text=""
                     android:typeface="normal"
-                    android:textSize="10pt"
+                    android:textSize="15dp"
                     android:textColor="#FFFFFF"/>
                 <RadioGroup
                     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -91,7 +126,6 @@
                         android:onClick="onRadioButtonClicked_P1"/>
                 </RadioGroup>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,7 +137,7 @@
                     android:layout_marginTop="5pt"
                     android:text=""
                     android:typeface="normal"
-                    android:textSize="10pt"
+                    android:textSize="15dp"
                     android:textColor="#FFFFFF"/>
                 <RadioGroup
                     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -148,7 +182,6 @@
                         android:onClick="onRadioButtonClicked_P2"/>
                 </RadioGroup>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,7 +193,7 @@
                     android:layout_marginTop="5pt"
                     android:text=""
                     android:typeface="normal"
-                    android:textSize="10pt"
+                    android:textSize="15dp"
                     android:textColor="#FFFFFF"/>
                 <RadioGroup
                     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -205,15 +238,18 @@
                         android:onClick="onRadioButtonClicked_P3"/>
                 </RadioGroup>
             </LinearLayout>
-
             <Button
                 android:id="@+id/defense_question_defender_boton"
-                style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="Defender"
-                android:textStyle="bold" />
+                style="@style/Widget.AppCompat.Button"
+                android:background="#80000000"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:layout_gravity="right"
+                android:textSize="15dp"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

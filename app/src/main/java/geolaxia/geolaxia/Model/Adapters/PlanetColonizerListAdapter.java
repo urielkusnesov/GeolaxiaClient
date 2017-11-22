@@ -63,20 +63,26 @@ public class PlanetColonizerListAdapter extends RecyclerView.Adapter<PlanetColon
             holder.name.setText(planets.get(position).getName() + " - No Colonizado");
         }
 
-        if(selectedPostion == position){
-
-        }
         holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         holder.itemView.setClickable(true);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setBackgroundColor(Color.WHITE);
-                holder.name.setTextColor(Color.BLACK);
                 context.selectTargetPlanet(planets.get(position));
                 selectedPostion = position;
+                notifyDataSetChanged();
             }
         });
+
+        if(selectedPostion==position){
+            holder.itemView.setBackgroundColor(Color.WHITE);
+            holder.name.setTextColor(Color.BLACK);
+        }
+        else
+        {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            holder.name.setTextColor(Color.WHITE);
+        }
     }
 
     @Override
