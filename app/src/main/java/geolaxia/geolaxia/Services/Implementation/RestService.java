@@ -136,6 +136,11 @@ public class RestService implements IRestService {
             }
         };
 
+        req.setRetryPolicy(new DefaultRetryPolicy(
+                60000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         Request response = Volley.newRequestQueue(context).add(req);
     }
 

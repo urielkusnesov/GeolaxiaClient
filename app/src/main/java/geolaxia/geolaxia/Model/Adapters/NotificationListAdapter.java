@@ -61,10 +61,10 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         if(this.Notifications.get(position).getTipoNotificacion().equals("Ataque")){
-            holder.name.setText("Ataque - Llega en " + this.ObtenerHora(this.Notifications.get(position).getTime()) + " al planeta " + this.Notifications.get(position).getPlanetNameT());
+            holder.name.setText("Ataque - Llega en " + this.ObtenerHora(this.Notifications.get(position).getTime()) + " al planeta " + this.Notifications.get(position).getPlanetNameT() + " del jugador " + this.Notifications.get(position).getPlayerName());
             holder.name.setTextColor(Color.GREEN);
         } else if(this.Notifications.get(position).getTipoNotificacion().equals("Defensa")){
-            holder.name.setText("Defensa - Llega en " + this.ObtenerHora(this.Notifications.get(position).getTime()) + " al planeta " + this.Notifications.get(position).getPlanetNameT());
+            holder.name.setText("Defensa - El ataque del jugador " + this.Notifications.get(position).getPlayerName() + " desde el planeta " + this.Notifications.get(position).getPlanetNameO() + " llega en " + this.ObtenerHora(this.Notifications.get(position).getTime()) + " al planeta " + this.Notifications.get(position).getPlanetNameT());
             holder.name.setTextColor(Color.RED);
         } else if(this.Notifications.get(position).getTipoNotificacion().equals("Colonización")){
             holder.name.setText("Colonización - Llega en " + this.ObtenerHora(this.Notifications.get(position).getTime()) + " al planeta " + this.Notifications.get(position).getPlanetNameT());
@@ -117,10 +117,11 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         long segundos = TimeUnit.MILLISECONDS.toSeconds(time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time));
 
         tiempoExtension += (dias > 0) ? String.valueOf(dias) + ((dias == 1) ? " día" : " días") : "";
-        tiempoExtension += (horas > 0) ? ((dias > 0) ? " : " : "") + String.valueOf(horas) + ((horas == 1) ? " hora" : " horas") : "";
-        tiempoExtension += (minutos > 0) ? ((horas > 0) ? " : " : "") + String.valueOf(minutos) + ((minutos == 1) ? " min" : " mins") : "";
-        tiempoExtension += (segundos > 0) ? ((minutos > 0) ? " : " : "") + String.valueOf(segundos) + ((segundos == 1) ? " seg" : " segs") : "";
+        tiempoExtension += (horas > 0) ? ((dias > 0) ? " : " : "") + String.valueOf(horas) + ((horas == 1) ? " hora" : " horas") : " : ";
+        tiempoExtension += (minutos > 0) ? ((horas > 0) ? " : " : "") + String.valueOf(minutos) + ((minutos == 1) ? " min" : " mins") : " : ";
+        tiempoExtension += (segundos > 0) ? ((minutos > 0) ? " : " : "") + String.valueOf(segundos) + ((segundos == 1) ? " seg" : " segs") : " ";
 
+        tiempoExtension.trim();
 //        if (dias > 0) {
 //            if (dias == 1){
 //                tiempoTexto += String.valueOf(dias) + " día";
