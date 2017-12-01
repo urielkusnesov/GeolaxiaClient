@@ -20,6 +20,7 @@ public class Constants {
     public static final String FLEET_SERVICE = "api/attack/fleet";
     public static final String LAST_POSITION_SERVICE = "api/player/setposition";
     public static final String SET_WEATHER_SERVICE = "api/player/setweather";
+    public static final String SET_FIREBASE_SERVICE = "api/player/setfirebase";
     public static final String CLOSER_PLAYERS_SERVICE = "api/attack/closerplayers";
     public static final String GET_PLAYER_SERVICE = "api/player/loggedplayer";
     public static final String WEATHER_SERVICE = "http://api.openweathermap.org/data/2.5/weather";
@@ -59,6 +60,7 @@ public class Constants {
     public static String getPlanetFleetServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + FLEET_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String SetLastPositionServiceUrl() { return (HTTP + BASE_URL + PORT + LAST_POSITION_SERVICE); }
     public static String SetWeatherServiceUrl(int weatherDesc, String weatherWindSpeed) { return (HTTP + BASE_URL + PORT + SET_WEATHER_SERVICE + "?weatherDesc=" + String.valueOf(weatherDesc) + "&windSpeed=" + weatherWindSpeed); }
+    public static String SetFirebaseServiceUrl(String firebaseToken) { return (HTTP + BASE_URL + PORT + SET_FIREBASE_SERVICE + "?token=" + firebaseToken); }
     public static String getCloserPlayersServiceUrl() { return (HTTP + BASE_URL + PORT + CLOSER_PLAYERS_SERVICE); }
     public static String getPlayerServiceUrl() { return (HTTP + BASE_URL + PORT + GET_PLAYER_SERVICE); }
     public static String getWeatherServiceUrl(String latitude, String longitude) { return (WEATHER_SERVICE + "?lat=" + latitude + "&lon=" + longitude + "&units=metric&APPID=a6e31252461e3c4a9ccaf2bcb32740c5"); }

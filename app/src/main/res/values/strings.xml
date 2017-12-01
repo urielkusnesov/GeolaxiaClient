@@ -25,4 +25,6 @@
     <string name="action_settings">Configuracion</string>
     <string name="title_activity_constructions">Construcciones</string>
     <string name="title_activity_military_constructions">Construcciones Militares</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">News</string>s
 </resources>

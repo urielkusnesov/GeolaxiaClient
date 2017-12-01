@@ -2,6 +2,7 @@ package geolaxia.geolaxia.Activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,23 +32,18 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.StringReader;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Adapters.NotificationListAdapter;
-import geolaxia.geolaxia.Model.Adapters.PlanetColonizerListAdapter;
 import geolaxia.geolaxia.Model.Constants;
-import geolaxia.geolaxia.Model.Dto.NotificationsDTO;
 import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.Notification;
 import geolaxia.geolaxia.Model.Planet;
@@ -59,6 +55,8 @@ import geolaxia.geolaxia.Services.Implementation.WeatherService;
 import geolaxia.geolaxia.Services.Interface.ILoginService;
 import geolaxia.geolaxia.Services.Interface.IPlanetService;
 import geolaxia.geolaxia.Services.Interface.IWeatherService;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 
 public class HomeActivity extends MenuActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener , LocationListener {
 
@@ -125,6 +123,22 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
         notificationList = (RecyclerView) findViewById(R.id.notificationlist);
         notificationListManager = new LinearLayoutManager(this);
         notificationList.setLayoutManager(notificationListManager);
+
+        setUpPushPushNotifications();
+    }
+
+    public void setUpPushPushNotifications(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            String channelId  = getString(R.string.default_notification_channel_id);
+            String channelName = getString(R.string.default_notification_channel_name);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW));
+        }
+
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
+        String token = FirebaseInstanceId.getInstance().getToken();
+        loginService.SetFirebaseToken(player.getUsername(), player.getToken(), token, this);
     }
 
     private void CargarNotificaciones(){

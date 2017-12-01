@@ -51,4 +51,9 @@ public class LoginService implements ILoginService {
     public void GetNotifications(String username, String token, Player player, HomeActivity act){
         restService.GetNotifications(username, token, player, act);
     }
+
+    @Override
+    public void SetFirebaseToken(String username, String token, String firebaseToken, HomeActivity act) {
+        restService.SetFirebaseToken(username, token, firebaseToken, act);
+    }
 }

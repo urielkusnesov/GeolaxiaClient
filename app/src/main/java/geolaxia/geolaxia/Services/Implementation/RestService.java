@@ -905,6 +905,35 @@ public class RestService implements IRestService {
         Request response = Volley.newRequestQueue(act).add(req);
     }
 
+    @Override
+    public void SetFirebaseToken(final String username, final String token, final String firebaseToken, final HomeActivity act) {
+        String url = Constants.SetFirebaseServiceUrl(firebaseToken);
+
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
     public void GetCloserPlayers(final String username, final String token, final AttackActivity.CloseAttackFragment fr, final AttackActivity act){
         String url = Constants.getCloserPlayersServiceUrl();
 

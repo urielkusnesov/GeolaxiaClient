@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "679882981785",
-    "firebase_url": "https://geolaxia.firebaseio.com",
-    "project_id": "geolaxia",
-    "storage_bucket": "geolaxia.appspot.com"
+    "project_number": "350941866697",
+    "firebase_url": "https://geolaxia-170320.firebaseio.com",
+    "project_id": "geolaxia-170320",
+    "storage_bucket": "geolaxia-170320.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:679882981785:android:5849ab9b81c5d166",
+        "mobilesdk_app_id": "1:350941866697:android:5849ab9b81c5d166",
         "android_client_info": {
           "package_name": "geolaxia.geolaxia"
         }
       },
       "oauth_client": [
         {
-          "client_id": "679882981785-dsjo1prd9ugn9m64p6tgd396tp6548kq.apps.googleusercontent.com",
+          "client_id": "350941866697-34urjp6q7jf9br10k1p8c7hmh6h49vgl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC9Y5aWgcH9VeLufvd3-hqrkPkJeCSN8aw"
+          "current_key": "AIzaSyBRfnryKmBlwWnzlDFnhX8B8Myp8NLonPc"
         }
       ],
       "services": {
