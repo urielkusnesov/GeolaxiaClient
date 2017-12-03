@@ -177,10 +177,10 @@ public class RestService implements IRestService {
 
                                 act.LogIn(playersContainer.getData());
                             } else {
-                                act.handleUnexpectedError("Error obteniendo planetas", playersContainer.getStatus().getDescription());
+                                act.handleUnexpectedError("Error al intentar loguearse en Geolaxia", playersContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los planetas. Intente nuevamente");
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo loguearse en Geolaxia. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {

@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:background="@drawable/main_bg"
+        android:background="@drawable/attack_bg"
         tools:context="geolaxia.geolaxia.Activities.AttackActivity">
 
         <android.support.design.widget.AppBarLayout

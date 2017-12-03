@@ -47,11 +47,12 @@ public class DefenseActivity extends MenuActivity {
         this.CargarCanones();
         this.CargarCanonesConstruccion();
         this.CargarBotonConstruir();
+
         this.CargarEstadoEscudo();
+        this.CargarBotonDefender();
 
         this.EstaConstruyendoCanones();
-
-        this.CargarBotonDefender();
+        this.EstaRecibiendoAtaque();
 
         this.VaciarPantalla();
     }
@@ -246,6 +247,18 @@ public class DefenseActivity extends MenuActivity {
         }
     }
 
+    // Carga el tiempo si esta recibiendo ataque.
+    private void EstaRecibiendoAtaque() {
+        //this.defenseService.IsBuildingCannons(this.player.getUsername(), this.player.getToken(), this, this.planet.getId());
+    }
+
+    // Respuesta del service.
+    public void EstaRecibiendoAtaqueAhora(IsBuildingCannonsDTO tiempoFinalizacion){
+//        if (tiempoFinalizacion.IsBuilding()) {
+//            this.CargarTiempoConstruccion(tiempoFinalizacion.getData());
+//        }
+    }
+
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
     private boolean TieneRecursosNecesariosParaConstruir(int metal, int cristal) {
@@ -274,6 +287,12 @@ public class DefenseActivity extends MenuActivity {
 
     private void SetearBotonConstruir(boolean activo) {
         Button construirBoton = (Button) findViewById(R.id.defense_cant_canones_construccion_boton);
+        construirBoton.setEnabled(activo);
+        construirBoton.setPaintFlags((!activo) ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
+    }
+
+    private void SetearBotonDefender(boolean activo) {
+        Button construirBoton = (Button) findViewById(R.id.defense_estado_escudo_defender);
         construirBoton.setEnabled(activo);
         construirBoton.setPaintFlags((!activo) ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
     }

@@ -398,7 +398,7 @@ public class HomeActivity extends MenuActivity implements GoogleApiClient.Connec
 
     @Override
     public void onBackPressed() {
-        SweetAlertDialog dialog = Helpers.getConfirmationDialog(this, "Salir", "Esta seguro que desea cerrar sesion?", "Cerrar sesion", "Cancelar");
+        SweetAlertDialog dialog = Helpers.getConfirmationDialog(this, "Salir", "¿Está seguro que desea cerrar sesión?", "Cerrar sesión", "Cancelar");
 
         dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
             @Override

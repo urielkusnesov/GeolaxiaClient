@@ -234,7 +234,8 @@ public class ColonizeActivity extends MenuActivity {
             ArrayList<String> galaxyNames = new ArrayList<>();
 
             for (Galaxy galaxy: galaxies) {
-                galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
+                //galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
+                galaxyNames.add(String.valueOf(galaxy.getId()));
             }
 
             galaxiesSelected = new String[galaxyNames.size()];
@@ -252,7 +253,8 @@ public class ColonizeActivity extends MenuActivity {
             ArrayList<String> solarSystemNames = new ArrayList<>();
 
             for (SolarSystem solarSystem: solarSystems) {
-                solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
+                //solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
+                solarSystemNames.add(String.valueOf(solarSystem.getId()));
             }
 
             solarSystemsSelected = new String[solarSystemNames.size()];
@@ -278,7 +280,8 @@ public class ColonizeActivity extends MenuActivity {
 
             for (Planet planet: finalPlanets) {
                 availablePlanets.put(planet.getOrder(), planet);
-                planetNames.add(planet.getOrder() + "-" + planet.getName());
+                //planetNames.add(planet.getOrder() + "-" + planet.getName());
+                planetNames.add(String.valueOf(planet.getOrder()));
             }
 
             planetsSelected = new String[planetNames.size()];
@@ -457,7 +460,8 @@ public class ColonizeActivity extends MenuActivity {
 
         private Planet GetTargetPlanet() {
             NumberPicker planetsPicker = (NumberPicker) getView().findViewById(R.id.planet);
-            int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+            //int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+            int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()]);
             Planet targetPlanet = availablePlanets.get(planetOrder);
 
             return(targetPlanet);
@@ -594,7 +598,8 @@ public class ColonizeActivity extends MenuActivity {
 
             ArrayList<String> galaxyNames = new ArrayList<>();
             for (Galaxy galaxy: galaxies) {
-                galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
+                //galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
+                galaxyNames.add(String.valueOf(galaxy.getId()));
             }
             galaxiesSelected = new String[galaxyNames.size()];
             galaxiesSelected = galaxyNames.toArray(galaxiesSelected);
@@ -610,7 +615,8 @@ public class ColonizeActivity extends MenuActivity {
 
             ArrayList<String> solarSystemNames = new ArrayList<>();
             for (SolarSystem solarSystem: solarSystems) {
-                solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
+                //solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
+                solarSystemNames.add(String.valueOf(solarSystem.getId()));
             }
             solarSystemsSelected = new String[solarSystemNames.size()];
             solarSystemsSelected = solarSystemNames.toArray(solarSystemsSelected);
