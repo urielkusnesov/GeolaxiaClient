@@ -37,4 +37,19 @@ public class DefenseService implements IDefenseService {
     public void Get3RandomQuestions(String username, String token, DefenseQuestionActivity context) {
         restService.Get3RandomQuestions(username, token, context);
     }
+
+    /*@Override
+    public void Get3RandomQuestions(String username, String token, DefenseQuestionActivity context, int attackId) {
+        restService.Get3RandomQuestions(username, token, context, attackId);
+    }*/
+
+    @Override
+    public void ObtenerAtaqueMasProximoNoDefendido(String username, String token, DefenseActivity context, int planetId) {
+        restService.ObtenerAtaqueMasProximoNoDefendido(username, token, context, planetId);
+    }
+
+    @Override
+    public void DefenseFromAttack(String username, String token, DefenseQuestionActivity context, int attackId, int idPregunta1, int idPregunta2, int idPregunta3, int cantidadCorrectas) {
+        restService.DefenseFromAttack(username, token, context, attackId, idPregunta1, idPregunta2, idPregunta3, cantidadCorrectas);
+    }
 }

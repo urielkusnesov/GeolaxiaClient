@@ -77,17 +77,19 @@ public interface IRestService {
     void BuildShield(String username, String token, int planetId, MilitaryConstructionsActivity context, MilitaryConstructionsActivity.OthersFragment fragment);
     void BuildProbes(final String username, final String token, final MilitaryConstructionsActivity.OthersFragment fragment, final MilitaryConstructionsActivity context, int planetId, int qtt);
     void BuildTraders(final String username, final String token, final MilitaryConstructionsActivity.OthersFragment fragment, final MilitaryConstructionsActivity context, int planetId, int qtt);
+    void GetPlanetFleet(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context, int planetId);
+    void GetShipsCost(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context);
+    void BuildShips(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context, int planetId, int qtt, int shipType);
 
     //defense
     void GetShieldStatus(String username, String token, DefenseActivity context, int planetId);
     void GetCannons(String username, String token, DefenseActivity context, int planetId);
     void BuildCannons(String username, String token, DefenseActivity context, int planetId, int cant);
     void IsBuildingCannons(String username, String token, DefenseActivity context, int planetId);
-    void GetPlanetFleet(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context, int planetId);
-    void GetShipsCost(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context);
-    void BuildShips(String username, String token, MilitaryConstructionsActivity act, MilitaryConstructionsActivity.ShipsFragment context, int planetId, int qtt, int shipType);
-
     void Get3RandomQuestions(String username, String token, DefenseQuestionActivity context);
+    //void Get3RandomQuestions(String username, String token, DefenseQuestionActivity context, int attackId);
+    void ObtenerAtaqueMasProximoNoDefendido(String username, String token, DefenseActivity context, int planetId);
+    void DefenseFromAttack(String username, String token, DefenseQuestionActivity context, int attackId, int idPregunta1, int idPregunta2, int idPregunta3, int cantidadCorrectas);
 
     //colonize
     void GetAllGalaxies(String username, String token, ColonizeActivity act, ColonizeActivity.ColonizeFragment context);

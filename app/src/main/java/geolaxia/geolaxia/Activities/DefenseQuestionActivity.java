@@ -32,6 +32,12 @@ public class DefenseQuestionActivity extends MenuActivity {
 
     private IDefenseService defenseService;
 
+    private int attackId;
+    //private int defenseId;
+
+    private int idPregunta1;
+    private int idPregunta2;
+    private int idPregunta3;
     private String respuesta1;
     private String respuesta2;
     private String respuesta3;
@@ -109,6 +115,7 @@ public class DefenseQuestionActivity extends MenuActivity {
         Intent intent = getIntent();
         player = (Player) intent.getExtras().getSerializable("player");
         planet = (Planet) intent.getExtras().getSerializable("planet");
+        attackId = (int) intent.getExtras().getSerializable("attackId");
         //FIN BASE.
     }
 
@@ -119,13 +126,25 @@ public class DefenseQuestionActivity extends MenuActivity {
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
     private void CargarPreguntas() {
+        //this.defenseService.Get3RandomQuestions(this.player.getUsername(), this.player.getToken(), this, this.attackId);
         this.defenseService.Get3RandomQuestions(this.player.getUsername(), this.player.getToken(), this);
     }
 
     public void CargarPreguntasAhora(ArrayList<Question> questions) {
         for (int i = 1; i <= questions.size(); i++) {
+            this.CargarIdPregunta(i, questions.get(i-1));
             this.CargarPregunta(i, questions.get(i-1));
             this.CargarRespuestasCorrectas(i, questions.get(i-1));
+        }
+    }
+
+    private void CargarIdPregunta(int numeroPregunta, Question question) {
+        if (numeroPregunta == 1) {
+            this.idPregunta1 = question.GetId();
+        } else if (numeroPregunta == 2) {
+            this.idPregunta2 = question.GetId();
+        } else if (numeroPregunta == 3) {
+            this.idPregunta3 = question.GetId();
         }
     }
 
@@ -134,8 +153,6 @@ public class DefenseQuestionActivity extends MenuActivity {
         TextView pregunta = (TextView)findViewById(preguntaId);
         pregunta.setText(question.GetQuestion());
 
-//        int respuestaId = 0;
-//       TextView respuesta = null;
         ArrayList<String> answers = question.GetAnswers();
 
         int grupoId = getResources().getIdentifier("P"+String.valueOf(numeroPregunta)+"_R", "id", this.getPackageName());
@@ -144,12 +161,6 @@ public class DefenseQuestionActivity extends MenuActivity {
         for (int i = 0; i < rbtnGrp.getChildCount(); i++) {
             ((RadioButton) rbtnGrp.getChildAt(i)).setText(answers.get(i));
         }
-
-//        for (int i = 1; i <= answers.size(); i++) {
-//            respuestaId = getResources().getIdentifier("P"+String.valueOf(numeroPregunta)+"_R"+String.valueOf(i), "id", this.getPackageName());
-//            respuesta = (RadioButton)findViewById(respuestaId);
-//            respuesta.setText(answers.get(i-1));
-//        }
     }
 
     private void CargarRespuestasCorrectas(int numeroPregunta, Question question) {
@@ -205,7 +216,7 @@ public class DefenseQuestionActivity extends MenuActivity {
     }
 
     private void MandarRespuestas() {
-        //this.defenseService.Defense(this.player.getUsername(), this.player.getToken(), this, this.ObtenerCantRespuestasCorrectas());
+        this.defenseService.DefenseFromAttack(this.player.getUsername(), this.player.getToken(), this, this.attackId, this.idPregunta1, this.idPregunta2, this.idPregunta3, this.ObtenerCantRespuestasCorrectas());
     }
 
     private void GoHome() {

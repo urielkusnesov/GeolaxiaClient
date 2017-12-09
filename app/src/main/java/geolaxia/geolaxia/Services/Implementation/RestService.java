@@ -34,6 +34,7 @@ import geolaxia.geolaxia.Model.Constants;
 import geolaxia.geolaxia.Model.CrystalMine;
 import geolaxia.geolaxia.Model.DarkMatterMine;
 import geolaxia.geolaxia.Model.Dto.AttackDTO;
+import geolaxia.geolaxia.Model.Dto.AttackIdDTO;
 import geolaxia.geolaxia.Model.Dto.BaseDTO;
 import geolaxia.geolaxia.Model.Dto.CannonsDTO;
 import geolaxia.geolaxia.Model.Dto.EnergyFacilitiesAllDTO;
@@ -44,6 +45,7 @@ import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
 import geolaxia.geolaxia.Model.Dto.HangarDTO;
 import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
 import geolaxia.geolaxia.Model.Dto.IsSendingColonizerDTO;
+import geolaxia.geolaxia.Model.Dto.IsUnderAttackDTO;
 import geolaxia.geolaxia.Model.Dto.MineDTO;
 import geolaxia.geolaxia.Model.Dto.MinesDTO;
 import geolaxia.geolaxia.Model.Dto.NotificationsDTO;
@@ -113,7 +115,7 @@ public class RestService implements IRestService {
                             if(Constants.OK_RESPONSE.equals(notifications.getStatus().getResult())) {
                                 context.CargarNotificacionesAhora(notifications.getData());
                             } else {
-                                context.handleUnexpectedError("Error obteniendo cañones", notifications.getStatus().getDescription());
+                                context.handleUnexpectedError("Error obteniendo notificaciones", notifications.getStatus().getDescription());
                             }
                         }catch (Exception e){
                             context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las notificaciones. Intente nuevamente");
@@ -298,64 +300,64 @@ public class RestService implements IRestService {
         Request response = Volley.newRequestQueue(act).add(req);
     }
 
-        @Override
-        public void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act) {
-            String url = Constants.getPlanetsByPlayerServiceUrl();
+    @Override
+    public void GetPlanetsByPlayer(final String username, final String token, final HomeActivity act) {
+        String url = Constants.getPlanetsByPlayerServiceUrl();
 
-            JsonObjectRequest req = new JsonObjectRequest(url, null,
-                    new Response.Listener<JSONObject> () {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                PlanetsDTO planetsContainer = new Gson().fromJson(response.toString(), PlanetsDTO.class);
-                                if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
+        JsonObjectRequest req = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            PlanetsDTO planetsContainer = new Gson().fromJson(response.toString(), PlanetsDTO.class);
+                            if(Constants.OK_RESPONSE.equals(planetsContainer.getStatus().getResult())) {
 
-                                    //transformar a planetas segun herencia
-                                    ArrayList<Planet> planets = new ArrayList<Planet>();
-                                    for (Planet planet: planetsContainer.getData()) {
-                                        Planet newPlanet = null;
-                                        switch (planet.getPlanetType()){
-                                            case Constants.WHITE_PLANET:
-                                                newPlanet = new WhitePlanet(planet);
-                                                break;
-                                            case Constants.BLUE_PLANET:
-                                                newPlanet = new BluePlanet(planet);
-                                                break;
-                                            case Constants.BLACK_PLANET:
-                                                newPlanet = new BlackPlanet(planet);
-                                                break;
-                                        }
-                                        planets.add(newPlanet);
+                                //transformar a planetas segun herencia
+                                ArrayList<Planet> planets = new ArrayList<Planet>();
+                                for (Planet planet: planetsContainer.getData()) {
+                                    Planet newPlanet = null;
+                                    switch (planet.getPlanetType()){
+                                        case Constants.WHITE_PLANET:
+                                            newPlanet = new WhitePlanet(planet);
+                                            break;
+                                        case Constants.BLUE_PLANET:
+                                            newPlanet = new BluePlanet(planet);
+                                            break;
+                                        case Constants.BLACK_PLANET:
+                                            newPlanet = new BlackPlanet(planet);
+                                            break;
                                     }
-
-                                    act.FillPlanets(planets);
-                                } else {
-                                    act.handleUnexpectedError("Error obteniendo planetas", planetsContainer.getStatus().getDescription());
+                                    planets.add(newPlanet);
                                 }
-                            }catch (Exception e){
-                                act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los planetas. Intente nuevamente");
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
-                    //handle error
-                }
-            })
-            {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("username", username);
-                    headers.put("token", token);
-                    return headers;
-                }
-            };
 
-            // add the request object to the queue to be executed
-            Request response = Volley.newRequestQueue(act).add(req);
-        }
+                                act.FillPlanets(planets);
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo planetas", planetsContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener los planetas. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
 
         /*@Override
         public void GetPlanet(final int planetId, final String username, final String token, final HomeActivity act) {
@@ -1603,6 +1605,173 @@ public class RestService implements IRestService {
     }
 
     @Override
+    public void Get3RandomQuestions(final String username, final String token, final DefenseQuestionActivity context) {
+        String url = Constants.getRandomQuestions();
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            QuestionDTO questions = gSon.fromJson(response.toString(), QuestionDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(questions.getStatus().getResult())) {
+                                context.CargarPreguntasAhora(questions.getData());
+                            } else {
+                                context.handleUnexpectedError("Error obteniendo preguntas", questions.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las preguntas. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    /*@Override
+    public void Get3RandomQuestions(final String username, final String token, final DefenseQuestionActivity context, final int attackId) {
+        *//*String url = Constants.getRandomQuestionsConAtaque(attackId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            QuestionDTO questions = gSon.fromJson(response.toString(), QuestionDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(questions.getStatus().getResult())) {
+                                context.CargarPreguntasAhora(questions.getData());
+                            } else {
+                                context.handleUnexpectedError("Error obteniendo preguntas", questions.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las preguntas. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);*//*
+    }*/
+
+    @Override
+    public  void ObtenerAtaqueMasProximoNoDefendido(final String username, final String token, final DefenseActivity context, final int planetId) {
+        String url = Constants.getAttackIdNoDefendido(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            AttackIdDTO attack = gSon.fromJson(response.toString(), AttackIdDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(attack.getStatus().getResult())) {
+                                context.EstaRecibiendoAtaqueAhora(attack);
+                            } else {
+                                context.handleUnexpectedError("Error obteniendo el ataque para su defensa", attack.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el ataque para su defensa. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    @Override
+    public void DefenseFromAttack(final String username, final String token, final DefenseQuestionActivity context, final int attackId, final int idPregunta1, final int idPregunta2, final int idPregunta3, final int cantidadCorrectas) {
+        String url = Constants.defenseFromAttack(attackId, idPregunta1, idPregunta2, idPregunta3, cantidadCorrectas);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            /*AttackIdDTO attack = gSon.fromJson(response.toString(), AttackIdDTO.class);
+
+                            if(Constants.OK_RESPONSE.equals(attack.getStatus().getResult())) {
+                                context.EstaRecibiendoAtaqueAhora(attack);
+                            } else {
+                                context.handleUnexpectedError("Error obteniendo el ataque para su defensa", attack.getStatus().getDescription());
+                            }*/
+                        }catch (Exception e){
+                            context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el ataque para su defensa. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        Request response = Volley.newRequestQueue(context).add(req);
+    }
+
+    // -*-*-*-*-*-*-
+    // CONSTRUCTION.
+    // -*-*-*-*-*-*-
+    @Override
     public void GetCurrentHangar(final String username, final String token, final int planetId, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.HangarFragment fragment){
         String url = Constants.getCurrentHangarServiceUrl(planetId);
 
@@ -2070,47 +2239,6 @@ public class RestService implements IRestService {
                             }
                         }catch (Exception e){
                             context.handleUnexpectedError("Ocurrio un error", "No se pudo construir el carguero. Intente nuevamente");
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                context.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("username", username);
-                headers.put("token", token);
-                return headers;
-            }
-        };
-
-        Request response = Volley.newRequestQueue(context).add(req);
-    }
-
-    @Override
-    public void Get3RandomQuestions(final String username, final String token, final DefenseQuestionActivity context) {
-        String url = Constants.getRandomQuestions();
-
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
-                new Response.Listener<JSONObject> () {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-                            QuestionDTO questions = gSon.fromJson(response.toString(), QuestionDTO.class);
-
-                            if(Constants.OK_RESPONSE.equals(questions.getStatus().getResult())) {
-                                context.CargarPreguntasAhora(questions.getData());
-                            } else {
-                                context.handleUnexpectedError("Error obteniendo preguntas", questions.getStatus().getDescription());
-                            }
-                        }catch (Exception e){
-                            context.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las preguntas. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
