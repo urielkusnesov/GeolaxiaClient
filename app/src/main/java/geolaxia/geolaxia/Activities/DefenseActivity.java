@@ -217,10 +217,9 @@ public class DefenseActivity extends MenuActivity {
 
     public void CargarBotonDefender() {
         Button defenderBoton = (Button) findViewById(R.id.defense_estado_escudo_defender);
-
         defenderBoton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                @Override
+                public void onClick(View view) {
                 SweetAlertDialog dialog = Helpers.getConfirmationDialog(context, "Defender", "¿Está preparado para responder 3 preguntas? Recuerde que tiene 20 segundos.", "Si", "No");
 
                 dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -262,8 +261,13 @@ public class DefenseActivity extends MenuActivity {
     // Respuesta del service.
     public void EstaRecibiendoAtaqueAhora(final AttackIdDTO attackId) {
         if (attackId.getData() > 0) {
-            this.attackId = attackId.getData();
-            this.SetearBotonDefender(true);
+            TextView estadoEscudo = (TextView)findViewById(R.id.defense_estado_escudo);
+            String estado = estadoEscudo.getText().toString();
+
+            if(estado.equals("Activado")) {
+                this.attackId = attackId.getData();
+                this.SetearBotonDefender(true);
+            }
         } else {
             this.SetearBotonDefender(false);
         }
