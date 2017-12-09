@@ -53,6 +53,8 @@ public class ColonizeActivity extends MenuActivity {
     private IColonizeService colonizeService;
     private IPlanetService planetService;
 
+    private boolean estaColonizando = false;
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -319,6 +321,8 @@ public class ColonizeActivity extends MenuActivity {
             }
         }
 
+        // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
         private void CargarBotonEnviar() {
             Button boton = (Button) rootView.findViewById(R.id.colonization_enviar_boton);
             boton.setOnClickListener(new View.OnClickListener() {
@@ -358,6 +362,8 @@ public class ColonizeActivity extends MenuActivity {
 
             act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
 
+            this.act.estaColonizando = true;
+
             this.CargarTiempoLlegada(arrival.getTime());
 
             SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Colonización", "La misión de la sonda colonizadora ha comenzado!");
@@ -396,6 +402,7 @@ public class ColonizeActivity extends MenuActivity {
 
         public void EstaEnviandoColonizadorAhora(IsSendingColonizerDTO tiempoLlegada){
             if (tiempoLlegada.IsSending()) {
+                this.act.estaColonizando = true;
                 this.CargarTiempoLlegada(tiempoLlegada.getData());
             }
         }
@@ -413,13 +420,14 @@ public class ColonizeActivity extends MenuActivity {
         }
 
         private boolean EstaColonizando() {
-            TextView timer = (TextView) rootView.findViewById(R.id.colonization_envio_timer);
+            /*TextView timer = (TextView) rootView.findViewById(R.id.colonization_envio_timer);
 
             if (timer.getVisibility() == View.VISIBLE) {
                 return (true);
             }
 
-            return (false);
+            return (false);*/
+            return(this.act.estaColonizando);
         }
 
         private void HabilitarPantalla() {
@@ -449,9 +457,7 @@ public class ColonizeActivity extends MenuActivity {
         }
 
         private void PantallaSegunEnvio() {
-            boolean estaConstruyendo = this.EstaColonizando();
-
-            if (estaConstruyendo) {
+            if (this.EstaColonizando()) {
                 this.DeshabilitarPantalla();
             } else {
                 this.HabilitarPantalla();
@@ -711,6 +717,8 @@ public class ColonizeActivity extends MenuActivity {
 
             act.planet.setDarkMatter(act.planet.getDarkMatter() - Integer.valueOf(costoMO.getText().toString()));
 
+            this.act.estaColonizando = true;
+
             this.CargarTiempoLlegada(arrival.getTime());
 
             SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Colonización", "La misión de la sonda colonizadora ha comenzado!");
@@ -749,6 +757,7 @@ public class ColonizeActivity extends MenuActivity {
 
         public void EstaEnviandoColonizadorAhora(IsSendingColonizerDTO tiempoLlegada){
             if (tiempoLlegada.IsSending()) {
+                this.act.estaColonizando = true;
                 this.CargarTiempoLlegada(tiempoLlegada.getData());
             }
         }
@@ -766,13 +775,14 @@ public class ColonizeActivity extends MenuActivity {
         }
 
         private boolean EstaColonizando() {
-            TextView timer = (TextView) rootView.findViewById(R.id.colonization_envio_timer);
+            /*TextView timer = (TextView) rootView.findViewById(R.id.colonization_envio_timer);
 
             if (timer.getVisibility() == View.VISIBLE) {
                 return (true);
             }
 
-            return (false);
+            return (false);*/
+            return (this.act.estaColonizando);
         }
 
         private void HabilitarPantalla() {

@@ -38,9 +38,11 @@ public class DefenseActivity extends MenuActivity {
     final Activity context = this;
 
     private IDefenseService defenseService;
-    private IPlanetService planetService;
 
-    private int attackId;
+    private boolean estaConstruyendoCanones = false;
+    private boolean escudoActivado = false;
+    private boolean estaRecibiendoAtaqueNoDefendido = false;
+    private int attackId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,6 @@ public class DefenseActivity extends MenuActivity {
         this.CargarBotonDefender();
 
         this.EstaConstruyendoCanones();
-
-        //this.SetearBotonDefender(false);
         this.EstaRecibiendoAtaque();
 
         this.VaciarPantalla();
@@ -85,7 +85,6 @@ public class DefenseActivity extends MenuActivity {
 
     private void ConstructorServicios() {
         this.defenseService = new DefenseService();
-        this.planetService = new PlanetService();
     }
 
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -99,7 +98,6 @@ public class DefenseActivity extends MenuActivity {
         TextView cantCanonesActivos = (TextView)findViewById(R.id.defense_cant_canones_activos);
 
         if (cannons != null && !cannons.isEmpty()) {
-
             int canonesActivos = cannons.size();
             cantCanonesActivos.setText(String.valueOf(canonesActivos));
         } else {
@@ -148,6 +146,7 @@ public class DefenseActivity extends MenuActivity {
     // Carga la seccion de seleccionar canones para construir boton construir.
     private void CargarBotonConstruir() {
         Button construirBoton = (Button) findViewById(R.id.defense_cant_canones_construccion_boton);
+
         construirBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,6 +184,8 @@ public class DefenseActivity extends MenuActivity {
         NumberPicker np = (NumberPicker) findViewById(R.id.defense_cant_canones_construccion);
         int cantCanonesAContruir = np.getValue();
 
+        this.estaConstruyendoCanones = true;
+
         this.CargarTiempoConstruccion(cantCanonesAContruir);
 
         this.planet.setMetal(this.planet.getMetal() - 100 * cantCanonesAContruir);
@@ -209,9 +210,11 @@ public class DefenseActivity extends MenuActivity {
         if(shield != null && shield.getStatus()){
             estadoEscudo.setText("Activado");
             estadoEscudo.setTextColor(Color.GREEN);
+            this.escudoActivado = true;
         } else {
             estadoEscudo.setText("Desactivado");
             estadoEscudo.setTextColor(Color.RED);
+            this.escudoActivado = false;
         }
     }
 
@@ -249,6 +252,7 @@ public class DefenseActivity extends MenuActivity {
     // Respuesta del service.
     public void EstaConstruyendoCanonesAhora(IsBuildingCannonsDTO tiempoFinalizacion){
         if (tiempoFinalizacion.IsBuilding()) {
+            this.estaConstruyendoCanones = true;
             this.CargarTiempoConstruccion(tiempoFinalizacion.getData());
         }
     }
@@ -262,9 +266,9 @@ public class DefenseActivity extends MenuActivity {
     public void EstaRecibiendoAtaqueAhora(final AttackIdDTO attackId) {
         if (attackId.getData() > 0) {
             TextView estadoEscudo = (TextView)findViewById(R.id.defense_estado_escudo);
-            String estado = estadoEscudo.getText().toString();
+            this.estaRecibiendoAtaqueNoDefendido = true;
 
-            if(estado.equals("Activado")) {
+            if(this.escudoActivado) {
                 this.attackId = attackId.getData();
                 this.SetearBotonDefender(true);
             }
