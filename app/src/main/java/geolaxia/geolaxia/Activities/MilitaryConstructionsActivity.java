@@ -162,6 +162,11 @@ public class MilitaryConstructionsActivity extends MenuActivity {
                 build.setEnabled(false);
                 act.hasHangar = true;
             }
+
+            if(act.player.getLevel() < hangar.getRequiredLevel()){
+                build.setPaintFlags(build.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                build.setEnabled(false);
+            }
         }
 
         public void checkAvailability(Hangar hangar){
@@ -305,30 +310,30 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    TextView shipXCostText = (TextView) fragment.getView().findViewById(R.id.shipXCostText);
-                    TextView shipXTimeText = (TextView) fragment.getView().findViewById(R.id.shipXTimeText);
+                TextView shipXCostText = (TextView) fragment.getView().findViewById(R.id.shipXCostText);
+                TextView shipXTimeText = (TextView) fragment.getView().findViewById(R.id.shipXTimeText);
 
-                    if (newVal > 0) {
-                        int crystalCost = newVal * 50;
-                        int metalCost = newVal * 250;
-                        int timeCost =  newVal * 5;
+                if (newVal > 0) {
+                    int crystalCost = newVal * 50;
+                    int metalCost = newVal * 250;
+                    int timeCost =  newVal * 5;
 
-                        shipXCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
-                        shipXTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+                    shipXCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
+                    shipXTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
 
-                        if (hasResources(crystalCost, metalCost, 0)) {
-                            buildShipX.setPaintFlags(0);
-                            buildShipX.setEnabled(true);
-                        } else {
-                            buildShipX.setPaintFlags(buildShipX.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                            buildShipX.setEnabled(false);
-                        }
+                    if (hasResources(crystalCost, metalCost, 0) && act.player.getLevel() >= 2) {
+                        buildShipX.setPaintFlags(0);
+                        buildShipX.setEnabled(true);
                     } else {
                         buildShipX.setPaintFlags(buildShipX.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildShipX.setEnabled(false);
-                        shipXCostText.setText("Costo: ");
-                        shipXTimeText.setText("Tiempo finalizacion: ");
                     }
+                } else {
+                    buildShipX.setPaintFlags(buildShipX.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    buildShipX.setEnabled(false);
+                    shipXCostText.setText("Costo: ");
+                    shipXTimeText.setText("Tiempo finalizacion: ");
+                }
                 }
             });
         }
@@ -343,30 +348,30 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    TextView shipYCostText = (TextView) fragment.getView().findViewById(R.id.shipYCostText);
-                    TextView shipYTimeText = (TextView) fragment.getView().findViewById(R.id.shipYTimeText);
+                TextView shipYCostText = (TextView) fragment.getView().findViewById(R.id.shipYCostText);
+                TextView shipYTimeText = (TextView) fragment.getView().findViewById(R.id.shipYTimeText);
 
-                    if (newVal > 0) {
-                        int crystalCost = newVal * 75;
-                        int metalCost = newVal * 500;
-                        int timeCost =  newVal * 10;
+                if (newVal > 0) {
+                    int crystalCost = newVal * 75;
+                    int metalCost = newVal * 500;
+                    int timeCost =  newVal * 10;
 
-                        shipYCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
-                        shipYTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+                    shipYCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
+                    shipYTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
 
-                        if (hasResources(crystalCost, metalCost, 0)) {
-                            buildShipY.setPaintFlags(0);
-                            buildShipY.setEnabled(true);
-                        } else {
-                            buildShipY.setPaintFlags(buildShipY.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                            buildShipY.setEnabled(false);
-                        }
+                    if (hasResources(crystalCost, metalCost, 0) && act.player.getLevel() >= 3) {
+                        buildShipY.setPaintFlags(0);
+                        buildShipY.setEnabled(true);
                     } else {
                         buildShipY.setPaintFlags(buildShipY.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildShipY.setEnabled(false);
-                        shipYCostText.setText("Costo: ");
-                        shipYTimeText.setText("Tiempo finalizacion: ");
                     }
+                } else {
+                    buildShipY.setPaintFlags(buildShipY.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    buildShipY.setEnabled(false);
+                    shipYCostText.setText("Costo: ");
+                    shipYTimeText.setText("Tiempo finalizacion: ");
+                }
                 }
             });
         }
@@ -381,30 +386,30 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    TextView shipZCostText = (TextView) fragment.getView().findViewById(R.id.shipZCostText);
-                    TextView shipZTimeText = (TextView) fragment.getView().findViewById(R.id.shipZTimeText);
+                TextView shipZCostText = (TextView) fragment.getView().findViewById(R.id.shipZCostText);
+                TextView shipZTimeText = (TextView) fragment.getView().findViewById(R.id.shipZTimeText);
 
-                    if (newVal > 0) {
-                        int crystalCost = newVal * 100;
-                        int metalCost = newVal * 1000;
-                        int timeCost =  newVal * 15;
+                if (newVal > 0) {
+                    int crystalCost = newVal * 100;
+                    int metalCost = newVal * 1000;
+                    int timeCost =  newVal * 15;
 
-                        shipZCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
-                        shipZTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+                    shipZCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
+                    shipZTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
 
-                        if (hasResources(crystalCost, metalCost, 0)) {
-                            buildShipZ.setPaintFlags(0);
-                            buildShipZ.setEnabled(true);
-                        } else {
-                            buildShipZ.setPaintFlags(buildShipZ.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                            buildShipZ.setEnabled(false);
-                        }
+                    if (hasResources(crystalCost, metalCost, 0) && act.player.getLevel() >= 5) {
+                        buildShipZ.setPaintFlags(0);
+                        buildShipZ.setEnabled(true);
                     } else {
                         buildShipZ.setPaintFlags(buildShipZ.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildShipZ.setEnabled(false);
-                        shipZCostText.setText("Costo: ");
-                        shipZTimeText.setText("Tiempo finalizacion: ");
                     }
+                } else {
+                    buildShipZ.setPaintFlags(buildShipZ.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    buildShipZ.setEnabled(false);
+                    shipZCostText.setText("Costo: ");
+                    shipZTimeText.setText("Tiempo finalizacion: ");
+                }
                 }
             });
         }
@@ -642,30 +647,30 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    TextView probeCostText = (TextView) fragment.getView().findViewById(R.id.probeCostText);
-                    TextView probeTimeText = (TextView) fragment.getView().findViewById(R.id.probeTimeText);
+                TextView probeCostText = (TextView) fragment.getView().findViewById(R.id.probeCostText);
+                TextView probeTimeText = (TextView) fragment.getView().findViewById(R.id.probeTimeText);
 
-                    if (newVal > 0) {
-                        int crystalCost = newVal * 50;
-                        int metalCost = newVal * 250;
-                        int timeCost =  newVal * 30;
+                if (newVal > 0) {
+                    int crystalCost = newVal * 50;
+                    int metalCost = newVal * 250;
+                    int timeCost =  newVal * 30;
 
-                        probeCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
-                        probeTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+                    probeCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
+                    probeTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
 
-                        if (hasResources(crystalCost, metalCost, 0)) {
-                            buildProbes.setPaintFlags(0);
-                            buildProbes.setEnabled(true);
-                        } else {
-                            buildProbes.setPaintFlags(buildProbes.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                            buildProbes.setEnabled(false);
-                        }
+                    if (hasResources(crystalCost, metalCost, 0) && act.player.getLevel() >= 5) {
+                        buildProbes.setPaintFlags(0);
+                        buildProbes.setEnabled(true);
                     } else {
                         buildProbes.setPaintFlags(buildProbes.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildProbes.setEnabled(false);
-                        probeCostText.setText("Costo: ");
-                        probeTimeText.setText("Tiempo finalizacion: ");
                     }
+                } else {
+                    buildProbes.setPaintFlags(buildProbes.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    buildProbes.setEnabled(false);
+                    probeCostText.setText("Costo: ");
+                    probeTimeText.setText("Tiempo finalizacion: ");
+                }
                 }
             });
         }
@@ -680,30 +685,30 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    TextView freighterCostText = (TextView) fragment.getView().findViewById(R.id.freighterCostText);
-                    TextView freighterTimeText = (TextView) fragment.getView().findViewById(R.id.freighterTimeText);
+                TextView freighterCostText = (TextView) fragment.getView().findViewById(R.id.freighterCostText);
+                TextView freighterTimeText = (TextView) fragment.getView().findViewById(R.id.freighterTimeText);
 
-                    if (newVal > 0) {
-                        int crystalCost = newVal * 50;
-                        int metalCost = newVal * 250;
-                        int timeCost =  newVal * 30;
+                if (newVal > 0) {
+                    int crystalCost = newVal * 50;
+                    int metalCost = newVal * 250;
+                    int timeCost =  newVal * 30;
 
-                        freighterCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
-                        freighterTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+                    freighterCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
+                    freighterTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
 
-                        if (hasResources(crystalCost, metalCost, 0)) {
-                            buildTraders.setPaintFlags(0);
-                            buildTraders.setEnabled(true);
-                        } else {
-                            buildTraders.setPaintFlags(buildTraders.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                            buildTraders.setEnabled(false);
-                        }
+                    if (hasResources(crystalCost, metalCost, 0) && act.player.getLevel() >= 5) {
+                        buildTraders.setPaintFlags(0);
+                        buildTraders.setEnabled(true);
                     } else {
                         buildTraders.setPaintFlags(buildTraders.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildTraders.setEnabled(false);
-                        freighterCostText.setText("Costo: ");
-                        freighterCostText.setText("Tiempo finalizacion: ");
                     }
+                } else {
+                    buildTraders.setPaintFlags(buildTraders.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    buildTraders.setEnabled(false);
+                    freighterCostText.setText("Costo: ");
+                    freighterCostText.setText("Tiempo finalizacion: ");
+                }
                 }
             });
         }
@@ -819,6 +824,11 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             checkAvailability(shield);
 
             if(shield.getPlanet().getId() == act.planet.getId()){
+                buildShield.setPaintFlags(buildShield.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                buildShield.setEnabled(false);
+            }
+
+            if(act.player.getLevel() < shield.getRequiredLevel()){
                 buildShield.setPaintFlags(buildShield.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 buildShield.setEnabled(false);
             }

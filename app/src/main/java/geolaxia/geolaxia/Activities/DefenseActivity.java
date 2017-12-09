@@ -113,27 +113,27 @@ public class DefenseActivity extends MenuActivity {
         np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                TextView cantCanonesCostoCristal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_cristal_valor);
-                TextView cantCanonesCostoMetal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_metal_valor);
-                TextView cantCanonesCostoTiempo = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_tiempo_valor);
+            TextView cantCanonesCostoCristal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_cristal_valor);
+            TextView cantCanonesCostoMetal = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_metal_valor);
+            TextView cantCanonesCostoTiempo = (TextView) findViewById(R.id.defense_cant_canones_construccion_costo_tiempo_valor);
 
-                if (newVal > 0) {
-                    int valorCristal = newVal * 50;
-                    int valorMetal = newVal * 100;
-                    int valorTiempo =  newVal * 3;
+            if (newVal > 0) {
+                int valorCristal = newVal * 50;
+                int valorMetal = newVal * 100;
+                int valorTiempo =  newVal * 3;
 
-                    cantCanonesCostoCristal.setText(String.valueOf(valorCristal));
-                    cantCanonesCostoMetal.setText(String.valueOf(valorMetal));
-                    cantCanonesCostoTiempo.setText(String.valueOf(valorTiempo) + " mins");
+                cantCanonesCostoCristal.setText(String.valueOf(valorCristal));
+                cantCanonesCostoMetal.setText(String.valueOf(valorMetal));
+                cantCanonesCostoTiempo.setText(String.valueOf(valorTiempo) + " mins");
 
-                    if (TieneRecursosNecesariosParaConstruir(valorMetal, valorCristal)) {
-                        SetearBotonConstruir(true);
-                    } else {
-                        SetearBotonConstruir(false);
-                    }
+                if (TieneRecursosNecesariosParaConstruir(valorMetal, valorCristal) && player.getLevel() >= 2) {
+                    SetearBotonConstruir(true);
                 } else {
-                    VaciarPantalla();
+                    SetearBotonConstruir(false);
                 }
+            } else {
+                VaciarPantalla();
+            }
             }
         });
     }
