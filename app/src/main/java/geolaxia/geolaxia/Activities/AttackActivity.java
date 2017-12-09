@@ -299,7 +299,7 @@ public class AttackActivity extends MenuActivity {
         public void FillPlanets(ArrayList<Planet> planets){
             ArrayList<Planet> finalPlanets = new ArrayList<>();
             for (Planet planet: planets) {
-                if(planet.getConqueror() == null || !planet.getConqueror().getUsername().equals(act.player.getUsername())){
+                if(planet.getConqueror() != null && !planet.getConqueror().getUsername().equals(act.player.getUsername())){
                     finalPlanets.add(planet);
                 }
             }
@@ -526,7 +526,7 @@ public class AttackActivity extends MenuActivity {
         public void FillPlanets(ArrayList<Planet> planets){
             ArrayList<Planet> finalPlanets = new ArrayList<>();
             for (Planet planet: planets) {
-                if(planet.getConqueror() == null || !planet.getConqueror().getUsername().equals(act.player.getUsername())){
+                if(planet.getConqueror() != null && !planet.getConqueror().getUsername().equals(act.player.getUsername())){
                     availablePlanets.put(planet.getOrder(), planet);
                     finalPlanets.add(planet);
                 }

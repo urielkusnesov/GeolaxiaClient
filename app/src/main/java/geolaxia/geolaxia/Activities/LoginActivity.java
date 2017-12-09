@@ -38,6 +38,9 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -248,8 +251,28 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            loginService.LogIn(mUserNameView.getText().toString(), mPasswordView.getText().toString(), this);
+
+            String passMD5 = convertPassMd5(mPasswordView.getText().toString());
+
+            loginService.LogIn(mUserNameView.getText().toString(), passMD5, this);
         }
+    }
+
+    private static String convertPassMd5(String pass) {
+        String password = null;
+        MessageDigest mdEnc;
+        try {
+            mdEnc = MessageDigest.getInstance("MD5");
+            mdEnc.update(pass.getBytes(), 0, pass.length());
+            pass = new BigInteger(1, mdEnc.digest()).toString(16);
+            while (pass.length() < 32) {
+                pass = "0" + pass;
+            }
+            password = pass;
+        } catch (NoSuchAlgorithmException e1) {
+            e1.printStackTrace();
+        }
+        return password;
     }
 
     private void Register(){

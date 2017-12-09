@@ -18,6 +18,9 @@ import android.widget.EditText;
 
 import org.json.JSONException;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -131,9 +134,28 @@ public class RegisterActivity extends BaseActivity {
             // perform the user login attempt.
             showProgress(true);
             //Player player = new Player(0, 1, 0, username, password, firstname, lastname, email, "", new ArrayList<Planet>(), "", "");
-            Player player = new Player(0, 1, 0, username, password, "", "", email, "", new ArrayList<Planet>(), "", "");
+            String passMD5 = convertPassMd5(password);
+
+            Player player = new Player(0, 1, 0, username, passMD5, "", "", email, "", new ArrayList<Planet>(), "", "");
             loginService.Register(player, this);
         }
+    }
+
+    private static String convertPassMd5(String pass) {
+        String password = null;
+        MessageDigest mdEnc;
+        try {
+            mdEnc = MessageDigest.getInstance("MD5");
+            mdEnc.update(pass.getBytes(), 0, pass.length());
+            pass = new BigInteger(1, mdEnc.digest()).toString(16);
+            while (pass.length() < 32) {
+                pass = "0" + pass;
+            }
+            password = pass;
+        } catch (NoSuchAlgorithmException e1) {
+            e1.printStackTrace();
+        }
+        return password;
     }
 
     public void registerSuccesfull(){

@@ -21,7 +21,9 @@ import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import geolaxia.geolaxia.Model.Cannon;
+import geolaxia.geolaxia.Model.Dto.AttackIdDTO;
 import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
+import geolaxia.geolaxia.Model.Dto.IsUnderAttackDTO;
 import geolaxia.geolaxia.Model.Helpers;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
@@ -38,6 +40,8 @@ public class DefenseActivity extends MenuActivity {
     private IDefenseService defenseService;
     private IPlanetService planetService;
 
+    private int attackId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +51,14 @@ public class DefenseActivity extends MenuActivity {
         this.CargarCanones();
         this.CargarCanonesConstruccion();
         this.CargarBotonConstruir();
+
         this.CargarEstadoEscudo();
+        this.CargarBotonDefender();
 
         this.EstaConstruyendoCanones();
 
-        this.CargarBotonDefender();
+        //this.SetearBotonDefender(false);
+        this.EstaRecibiendoAtaque();
 
         this.VaciarPantalla();
     }
@@ -208,7 +215,7 @@ public class DefenseActivity extends MenuActivity {
         }
     }
 
-    private void CargarBotonDefender() {
+    public void CargarBotonDefender() {
         Button defenderBoton = (Button) findViewById(R.id.defense_estado_escudo_defender);
 
         defenderBoton.setOnClickListener(new View.OnClickListener() {
@@ -219,11 +226,12 @@ public class DefenseActivity extends MenuActivity {
                 dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    Intent defenseIntent = new Intent(context, DefenseQuestionActivity.class);
-                    defenseIntent.putExtra("player", player);
-                    defenseIntent.putExtra("planet", planet);
-                    startActivity(defenseIntent);
-                    sweetAlertDialog.cancel();
+                        Intent defenseIntent = new Intent(context, DefenseQuestionActivity.class);
+                        defenseIntent.putExtra("player", player);
+                        defenseIntent.putExtra("planet", planet);
+                        defenseIntent.putExtra("attackId", attackId);
+                        startActivity(defenseIntent);
+                        sweetAlertDialog.cancel();
                     }
                 });
 
@@ -243,6 +251,21 @@ public class DefenseActivity extends MenuActivity {
     public void EstaConstruyendoCanonesAhora(IsBuildingCannonsDTO tiempoFinalizacion){
         if (tiempoFinalizacion.IsBuilding()) {
             this.CargarTiempoConstruccion(tiempoFinalizacion.getData());
+        }
+    }
+
+    // Carga el tiempo si esta recibiendo ataque.
+    private void EstaRecibiendoAtaque() {
+        this.defenseService.ObtenerAtaqueMasProximoNoDefendido(this.player.getUsername(), this.player.getToken(), this, this.planet.getId());
+    }
+
+    // Respuesta del service.
+    public void EstaRecibiendoAtaqueAhora(final AttackIdDTO attackId) {
+        if (attackId.getData() > 0) {
+            this.attackId = attackId.getData();
+            this.SetearBotonDefender(true);
+        } else {
+            this.SetearBotonDefender(false);
         }
     }
 
@@ -274,6 +297,12 @@ public class DefenseActivity extends MenuActivity {
 
     private void SetearBotonConstruir(boolean activo) {
         Button construirBoton = (Button) findViewById(R.id.defense_cant_canones_construccion_boton);
+        construirBoton.setEnabled(activo);
+        construirBoton.setPaintFlags((!activo) ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
+    }
+
+    private void SetearBotonDefender(boolean activo) {
+        Button construirBoton = (Button) findViewById(R.id.defense_estado_escudo_defender);
         construirBoton.setEnabled(activo);
         construirBoton.setPaintFlags((!activo) ? Paint.STRIKE_THRU_TEXT_FLAG : 0);
     }

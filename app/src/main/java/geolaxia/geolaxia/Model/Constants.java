@@ -96,12 +96,17 @@ public class Constants {
     public static final String DEFENSE_GETSHIELDSTATUS_SERVICE = "api/defense/getShieldStatus";
     public static final String DEFENSE_ISBUILDINGCANNONS_SERVICE = "api/defense/IsBuildingCannons";
     public static final String DEFENSE_GET_RANDOM_QUESTIONS_SERVICE = "api/defense/Get3RandomQuestions";
+    public static final String DEFENSE_GETATTACKIDNODEFENDIDO_SERVICE = "api/defense/ObtenerIdAtaqueMasProximoNoDefendido";
+    public static final String DEFENSE_DEFENSEFROMATTACK_SERVICE = "api/defense/DefenseFromAttack";
 
     public static String getCannons(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETCANNONS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String BuildCannons(int planetId, int cant) { return (HTTP + BASE_URL + PORT + DEFENSE_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "cant=" + String.valueOf(cant)); }
     public static String getShieldStatus(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETSHIELDSTATUS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String isBuldingCannons(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_ISBUILDINGCANNONS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getRandomQuestions() { return (HTTP + BASE_URL + PORT + DEFENSE_GET_RANDOM_QUESTIONS_SERVICE); }
+    //public static String getRandomQuestionsConAtaque(int attackId) { return (HTTP + BASE_URL + PORT + DEFENSE_GET_RANDOM_QUESTIONS_SERVICE + "?attackId=" + String.valueOf(attackId)); }
+    public static String getAttackIdNoDefendido(int planetId) { return (HTTP + BASE_URL + PORT + DEFENSE_GETATTACKIDNODEFENDIDO_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String defenseFromAttack(int attackId, int idPregunta1, int idPregunta2, int idPregunta3, int cantidadCorrectas) { return (HTTP + BASE_URL + PORT + DEFENSE_DEFENSEFROMATTACK_SERVICE + "?attackId=" + String.valueOf(attackId) + "&idPregunta1=" + String.valueOf(idPregunta1) + "&idPregunta2=" + String.valueOf(idPregunta2) + "&idPregunta3=" + String.valueOf(idPregunta3) + "&cantidadCorrectas=" + String.valueOf(cantidadCorrectas)); }
 
     //Colonize
     public static final String COLONIZE_GETCOLONIZERS_SERVICE = "api/colonize/GetColonizers";

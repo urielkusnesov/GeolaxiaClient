@@ -13,4 +13,7 @@ public interface IDefenseService {
     void BuildCannons(String username, String token, DefenseActivity context, int planetId, int cant);
     void IsBuildingCannons(String username, String token, DefenseActivity context, int planetId);
     void Get3RandomQuestions(String username, String token, DefenseQuestionActivity context);
+    //void Get3RandomQuestions(String username, String token, DefenseQuestionActivity context, int attackId);
+    void ObtenerAtaqueMasProximoNoDefendido(String username, String token, DefenseActivity context, int planetId);
+    void DefenseFromAttack(String username, String token, DefenseQuestionActivity context, int attackId, int idPregunta1, int idPregunta2, int idPregunta3, int cantidadCorrectas);
 }
