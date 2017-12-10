@@ -112,6 +112,36 @@ public class ColonizeActivity extends MenuActivity {
         return new Date(t + (minutesToAdd * ONE_MINUTE_IN_MILLIS));
     }
 
+    private String ObtenerHora(long tiempo) {
+        String tiempoExtension = "";
+        //long time = tiempo - System.currentTimeMillis();
+        long time = tiempo;
+
+        long dias = TimeUnit.MILLISECONDS.toDays(time);
+        long horas = TimeUnit.MILLISECONDS.toHours(time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toDays(time));
+        long minutos = TimeUnit.MILLISECONDS.toMinutes(time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(time));
+        long segundos = TimeUnit.MILLISECONDS.toSeconds(time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time));
+
+        tiempoExtension += (dias > 0) ? (((dias >= 10) ? String.valueOf(dias) : "0" + String.valueOf(dias)) + ((dias == 1) ? " día" : " días") + " : ") : "";
+        tiempoExtension += (horas > 0) ? (((horas >= 10) ? String.valueOf(horas) : "0" + String.valueOf(horas)) + ((horas == 1) ? " hora" : " horas") + " : ") : "";
+        tiempoExtension += (minutos > 0) ? (((minutos >= 10) ? String.valueOf(minutos) : "0" + String.valueOf(minutos)) + ((minutos == 1) ? " min" : " mins") + " : ") : "";
+        tiempoExtension += (segundos > 0) ? (((segundos >= 10) ? String.valueOf(segundos) : "0" + String.valueOf(segundos)) + ((segundos == 1) ? " seg" : " segs")) : "";
+
+        tiempoExtension.trim();
+
+        return(tiempoExtension);
+    }
+
+    private boolean TieneRecursosNecesariosParaColonizar(int mo) {
+        boolean tieneRecursosSuficientes = true;
+
+        if (mo > this.planet.getDarkMatter()) {
+            tieneRecursosSuficientes = false;
+        }
+
+        return (tieneRecursosSuficientes);
+    }
+
     // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
     public static class ColonizeFragment extends Fragment {
@@ -171,6 +201,7 @@ public class ColonizeActivity extends MenuActivity {
 
         private void CargarPantallaInicial() {
             this.VaciarPantalla();
+            this.PantallaSegunEnvio();
             this.CargarColonizadores();
             act.planetService.GetAllGalaxies(act.player.getUsername(), act.player.getToken(), act, this);
             this.CargarSelector();
@@ -310,7 +341,8 @@ public class ColonizeActivity extends MenuActivity {
                 long horasTotales = (minutes > 0 || seconds > 0) ? hours + 1 : hours;
                 long combustible = horasTotales * COSTO_COMBUSTIBLE;
 
-                if  ((combustible <= this.act.planet.getDarkMatter())){
+                //if  ((combustible <= this.act.planet.getDarkMatter())){
+                if  (act.TieneRecursosNecesariosParaColonizar((int)combustible) && !act.estaColonizando){
                     this.CargarBotonEnviar();
                     SetearBotonEnviar(true);
                     costoMO.setText(String.valueOf(combustible));
@@ -378,11 +410,12 @@ public class ColonizeActivity extends MenuActivity {
 
                 public void onTick(long millisUntilFinished) {
                     timer.setVisibility(View.VISIBLE);
-                    timer.setText("Tiempo de llegada: " +
+                    /*timer.setText("Tiempo de llegada: " +
                             String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
                             String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
                             String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
-                    );
+                    );*/
+                    timer.setText("Tiempo de llegada: " + act.ObtenerHora(millisUntilFinished));
                     timer.setTextColor(Color.GREEN);
                     timer.setTypeface(null, Typeface.BOLD);
                 }
@@ -390,10 +423,11 @@ public class ColonizeActivity extends MenuActivity {
                 public void onFinish() {
                     timer.setVisibility(View.INVISIBLE);
                     CargarColonizadores();
+                    PantallaSegunEnvio();
                 }
             }.start();
 
-            this.PantallaSegunEnvio();
+            //this.PantallaSegunEnvio();
         }
 
         private void EstaEnviandoColonizador() {
@@ -551,6 +585,7 @@ public class ColonizeActivity extends MenuActivity {
 
         private void CargarPantallaInicial(){
             this.VaciarPantalla();
+            this.PantallaSegunEnvio();
             this.CargarColonizadores();
             act.planetService.GetAllGalaxies(act.player.getUsername(), act.player.getToken(), act, this);
             this.CargarSelector();
@@ -672,7 +707,8 @@ public class ColonizeActivity extends MenuActivity {
                 long combustible = horasTotales * COSTO_COMBUSTIBLE;
 
                 //if  ((combustible <= this.act.planet.getDarkMatter()) && (!this.EstaColonizando())){
-                if  ((combustible <= this.act.planet.getDarkMatter())){
+                //if  ((combustible <= this.act.planet.getDarkMatter())){
+                if  (act.TieneRecursosNecesariosParaColonizar((int)combustible) && !act.estaColonizando){
                     this.CargarBotonEnviar();
                     SetearBotonEnviar(true);
                     costoMO.setText(String.valueOf(combustible));
@@ -733,11 +769,12 @@ public class ColonizeActivity extends MenuActivity {
 
                 public void onTick(long millisUntilFinished) {
                     timer.setVisibility(View.VISIBLE);
-                    timer.setText("Tiempo de llegada: " +
+                    /*timer.setText("Tiempo de llegada: " +
                             String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
                             String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
                             String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
-                    );
+                    );*/
+                    timer.setText("Tiempo de llegada: " + act.ObtenerHora(millisUntilFinished));
                     timer.setTextColor(Color.GREEN);
                     timer.setTypeface(null, Typeface.BOLD);
                 }
@@ -745,10 +782,11 @@ public class ColonizeActivity extends MenuActivity {
                 public void onFinish() {
                     timer.setVisibility(View.INVISIBLE);
                     CargarColonizadores();
+                    PantallaSegunEnvio();
                 }
             }.start();
 
-            this.PantallaSegunEnvio();
+            //this.PantallaSegunEnvio();
         }
 
         private void EstaEnviandoColonizador() {
