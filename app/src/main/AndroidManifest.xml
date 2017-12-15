@@ -71,6 +71,10 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
+            <intent-filter>
+                <action android:name="geolaxia.geolaxia.HOME" />
+                <category android:name="android.intent.category.GEOLAXIA" />
+            </intent-filter>
         <activity
             android:name=".Activities.AttackActivity"
             android:label="@string/title_activity_attack"
