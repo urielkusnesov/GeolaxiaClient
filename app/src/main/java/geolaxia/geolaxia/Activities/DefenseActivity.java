@@ -61,6 +61,7 @@ public class DefenseActivity extends MenuActivity {
         this.EstaRecibiendoAtaque();
 
         this.VaciarPantalla();
+        this.PantallaSegunConstruccion();
     }
 
     private void Constructor() {
@@ -320,11 +321,6 @@ public class DefenseActivity extends MenuActivity {
             TextView timer = (TextView) findViewById(R.id.defense_cant_canones_construccion_timer);
             public void onTick(long millisUntilFinished) {
                 timer.setVisibility(View.VISIBLE);
-                /*timer.setText("Tiempo para finalización: " +
-                        String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
-                        String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
-                        String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
-                );*/
                 timer.setText("Tiempo de finalización: " + ObtenerHora(millisUntilFinished));
                 timer.setTextColor(Color.GREEN);
                 timer.setTypeface(null, Typeface.BOLD);
@@ -332,14 +328,15 @@ public class DefenseActivity extends MenuActivity {
 
             public void onFinish() {
                 timer.setVisibility(View.INVISIBLE);
+                estaConstruyendoCanones = false;
                 CargarCanones();
                 VaciarPantalla();
                 PantallaSegunConstruccion();
             }
         }.start();
 
-        /*VaciarPantalla();
-        PantallaSegunConstruccion();*/
+        VaciarPantalla();
+        PantallaSegunConstruccion();
     }
 
     private void CargarTiempoConstruccion(long fechaFinalizacion) {
@@ -350,11 +347,6 @@ public class DefenseActivity extends MenuActivity {
 
             public void onTick(long millisUntilFinished) {
                 timer.setVisibility(View.VISIBLE);
-                /*timer.setText("Tiempo para finalización: " +
-                        String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
-                        String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
-                        String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
-                );*/
                 timer.setText("Tiempo de finalización: " + ObtenerHora(millisUntilFinished));
                 timer.setTextColor(Color.GREEN);
                 timer.setTypeface(null, Typeface.BOLD);
@@ -362,6 +354,7 @@ public class DefenseActivity extends MenuActivity {
 
             public void onFinish() {
                 timer.setVisibility(View.INVISIBLE);
+                estaConstruyendoCanones = false;
                 CargarCanones();
                 VaciarPantalla();
                 PantallaSegunConstruccion();
@@ -369,18 +362,12 @@ public class DefenseActivity extends MenuActivity {
 
         }.start();
 
-        /*VaciarPantalla();
-        PantallaSegunConstruccion();*/
+        VaciarPantalla();
+        PantallaSegunConstruccion();
     }
 
     private boolean EstaConstruyendo() {
-        TextView timer = (TextView) findViewById(R.id.defense_cant_canones_construccion_timer);
-
-        if (timer.getVisibility() == View.VISIBLE) {
-            return (true);
-        }
-
-        return (false);
+        return(this.estaConstruyendoCanones);
     }
 
     private void HabilitarPantalla() {

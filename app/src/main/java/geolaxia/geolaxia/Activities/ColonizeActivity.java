@@ -410,11 +410,6 @@ public class ColonizeActivity extends MenuActivity {
 
                 public void onTick(long millisUntilFinished) {
                     timer.setVisibility(View.VISIBLE);
-                    /*timer.setText("Tiempo de llegada: " +
-                            String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
-                            String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
-                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
-                    );*/
                     timer.setText("Tiempo de llegada: " + act.ObtenerHora(millisUntilFinished));
                     timer.setTextColor(Color.GREEN);
                     timer.setTypeface(null, Typeface.BOLD);
@@ -422,12 +417,13 @@ public class ColonizeActivity extends MenuActivity {
 
                 public void onFinish() {
                     timer.setVisibility(View.INVISIBLE);
+                    act.estaColonizando = false;
                     CargarColonizadores();
                     PantallaSegunEnvio();
                 }
             }.start();
 
-            //this.PantallaSegunEnvio();
+            this.PantallaSegunEnvio();
         }
 
         private void EstaEnviandoColonizador() {
@@ -706,8 +702,6 @@ public class ColonizeActivity extends MenuActivity {
                 long horasTotales = (minutes > 0 || seconds > 0) ? hours + 1 : hours;
                 long combustible = horasTotales * COSTO_COMBUSTIBLE;
 
-                //if  ((combustible <= this.act.planet.getDarkMatter()) && (!this.EstaColonizando())){
-                //if  ((combustible <= this.act.planet.getDarkMatter())){
                 if  (act.TieneRecursosNecesariosParaColonizar((int)combustible) && !act.estaColonizando){
                     this.CargarBotonEnviar();
                     SetearBotonEnviar(true);
@@ -769,11 +763,6 @@ public class ColonizeActivity extends MenuActivity {
 
                 public void onTick(long millisUntilFinished) {
                     timer.setVisibility(View.VISIBLE);
-                    /*timer.setText("Tiempo de llegada: " +
-                            String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
-                            String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
-                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
-                    );*/
                     timer.setText("Tiempo de llegada: " + act.ObtenerHora(millisUntilFinished));
                     timer.setTextColor(Color.GREEN);
                     timer.setTypeface(null, Typeface.BOLD);
@@ -781,12 +770,13 @@ public class ColonizeActivity extends MenuActivity {
 
                 public void onFinish() {
                     timer.setVisibility(View.INVISIBLE);
+                    act.estaColonizando = false;
                     CargarColonizadores();
                     PantallaSegunEnvio();
                 }
             }.start();
 
-            //this.PantallaSegunEnvio();
+            this.PantallaSegunEnvio();
         }
 
         private void EstaEnviandoColonizador() {
