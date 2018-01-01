@@ -113,6 +113,7 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             act = (MilitaryConstructionsActivity) getActivity();
             constructionService = new ConstructionService();
             constructionService.GetCurrentHangar(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+            constructionService.GetHangarBuildingTime(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
 
             timerView = (TextView) rootView.findViewById(R.id.timer);
 
@@ -169,21 +170,25 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             }
         }
 
-        public void checkAvailability(Hangar hangar){
-            Date currentDate = Calendar.getInstance().getTime();
+        public void SetCurrentConstructionValues(long buildingTime){
+            if(buildingTime > 0){
+                InConstruction(buildingTime);
+            }
+        }
 
+        public void InConstruction(long buildingTime){
+            build.setPaintFlags(build.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            build.setEnabled(false);
+            SetConstructionTimer(timerView, buildingTime);
+        }
+
+        public void checkAvailability(Hangar hangar){
             if(!hasResources(hangar.getCost().getCrystalCost(), hangar.getCost().getMetalCost() ,hangar.getCost().getDarkMatterCost())){
                 build.setPaintFlags(build.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 build.setEnabled(false);
             } else {
                 build.setPaintFlags(0);
                 build.setEnabled(true);
-            }
-
-            if(currentDate.compareTo(hangar.getEnableDate()) == -1){
-                build.setPaintFlags(build.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                build.setEnabled(false);
-                SetConstructionTimer(timerView, hangar.getEnableDate().getTime());
             }
         }
 
@@ -262,6 +267,7 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             constructionService = new ConstructionService();
             constructionService.GetFleet(act.player.getUsername(), act.player.getToken(), act, fragment, act.planet.getId());
             constructionService.GetShipsCost(act.player.getUsername(), act.player.getToken(), act, fragment);
+            constructionService.GetShipsBuildingTime(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
 
             buildShipX = (Button) rootView.findViewById(R.id.shipXBuildButton);
             buildShipX.setOnClickListener(new View.OnClickListener() {
@@ -437,54 +443,25 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             dialog.show();
         }
 
-        public void InConstruction(Button buildButton, TextView timer, Military military){
+        public void setCurrentConstructionValues(long shipXBuildingTime, long shipYBuildingTime, long shipZBuildingTime){
+            if(shipXBuildingTime > 0){
+                InConstruction(buildShipX, (TextView)getView().findViewById(R.id.shipX_timer), shipXBuildingTime);
+            }
+            if(shipYBuildingTime > 0){
+                InConstruction(buildShipY, (TextView)getView().findViewById(R.id.shipY_timer), shipYBuildingTime);
+            }
+            if(shipZBuildingTime > 0){
+                InConstruction(buildShipZ, (TextView)getView().findViewById(R.id.shipZ_timer), shipZBuildingTime);
+            }
+        }
+
+        public void InConstruction(Button buildButton, TextView timer, long buildingTime){
             buildButton.setPaintFlags(buildButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             buildButton.setEnabled(false);
-            SetConstructionTimer(timer, military.getEnableDate().getTime());
+            SetConstructionTimer(timer, buildingTime);
         }
 
         public void setCurrentValues(ArrayList<ShipX> shipsX, ArrayList<ShipY> shipsY, ArrayList<ShipZ> shipsZ){
-            Date currentDate = Calendar.getInstance().getTime();
-
-            ShipX lastShipXToEnable = null;
-            for (ShipX shipX: shipsX) {
-                if(lastShipXToEnable == null || lastShipXToEnable.getEnableDate().compareTo(shipX.getEnableDate()) == -1)
-                {
-                    lastShipXToEnable = shipX;
-                }
-            }
-            if(lastShipXToEnable != null){
-                if(currentDate.compareTo(lastShipXToEnable.getEnableDate()) == -1) {
-                    InConstruction(buildShipX, (TextView) getView().findViewById(R.id.shipX_timer), lastShipXToEnable);
-                }
-            }
-
-            ShipY lastShipYToEnable = null;
-            for (ShipY shipY: shipsY) {
-                if(lastShipYToEnable == null || lastShipYToEnable.getEnableDate().compareTo(shipY.getEnableDate()) == -1)
-                {
-                    lastShipYToEnable = shipY;
-                }
-            }
-            if(lastShipYToEnable != null){
-                if(currentDate.compareTo(lastShipYToEnable.getEnableDate()) == -1) {
-                    InConstruction(buildShipY, (TextView) getView().findViewById(R.id.shipY_timer), lastShipYToEnable);
-                }
-            }
-
-            ShipZ lastShipZToEnable = null;
-            for (ShipZ shipZ: shipsZ) {
-                if(lastShipZToEnable == null || lastShipZToEnable.getEnableDate().compareTo(shipZ.getEnableDate()) == -1)
-                {
-                    lastShipZToEnable = shipZ;
-                }
-            }
-            if(lastShipZToEnable != null){
-                if(currentDate.compareTo(lastShipZToEnable.getEnableDate()) == -1) {
-                    InConstruction(buildShipZ, (TextView) getView().findViewById(R.id.shipZ_timer), lastShipZToEnable);
-                }
-            }
-
             TextView shipXQtt = (TextView) getView().findViewById(R.id.shipXQttText);
             shipXQtt.setText("Cantidad Actual: " + String.valueOf(shipsX.size()));
 
@@ -601,6 +578,7 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             constructionService.GetCurrentShield(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
             constructionService.GetCurrentProbes(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
             constructionService.GetCurrentTraders(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+            constructionService.GetOthersBuildingTime(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
 
             buildShield = (Button) rootView.findViewById(R.id.shieldBuildButton);
             buildShield.setOnClickListener(new View.OnClickListener() {
@@ -616,7 +594,7 @@ public class MilitaryConstructionsActivity extends MenuActivity {
                 @Override
                 public void onClick(View v) {
                     timerView = (TextView) rootView.findViewById(R.id.probe_timer);
-                    probeQttToBuild = ((NumberPicker)rootView.findViewById(R.id.probe)).getValue();
+                    probeQttToBuild = ((NumberPicker) rootView.findViewById(R.id.probe)).getValue();
                     confirmConstructionProbes(probeQttToBuild);
                 }
             });
@@ -626,7 +604,7 @@ public class MilitaryConstructionsActivity extends MenuActivity {
                 @Override
                 public void onClick(View v) {
                     timerView = (TextView) rootView.findViewById(R.id.freighter_timer);
-                    traderQttToBuild = ((NumberPicker)rootView.findViewById(R.id.freighter)).getValue();
+                    traderQttToBuild = ((NumberPicker) rootView.findViewById(R.id.freighter)).getValue();
                     confirmConstructionTraders(traderQttToBuild);
                 }
             });
@@ -647,30 +625,30 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                TextView probeCostText = (TextView) fragment.getView().findViewById(R.id.probeCostText);
-                TextView probeTimeText = (TextView) fragment.getView().findViewById(R.id.probeTimeText);
+                    TextView probeCostText = (TextView) fragment.getView().findViewById(R.id.probeCostText);
+                    TextView probeTimeText = (TextView) fragment.getView().findViewById(R.id.probeTimeText);
 
-                if (newVal > 0) {
-                    int crystalCost = newVal * 50;
-                    int metalCost = newVal * 250;
-                    int timeCost =  newVal * 30;
+                    if (newVal > 0) {
+                        int crystalCost = newVal * 50;
+                        int metalCost = newVal * 250;
+                        int timeCost = newVal * 30;
 
-                    probeCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
-                    probeTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+                        probeCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
+                        probeTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
 
-                    if (hasResources(crystalCost, metalCost, 0) && act.player.getLevel() >= 5) {
-                        buildProbes.setPaintFlags(0);
-                        buildProbes.setEnabled(true);
+                        if (hasResources(crystalCost, metalCost, 0) && act.player.getLevel() >= 5) {
+                            buildProbes.setPaintFlags(0);
+                            buildProbes.setEnabled(true);
+                        } else {
+                            buildProbes.setPaintFlags(buildProbes.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            buildProbes.setEnabled(false);
+                        }
                     } else {
                         buildProbes.setPaintFlags(buildProbes.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildProbes.setEnabled(false);
+                        probeCostText.setText("Costo: ");
+                        probeTimeText.setText("Tiempo finalizacion: ");
                     }
-                } else {
-                    buildProbes.setPaintFlags(buildProbes.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    buildProbes.setEnabled(false);
-                    probeCostText.setText("Costo: ");
-                    probeTimeText.setText("Tiempo finalizacion: ");
-                }
                 }
             });
         }
@@ -685,35 +663,35 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                TextView freighterCostText = (TextView) fragment.getView().findViewById(R.id.freighterCostText);
-                TextView freighterTimeText = (TextView) fragment.getView().findViewById(R.id.freighterTimeText);
+                    TextView freighterCostText = (TextView) fragment.getView().findViewById(R.id.freighterCostText);
+                    TextView freighterTimeText = (TextView) fragment.getView().findViewById(R.id.freighterTimeText);
 
-                if (newVal > 0) {
-                    int crystalCost = newVal * 50;
-                    int metalCost = newVal * 250;
-                    int timeCost =  newVal * 30;
+                    if (newVal > 0) {
+                        int crystalCost = newVal * 50;
+                        int metalCost = newVal * 250;
+                        int timeCost = newVal * 30;
 
-                    freighterCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
-                    freighterTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+                        freighterCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
+                        freighterTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
 
-                    if (hasResources(crystalCost, metalCost, 0) && act.player.getLevel() >= 5) {
-                        buildTraders.setPaintFlags(0);
-                        buildTraders.setEnabled(true);
+                        if (hasResources(crystalCost, metalCost, 0) && act.player.getLevel() >= 5) {
+                            buildTraders.setPaintFlags(0);
+                            buildTraders.setEnabled(true);
+                        } else {
+                            buildTraders.setPaintFlags(buildTraders.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            buildTraders.setEnabled(false);
+                        }
                     } else {
                         buildTraders.setPaintFlags(buildTraders.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildTraders.setEnabled(false);
+                        freighterCostText.setText("Costo: ");
+                        freighterCostText.setText("Tiempo finalizacion: ");
                     }
-                } else {
-                    buildTraders.setPaintFlags(buildTraders.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    buildTraders.setEnabled(false);
-                    freighterCostText.setText("Costo: ");
-                    freighterCostText.setText("Tiempo finalizacion: ");
-                }
                 }
             });
         }
 
-        public void confirmConstruction(final Shield shield){
+        public void confirmConstruction(final Shield shield) {
             shield.setPlanet(act.planet);
             final Shield shieldToAdd = shield;
             SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Confirmar", "Esta seguro que desea comenzar la construccion?", "Construir", "Cancelar");
@@ -730,7 +708,7 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             dialog.show();
         }
 
-        public void confirmConstructionProbes(final int qtt){
+        public void confirmConstructionProbes(final int qtt) {
             SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Confirmar", "Esta seguro que desea comenzar la construccion?", "Construir", "Cancelar");
             dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
@@ -745,7 +723,7 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             dialog.show();
         }
 
-        public void confirmConstructionTraders(final int qtt){
+        public void confirmConstructionTraders(final int qtt) {
             SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Confirmar", "Esta seguro que desea comenzar la construccion?", "Construir", "Cancelar");
             dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
@@ -760,28 +738,25 @@ public class MilitaryConstructionsActivity extends MenuActivity {
             dialog.show();
         }
 
-        public void InConstruction(Button buildButton, TextView timer, Military military){
+        public void setCurrentConstructionValues(long shieldTime, long probeTime, long traderTime){
+            if(shieldTime > 0){
+                InConstruction(buildShield, (TextView)getView().findViewById(R.id.shield_timer), shieldTime);
+            }
+            if(probeTime > 0){
+                InConstruction(buildProbes, (TextView)getView().findViewById(R.id.probe_timer), probeTime);
+            }
+            if(shieldTime > 0){
+                InConstruction(buildTraders, (TextView)getView().findViewById(R.id.freighter_timer), traderTime);
+            }
+        }
+
+        public void InConstruction(Button buildButton, TextView timer, long buildingTime){
             buildButton.setPaintFlags(buildButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             buildButton.setEnabled(false);
-            SetConstructionTimer(timer, military.getEnableDate().getTime());
+            SetConstructionTimer(timer, buildingTime);
         }
 
         public void setProbesValues(ArrayList<Probe> probes){
-            Date currentDate = Calendar.getInstance().getTime();
-
-            Probe lastProbeToEnable = null;
-            for (Probe probe: probes) {
-                if(lastProbeToEnable == null || lastProbeToEnable.getEnableDate().compareTo(probe.getEnableDate()) == -1)
-                {
-                    lastProbeToEnable = probe;
-                }
-            }
-            if(lastProbeToEnable != null){
-                if(currentDate.compareTo(lastProbeToEnable.getEnableDate()) == -1) {
-                    InConstruction(buildProbes, (TextView) getView().findViewById(R.id.probe_timer), lastProbeToEnable);
-                }
-            }
-
             TextView probeQtt = (TextView) getView().findViewById(R.id.probeQttText);
             probeQtt.setText("Cantidad Actual: " + String.valueOf(probes.size()));
             TextView probeRequiredLevelText = (TextView) fragment.getView().findViewById(R.id.probeRequiredLevelText);
@@ -789,21 +764,6 @@ public class MilitaryConstructionsActivity extends MenuActivity {
         }
 
         public void setTradersValues(ArrayList<Trader> traders){
-            Date currentDate = Calendar.getInstance().getTime();
-
-            Trader lastTraderToEnable = null;
-            for (Trader trader: traders) {
-                if(lastTraderToEnable == null || lastTraderToEnable.getEnableDate().compareTo(trader.getEnableDate()) == -1)
-                {
-                    lastTraderToEnable = trader;
-                }
-            }
-            if(lastTraderToEnable != null){
-                if(currentDate.compareTo(lastTraderToEnable.getEnableDate()) == -1) {
-                    InConstruction(buildTraders, (TextView) getView().findViewById(R.id.freighter_timer), lastTraderToEnable);
-                }
-            }
-
             TextView traderQtt = (TextView) getView().findViewById(R.id.freighterQttText);
             traderQtt.setText("Cantidad Actual: " + String.valueOf(traders.size()));
             TextView traderRequiredLevelText = (TextView) fragment.getView().findViewById(R.id.freighterRequiredLevelText);
@@ -835,20 +795,12 @@ public class MilitaryConstructionsActivity extends MenuActivity {
         }
 
         public void checkAvailability(Shield shield){
-            Date currentDate = Calendar.getInstance().getTime();
-
             if(!hasResources(shield.getCost().getCrystalCost(), shield.getCost().getMetalCost() ,shield.getCost().getDarkMatterCost())){
                 buildShield.setPaintFlags(buildShield.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 buildShield.setEnabled(false);
             } else {
                 buildShield.setPaintFlags(0);
                 buildShield.setEnabled(true);
-            }
-
-            if(currentDate.compareTo(shield.getEnableDate()) == -1){
-                buildShield.setPaintFlags(buildShield.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                buildShield.setEnabled(false);
-                SetConstructionTimer(timerView, shield.getEnableDate().getTime());
             }
         }
 

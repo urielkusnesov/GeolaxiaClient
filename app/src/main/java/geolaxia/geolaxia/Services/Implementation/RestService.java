@@ -29,7 +29,6 @@ import geolaxia.geolaxia.Activities.RegisterActivity;
 import geolaxia.geolaxia.Model.Attack;
 import geolaxia.geolaxia.Model.BlackPlanet;
 import geolaxia.geolaxia.Model.BluePlanet;
-import geolaxia.geolaxia.Model.Cannon;
 import geolaxia.geolaxia.Model.Constants;
 import geolaxia.geolaxia.Model.CrystalMine;
 import geolaxia.geolaxia.Model.DarkMatterMine;
@@ -44,8 +43,8 @@ import geolaxia.geolaxia.Model.Dto.EnergyFacilityDTO;
 import geolaxia.geolaxia.Model.Dto.GalaxiesDTO;
 import geolaxia.geolaxia.Model.Dto.HangarDTO;
 import geolaxia.geolaxia.Model.Dto.IsBuildingCannonsDTO;
+import geolaxia.geolaxia.Model.Dto.IsBuildingFaciltyDTO;
 import geolaxia.geolaxia.Model.Dto.IsSendingColonizerDTO;
-import geolaxia.geolaxia.Model.Dto.IsUnderAttackDTO;
 import geolaxia.geolaxia.Model.Dto.MineDTO;
 import geolaxia.geolaxia.Model.Dto.MinesDTO;
 import geolaxia.geolaxia.Model.Dto.NotificationsDTO;
@@ -65,17 +64,14 @@ import geolaxia.geolaxia.Model.EnergyCentral;
 import geolaxia.geolaxia.Model.EnergyFacility;
 import geolaxia.geolaxia.Model.EnergyFuelCentral;
 import geolaxia.geolaxia.Model.MetalMine;
-import geolaxia.geolaxia.Model.Military;
 import geolaxia.geolaxia.Model.Mine;
 import geolaxia.geolaxia.Model.Planet;
 import geolaxia.geolaxia.Model.Player;
-import geolaxia.geolaxia.Model.Shield;
 import geolaxia.geolaxia.Model.Ship;
 import geolaxia.geolaxia.Model.ShipX;
 import geolaxia.geolaxia.Model.ShipY;
 import geolaxia.geolaxia.Model.ShipZ;
 import geolaxia.geolaxia.Model.SolarPanel;
-import geolaxia.geolaxia.Model.SolarSystem;
 import geolaxia.geolaxia.Model.WhitePlanet;
 import geolaxia.geolaxia.Model.WindTurbine;
 import geolaxia.geolaxia.Services.Interface.IRestService;
@@ -182,7 +178,7 @@ public class RestService implements IRestService {
                                 act.handleUnexpectedError("Error al intentar loguearse en Geolaxia", playersContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
-                            act.handleUnexpectedError("Ocurrio un error", "No se pudo loguearse en Geolaxia. Intente nuevamente");
+                            act.handleUnexpectedError("Ocurrio un error", "No pudo loguearse en Geolaxia. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -1149,6 +1145,49 @@ public class RestService implements IRestService {
         Request response = Volley.newRequestQueue(act).add(req);
     }
 
+    public void GetBuildingTime(final String username, final String token, final int planetId, final ConstructionsActivity act, final ConstructionsActivity.MinesFragment fragment){
+        String url = Constants.getMineBuildingTimeServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            IsBuildingFaciltyDTO buildingTimesContainer = gSon.fromJson(response.toString(), IsBuildingFaciltyDTO.class);
+                            if(Constants.OK_RESPONSE.equals(buildingTimesContainer.getStatus().getResult())) {
+                                ArrayList<Long> times = buildingTimesContainer.getData();
+                                if(times.size() == 3){
+                                    fragment.setCurrentConstructionTimers(times.get(0), times.get(1), times.get(2));
+                                }
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo minas", buildingTimesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las minas. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
     public void BuildMine(final String username, final String token, final Mine mine, final ConstructionsActivity context, final ConstructionsActivity.MinesFragment fragment){
         String url = Constants.getBuildMineServiceUrl();
 
@@ -1288,6 +1327,49 @@ public class RestService implements IRestService {
                                 fragment.setCosts(energyCentral, energyFuelCentral);
                             } else {
                                 act.handleUnexpectedError("Error obteniendo construcciones de energia", energyFacilitiesContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las construcciones de energia. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    public void GetEnergyFacilitiesBuildingTime(final String username, final String token, final int planetId, final ConstructionsActivity act, final ConstructionsActivity.EnergyFragment fragment){
+        String url = Constants.getEnergyFacilitiesBuildingTimeServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            IsBuildingFaciltyDTO isBuildingContainer = gSon.fromJson(response.toString(), IsBuildingFaciltyDTO.class);
+                            if(Constants.OK_RESPONSE.equals(isBuildingContainer.getStatus().getResult())) {
+                                ArrayList<Long> times = isBuildingContainer.getData();
+                                if(times.size() == 4){
+                                    fragment.setCurrentConstructionTimers(times.get(0), times.get(1), times.get(2), times.get(3));
+                                }
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo construcciones de energia", isBuildingContainer.getStatus().getDescription());
                             }
                         }catch (Exception e){
                             act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las construcciones de energia. Intente nuevamente");
@@ -1813,6 +1895,47 @@ public class RestService implements IRestService {
     }
 
     @Override
+    public void GetHangarBuildingTime(final String username, final String token, final int planetId, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.HangarFragment fragment){
+        String url = Constants.getHangarBuildingTimeServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            IsBuildingFaciltyDTO hangarBuildingContainer = gSon.fromJson(response.toString(), IsBuildingFaciltyDTO.class);
+                            if(Constants.OK_RESPONSE.equals(hangarBuildingContainer.getStatus().getResult())) {
+                                fragment.SetCurrentConstructionValues(hangarBuildingContainer.getData().get(0));
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo hangar", hangarBuildingContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el hangar. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
     public void BuildHangar(final String username, final String token, final int planetId, final MilitaryConstructionsActivity context, final MilitaryConstructionsActivity.HangarFragment fragment){
         String url = Constants.getBuildHangarServiceUrl(planetId);
 
@@ -1951,6 +2074,50 @@ public class RestService implements IRestService {
                             }
                         }catch (Exception e){
                             act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener las naves. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetShipsBuildingTime(final String username, final String token, final int planetId, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.ShipsFragment fragment){
+        String url = Constants.getShipBuildingTimeServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            IsBuildingFaciltyDTO shipBuildingContainer = gSon.fromJson(response.toString(), IsBuildingFaciltyDTO.class);
+                            if(Constants.OK_RESPONSE.equals(shipBuildingContainer.getStatus().getResult())) {
+                                ArrayList<Long> times = shipBuildingContainer.getData();
+                                if(times.size() == 3){
+                                    fragment.setCurrentConstructionValues(times.get(0), times.get(1), times.get(2));
+                                }
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo hangar", shipBuildingContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el hangar. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -2115,6 +2282,50 @@ public class RestService implements IRestService {
                             }
                         }catch (Exception e){
                             act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el escudo. Intente nuevamente");
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                act.handleUnexpectedError("Error de conexion", "No se pudo conectar. Intente nuevamente");
+                //handle error
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("username", username);
+                headers.put("token", token);
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        Request response = Volley.newRequestQueue(act).add(req);
+    }
+
+    @Override
+    public void GetOthersBuildingTime(final String username, final String token, final int planetId, final MilitaryConstructionsActivity act, final MilitaryConstructionsActivity.OthersFragment fragment){
+        String url = Constants.getOthersBuildingTimeServiceUrl(planetId);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, url, null,
+                new Response.Listener<JSONObject> () {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gSon=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+                            IsBuildingFaciltyDTO shipBuildingContainer = gSon.fromJson(response.toString(), IsBuildingFaciltyDTO.class);
+                            if(Constants.OK_RESPONSE.equals(shipBuildingContainer.getStatus().getResult())) {
+                                ArrayList<Long> times = shipBuildingContainer.getData();
+                                if(times.size() == 3){
+                                    fragment.setCurrentConstructionValues(times.get(0), times.get(1), times.get(2));
+                                }
+                            } else {
+                                act.handleUnexpectedError("Error obteniendo hangar", shipBuildingContainer.getStatus().getDescription());
+                            }
+                        }catch (Exception e){
+                            act.handleUnexpectedError("Ocurrio un error", "No se pudo obtener el hangar. Intente nuevamente");
                         }
                     }
                 }, new Response.ErrorListener() {

@@ -73,11 +73,17 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     private ILoginService loginService;
     final LoginActivity context = this;
     private CallbackManager callbackManager;
+    private String nextActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Intent intent = getIntent();
+        if(intent.getExtras().getString("activity") != null){
+            nextActivity = intent.getExtras().getString("activity");
+        }
 
         loginService = new LoginService();
 
@@ -283,6 +289,9 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     public void LogIn(Player player) {
         showProgress(false);
         Intent intent = new Intent(context, HomeActivity.class);
+        if(nextActivity != null && nextActivity != ""){
+            intent = new Intent(nextActivity);
+        }
         intent.putExtra("player", player);
         intent.putExtra("planet", new Planet());
         startActivity(intent);

@@ -5,7 +5,7 @@ package geolaxia.geolaxia.Model;
  */
 
 public class Constants {
-    public static String BASE_URL = "192.168.0.11";/*Server IP*/
+    public static String BASE_URL = "181.47.79.25";/*Server IP*/
     public static final String PORT = ":62078/";
     public static final String HTTP = "http://";
     public static final String LOGIN_SERVICE = "api/player/login";
@@ -27,19 +27,26 @@ public class Constants {
     public static final String ATTACK_SERVICE = "api/attack/attack";
     public static final String MINES_CURRENT_SERVICE = "api/construction/currentmines";
     public static final String MINES_TO_BUILD_SERVICE = "api/construction/minestobuild";
+    public static final String MINES_BUILD_TIME_SERVICE = "api/construction/minebuildtime";
     public static final String MINES_BUILD_SERVICE = "api/construction/startbuildmine";
     public static final String ENERGY_CURRENT_SERVICE = "api/construction/currentenergyfacilities";
     public static final String ENERGY_TO_BUILD_SERVICE = "api/construction/energyfacilitiestobuild";
+    public static final String ENERGY_BUILD_TIME_SERVICE = "api/construction/energybuildtime";
     public static final String ENERGY_BUILD_SERVICE = "api/construction/startbuildenergyfacility";
     public static final String SOLAR_PANEL_BUILD_SERVICE = "api/construction/startbuildsolarpanel";
     public static final String WIND_TURBINE_BUILD_SERVICE = "api/construction/startbuildwindturbine";
     public static final String HANGAR_CURRENT_SERVICE = "api/construction/currenthangar";
+    public static final String HANGAR_BUILD_TIME_SERVICE = "api/construction/hangarbuildtime";
     public static final String HANGAR_BUILD_SERVICE = "api/construction/startbuildhangar";
     public static final String SHIP_COST_SERVICE = "api/construction/shipscost";
+    public static final String SHIP_BUILD_TIME_SERVICE = "api/construction/shipbuildtime";
     public static final String SHIP_BUILD_SERVICE = "api/construction/startbuildship";
     public static final String SHIELD_CURRENT_SERVICE = "api/construction/currentshield";
+    public static final String OTHER_BUILD_TIME_SERVICE = "api/construction/otherbuildtime";
     public static final String PROBE_CURRENT_SERVICE = "api/construction/currentprobes";
+    public static final String PROBE_BUILD_TIME_SERVICE = "api/construction/probebuildtime";
     public static final String TRADER_CURRENT_SERVICE = "api/construction/currenttraders";
+    public static final String TRADER_BUILD_TIME_SERVICE = "api/construction/traderbuildtime";
     public static final String SHIELD_BUILD_SERVICE = "api/construction/startbuildshield";
     public static final String PROBE_BUILD_SERVICE = "api/construction/startbuildprobe";
     public static final String TRADER_BUILD_SERVICE = "api/construction/startbuildtrader";
@@ -67,18 +74,23 @@ public class Constants {
     public static String getAttackServiceUrl() { return (HTTP + BASE_URL + PORT + ATTACK_SERVICE); }
     public static String getCurrentMinesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getMinesToBuildServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_TO_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getMineBuildingTimeServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + MINES_BUILD_TIME_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildMineServiceUrl() { return (HTTP + BASE_URL + PORT + MINES_BUILD_SERVICE); }
     public static String getCurrentEnergyFacilitiesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + ENERGY_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getEnergyFacilitiesToBuildServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + ENERGY_TO_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getEnergyFacilitiesBuildingTimeServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + ENERGY_BUILD_TIME_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildEnergyFacilityServiceUrl() { return (HTTP + BASE_URL + PORT + ENERGY_BUILD_SERVICE); }
     public static String getBuildSolarPanelsServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + SOLAR_PANEL_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
     public static String getBuildWindTurbinesServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + WIND_TURBINE_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
     public static String getCurrentHangarServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + HANGAR_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getHangarBuildingTimeServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + HANGAR_BUILD_TIME_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildHangarServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + HANGAR_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getShipsServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + SHIPS_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getShipsCostServiceUrl() { return (HTTP + BASE_URL + PORT + SHIP_COST_SERVICE); }
+    public static String getShipBuildingTimeServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + SHIP_BUILD_TIME_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildShipsServiceUrl(int planetId, int qtt, int shipType) { return (HTTP + BASE_URL + PORT + SHIP_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)) + "&" + "shipType=" + String.valueOf(shipType); }
     public static String getCurrentShieldServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + SHIELD_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getOthersBuildingTimeServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + OTHER_BUILD_TIME_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getCurrentProbesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + PROBE_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getCurrentTradersServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + TRADER_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildShieldServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + SHIELD_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }

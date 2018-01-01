@@ -117,6 +117,7 @@ public class ConstructionsActivity extends MenuActivity {
             constructionService = new ConstructionService();
             constructionService.GetCurrentMines(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
             constructionService.GetMinesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+            constructionService.GetBuildingTime(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
 
             buildCrystal = (Button) rootView.findViewById(R.id.cristalBuildButton);
             buildCrystal.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +159,7 @@ public class ConstructionsActivity extends MenuActivity {
                     constructionService.BuildMine(act.player.getUsername(), act.player.getToken(), mineToAdd, act, fragment);
                     act.crystalUsed = mineToAdd.getCost().getCrystalCost();
                     act.metalUsed = mineToAdd.getCost().getMetalCost();
+                    SetConstructionTimer(timerView, mineToAdd.getConstructionTime());
                     sweetAlertDialog.cancel();
                 }
             });
@@ -165,24 +167,25 @@ public class ConstructionsActivity extends MenuActivity {
             dialog.show();
         }
 
-        public void InConstruction(Button buildButton, TextView timer, Facility facility){
+        public void InConstruction(Button buildButton, TextView timer, long buildingTime){
             buildButton.setPaintFlags(buildButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             buildButton.setEnabled(false);
-            SetConstructionTimer(timer, facility.getEnableDate().getTime());
+            SetConstructionTimer(timer, buildingTime);
+        }
+
+        public void setCurrentConstructionTimers(long crystalTime, long metalTime, long darkMatterTime){
+            if(crystalTime > 0){
+                InConstruction(buildCrystal, (TextView)getView().findViewById(R.id.crystal_timer), crystalTime);
+            }
+            if(metalTime > 0){
+                InConstruction(buildMetal, (TextView)getView().findViewById(R.id.metal_timer), metalTime);
+            }
+            if(darkMatterTime > 0){
+                InConstruction(buildDarkMatter, (TextView)getView().findViewById(R.id.darkMatter_timer), darkMatterTime);
+            }
         }
 
         public void setCurrentValues(CrystalMine crystalMine, MetalMine metalMine, DarkMatterMine darkMatterMine){
-            Date currentDate = Calendar.getInstance().getTime();
-            if(currentDate.compareTo(crystalMine.getEnableDate()) == -1){
-                InConstruction(buildCrystal, (TextView)getView().findViewById(R.id.crystal_timer), crystalMine);
-            }
-            if(currentDate.compareTo(metalMine.getEnableDate()) == -1){
-                InConstruction(buildMetal, (TextView)getView().findViewById(R.id.metal_timer), metalMine);
-            }
-            if(currentDate.compareTo(darkMatterMine.getEnableDate()) == -1){
-                InConstruction(buildDarkMatter, (TextView)getView().findViewById(R.id.darkMatter_timer), darkMatterMine);
-           }
-
             TextView crystalCurrentLevel = (TextView) getView().findViewById(R.id.cristalLevelText);
             crystalCurrentLevel.setText("Nivel Actual: " + String.valueOf(crystalMine.getLevel()));
             TextView crystalProductivity = (TextView) getView().findViewById(R.id.cristalProductionText);
@@ -280,11 +283,8 @@ public class ConstructionsActivity extends MenuActivity {
         }
 
         public void MineBuilt(Mine mine){
-            SetConstructionTimer(timerView, mine.getEnableDate().getTime());
             act.player.getPlanet(act.planet.getId()).setCrystal(act.planet.getCrystal() - act.crystalUsed);
             act.player.getPlanet(act.planet.getId()).setMetal(act.planet.getMetal() - act.metalUsed);
-            constructionService.GetCurrentMines(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
-            constructionService.GetMinesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
             SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Construccion", "La construccion de la mina ha comenzado!");
             dialog.show();
         }
@@ -292,22 +292,27 @@ public class ConstructionsActivity extends MenuActivity {
         private void SetConstructionTimer(final TextView timer, long fechaFinalizacion) {
             long tiempoRestante = fechaFinalizacion - System.currentTimeMillis();
 
-            new CountDownTimer(tiempoRestante, 1000) {
+            new CountDownTimer(fechaFinalizacion, 1000) {
                 public void onTick(long millisUntilFinished) {
                     timer.setVisibility(View.VISIBLE);
-                    timer.setText("Tiempo para finalización: " +
-                            String.valueOf(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)) + ":" +
-                            String.valueOf(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished))) + ":" +
-                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)))
-                    );
+                    timer.setText("Tiempo para finalización: " + act.ObtenerHora(millisUntilFinished));
                     timer.setTextColor(Color.GREEN);
                     timer.setTypeface(null, Typeface.BOLD);
                 }
 
                 public void onFinish() {
                     timer.setVisibility(View.INVISIBLE);
-                    constructionService.GetCurrentMines(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
-                    constructionService.GetMinesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+                    SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Construcciones", "La construccion ha sido finalizada");
+                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            constructionService.GetCurrentMines(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+                            constructionService.GetMinesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+                            sweetAlertDialog.cancel();
+                        }
+                    });
+
+                    dialog.show();
                 }
 
             }.start();
@@ -350,6 +355,7 @@ public class ConstructionsActivity extends MenuActivity {
             constructionService = new ConstructionService();
             constructionService.GetCurrentEnergyFacilities(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
             constructionService.GetEnergyFacilitiesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+            constructionService.GetEnergyFacilitiesBuildingTime(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
 
             buildEnergyCentral = (Button) rootView.findViewById(R.id.energyCentralBuildButton);
             buildEnergyCentral.setOnClickListener(new View.OnClickListener() {
@@ -518,46 +524,28 @@ public class ConstructionsActivity extends MenuActivity {
             dialog.show();
         }
 
-        public void InConstruction(Button buildButton, TextView timer, Facility facility){
+        public void InConstruction(Button buildButton, TextView timer, long buildingTime){
             buildButton.setPaintFlags(buildButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             buildButton.setEnabled(false);
-            SetConstructionTimer(timer, facility.getEnableDate().getTime());
+            SetConstructionTimer(timer, buildingTime);
+        }
+
+        public void setCurrentConstructionTimers(long energyCentralTime, long energyFuelCentralTime, long solarPanelTime, long windTurbineTime){
+            if(energyCentralTime > 0){
+                InConstruction(buildEnergyCentral, (TextView)getView().findViewById(R.id.energyCentral_timer), energyCentralTime);
+            }
+            if(energyFuelCentralTime > 0){
+                InConstruction(buildEnergyFuelCentral, (TextView)getView().findViewById(R.id.energyFuelCentral_timer), energyFuelCentralTime);
+            }
+            if(solarPanelTime > 0){
+                InConstruction(buildSolarPanel, (TextView)getView().findViewById(R.id.solarPanel_timer), solarPanelTime);
+            }
+            if(windTurbineTime > 0){
+                InConstruction(buildWindTurbine, (TextView)getView().findViewById(R.id.windTurbine_timer), windTurbineTime);
+            }
         }
 
         public void setCurrentValues(EnergyCentral energyCentral, EnergyFuelCentral energyFuelCentral, ArrayList<SolarPanel> solarPanels, ArrayList<WindTurbine> windTurbines){
-            Date currentDate = Calendar.getInstance().getTime();
-            if(currentDate.compareTo(energyCentral.getEnableDate()) == -1){
-                InConstruction(buildEnergyCentral, (TextView)getView().findViewById(R.id.energyCentral_timer), energyCentral);
-            }
-            if(currentDate.compareTo(energyFuelCentral.getEnableDate()) == -1){
-                InConstruction(buildEnergyFuelCentral, (TextView)getView().findViewById(R.id.energyFuelCentral_timer), energyFuelCentral);
-            }
-            SolarPanel lastSolarPanelToEnable = null;
-            for (SolarPanel solarPanel: solarPanels) {
-                if(lastSolarPanelToEnable == null || lastSolarPanelToEnable.getEnableDate().compareTo(solarPanel.getEnableDate()) == -1)
-                {
-                    lastSolarPanelToEnable = solarPanel;
-                }
-            }
-            if(lastSolarPanelToEnable != null){
-                if(currentDate.compareTo(lastSolarPanelToEnable.getEnableDate()) == -1) {
-                    InConstruction(buildSolarPanel, (TextView) getView().findViewById(R.id.solarPanel_timer), lastSolarPanelToEnable);
-                }
-            }
-
-            WindTurbine lastWindTurbineToEnable = null;
-            for (WindTurbine windTurbine: windTurbines) {
-                if(lastWindTurbineToEnable == null || lastSolarPanelToEnable.getEnableDate().compareTo(windTurbine.getEnableDate()) == -1)
-                {
-                    lastWindTurbineToEnable = windTurbine;
-                }
-            }
-            if(lastWindTurbineToEnable != null){
-                if(currentDate.compareTo(lastWindTurbineToEnable.getEnableDate()) == -1) {
-                    InConstruction(buildWindTurbine, (TextView) getView().findViewById(R.id.windTurbine_timer), lastWindTurbineToEnable);
-                }
-            }
-
             TextView energyCentralCurrentLevel = (TextView) getView().findViewById(R.id.energyCentralLevelText);
             energyCentralCurrentLevel.setText("Nivel Actual: " + String.valueOf(energyCentral.getLevel()));
             TextView energyCentralProductivity = (TextView) getView().findViewById(R.id.energyCentralProductionText);
@@ -596,12 +584,6 @@ public class ConstructionsActivity extends MenuActivity {
             TextView energyFuelCentralNewDarkMatter = (TextView) getView().findViewById(R.id.energyFuelCentralNextDarkMatterText);
             energyFuelCentralNewDarkMatter.setText("Consumo materia oscura: " + String.valueOf(energyFuelCentral.getDarkMatterConsumption()));
             buildEnergyFuelCentral.setText("Construir Nivel " + String.valueOf(energyFuelCentral.getLevel()));
-
-            TextView solarPanelCost = (TextView) getView().findViewById(R.id.solarPanelCostText);
-            solarPanelCost.setText("Costo: Cristal 5 Metal 20");
-
-            TextView windTurbineCost = (TextView) getView().findViewById(R.id.windTurbineCostText);
-            windTurbineCost.setText("Costo: Cristal 5 Metal 20");
 
             checkAvailability(energyCentral, energyFuelCentral);
         }
