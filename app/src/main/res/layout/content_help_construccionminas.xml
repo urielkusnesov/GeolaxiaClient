@@ -35,135 +35,759 @@
                 android:textSize="12pt"
                 android:textColor="#000000"
                 android:textAlignment="center"/>
-
-
-            <android.support.v7.widget.AppCompatTextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5pt"
-                android:text="Mina de Cristal"
-                android:typeface="normal"
-                android:textSize="10pt"
-                android:textColor="#FFFFFF"/>
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/cristal"
-                android:layout_gravity="center"/>
-            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-                <TableRow
+                android:orientation="vertical">
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:text="Mina de Cristal"
+                    android:typeface="normal"
+                    android:textSize="10pt"
+                    android:textColor="#FFFFFF"/>
+                <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dip" >
-                    <TextView android:text="Nivel"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-                    <TextView  android:text="Costo de Construcción"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-                    <TextView  android:text="Costo de Energía (por hora)"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-                    <TextView  android:text="Tiempo de Construcción (en minutos)"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-                    <TextView  android:text="Cantidad de recurso (por hora)"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-                </TableRow>
-                <TableRow
+                    app:srcCompat="@drawable/cristal"
+                    android:layout_gravity="center"/>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dip" >
-                    <TextView android:text="1"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-                    <TextView  android:text="Metal 100 Cristal 100"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-                    <TextView  android:text="50"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-                    <TextView  android:text="1"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-                    <TextView  android:text="50"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-                </TableRow>
-            </TableLayout>
-
-            <android.support.v7.widget.AppCompatTextView
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 1"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 100 Cristal 100"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 50 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 1 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 50 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 2"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 200 Cristal 200"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 100 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 21 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 100 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 3"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 300 Cristal 300"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 150 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 41 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 150 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 4"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 400 Cristal 400"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 200 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 61 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 200 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 5"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 500 Cristal 500"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 250 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 81 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 250 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5pt"
-                android:text="Azules"
-                android:typeface="normal"
-                android:textSize="10pt"
-                android:textColor="#FFFFFF"/>
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/planeta_azul"
-                android:layout_gravity="center"/>
-            <android.support.v7.widget.AppCompatTextView
+                android:orientation="vertical">
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:text="Mina de Metal"
+                    android:typeface="normal"
+                    android:textSize="10pt"
+                    android:textColor="#FFFFFF"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/metal"
+                    android:layout_gravity="center"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 1"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 100 Cristal 100"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 50 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 1 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 100 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 2"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 150 Cristal 150"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 75 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 11 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 200 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 3"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 200 Cristal 200"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 100 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 21 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 300 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 4"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 250 Cristal 250"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 125 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 31 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 400 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 5"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 300 Cristal 300"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 150 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 41 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 500 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Abundancia: Mayor concentración de Metal en ubicaciones con  distancia media del sol (planetas del medio del sistema solar)."
-                android:typeface="normal"
-                android:textSize="8pt"
-                android:textColor="#FFFFFF"/>
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Obtención en mina del tipo abundante: Planeta 4 - 10% más de producción. Planeta 5 - 10% más de producción. Planeta 6 - 10% más de producción."
-                android:typeface="normal"
-                android:textSize="8pt"
-                android:textColor="#FFFFFF"/>
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Relación otros Recursos: Cristal: producción normal según nivel de  mina. Materia Oscura: producción normal según nivel de  mina."
-                android:typeface="normal"
-                android:textSize="8pt"
-                android:textColor="#FFFFFF"/>
-
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5pt"
-                android:text="Oscuros"
-                android:typeface="normal"
-                android:textSize="10pt"
-                android:textColor="#FFFFFF"/>
-            <android.support.v7.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/planeta_oscuro"
-                android:layout_gravity="center"/>
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Abundancia: Mayor concentración de Materia Oscura en ubicaciones lejanas al sol (últimos 3 planetas del sistema solar)."
-                android:typeface="normal"
-                android:textSize="8pt"
-                android:textColor="#FFFFFF"/>
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Obtención en mina del tipo abundante: Planeta 7 - 5% más de producción. Planeta 8 - 10% más de producción. Planeta 9 - 15% más de producción."
-                android:typeface="normal"
-                android:textSize="8pt"
-                android:textColor="#FFFFFF"/>
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Relación otros Recursos: Cristal: 50% menos de producción. Metal: producción normal según nivel de  mina."
-                android:typeface="normal"
-                android:textSize="8pt"
-                android:textColor="#FFFFFF"/>
+                android:orientation="vertical">
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5pt"
+                    android:text="Mina de Materia Oscura"
+                    android:typeface="normal"
+                    android:textSize="10pt"
+                    android:textColor="#FFFFFF"/>
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/materia_oscura"
+                    android:layout_gravity="center"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 1"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 100 Cristal 100"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 100 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 1 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 25 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 2"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 300 Cristal 300"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 300 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 31 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 50 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 3"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 500 Cristal 500"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 500 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 61 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 75 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 4"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 700 Cristal 700"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 700 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 91 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 100 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:typeface="normal"
+                        android:textSize="15dp"
+                        android:textColor="#FFFFFF"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nivel: 5"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Construcción: Metal 900 Cristal 900"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C.Energía: 900 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="T.Construcción: 121 min"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cant.Recurso: 125 por hora"
+                            android:typeface="normal"
+                            android:textSize="15dp"
+                            android:textColor="#FFFFFF"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

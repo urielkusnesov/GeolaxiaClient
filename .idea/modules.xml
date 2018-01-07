@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/GeolaxiaClient.iml" filepath="$PROJECT_DIR$/GeolaxiaClient.iml" />
       <module fileurl="file://C:\Users\uriel\Desktop\TPP\GeolaxiaGame\GeolaxiaClient.iml" filepath="C:\Users\uriel\Desktop\TPP\GeolaxiaGame\GeolaxiaClient.iml" />
-      <module fileurl="file://$PROJECT_DIR$/GeolaxiaGame.iml" filepath="$PROJECT_DIR$/GeolaxiaGame.iml" />
+      <module fileurl="file://C:\Users\Rha\Documents\GitHub\GeolaxiaClient\GeolaxiaGame.iml" filepath="C:\Users\Rha\Documents\GitHub\GeolaxiaClient\GeolaxiaGame.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
