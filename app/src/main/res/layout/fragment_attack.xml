@@ -21,140 +21,263 @@
         tools:showIn="@layout/activity_attack"
         android:weightSum="1.0">
 
-
-        <TextView
-            android:id="@+id/targetText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Objetivo"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp" />
-
-        <View
-            android:id="@+id/targetDivider"
-            android:layout_below="@id/targetText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginBottom="10dp"
-            android:background="#FFFFFF"/>
-
-        <RelativeLayout
-            android:id="@+id/targetPickers"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/targetDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <NumberPicker
-                android:id="@+id/galaxy"
-                android:background="#80000000"
-                android:descendantFocusability="blocksDescendants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <NumberPicker
-                android:id="@+id/solarSystem"
-                android:background="#80000000"
-                android:descendantFocusability="blocksDescendants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/galaxy"
-                android:layout_toEndOf="@+id/galaxy" />
-
-            <NumberPicker
-                android:id="@+id/planet"
-                android:background="#80000000"
-                android:descendantFocusability="blocksDescendants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/solarSystem"
-                android:layout_toEndOf="@+id/solarSystem" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/fleetText"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Flota"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp"
-            android:layout_below="@id/targetPickers"/>
-
-        <View
-            android:id="@+id/fleetDivider"
-            android:layout_below="@id/fleetText"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_marginBottom="10dp"
-            android:background="#FFFFFF"/>
-
-        <RelativeLayout
-            android:id="@+id/fleetPickers"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/fleetDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <NumberPicker
-                android:id="@+id/x"
-                android:background="#80000000"
-                android:descendantFocusability="blocksDescendants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <NumberPicker
-                android:id="@+id/y"
-                android:background="#80000000"
-                android:descendantFocusability="blocksDescendants"
-                android:layout_width="wrap_content"
+            android:orientation="vertical">
+            <!--<LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/x"
-                android:layout_toEndOf="@+id/x" />
-
-            <NumberPicker
-                android:id="@+id/z"
-                android:background="#80000000"
-                android:descendantFocusability="blocksDescendants"
-                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="ATAQUE"
+                    android:textColor="#FFFFFF"
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="1dp"
+                    android:background="#FFFFFF"/>
+            </LinearLayout>-->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/y"
-                android:layout_toEndOf="@+id/y" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/estimateText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="El Ataque llegar en: "
-            android:textColor="#40F000"
-            android:textSize="20dp"
-            android:layout_below="@id/fleetPickers"/>
-
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Atacar"
-            style="@style/Widget.AppCompat.Button"
-            android:background="#80000000"
-            android:textColor="#FFFFFF"
-            android:layout_below="@id/estimateText"
-            android:layout_alignParentRight="true"
-            />
-
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="OBJETIVO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20dp"
+                        android:textStyle="bold"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="1dp"
+                        android:background="#FFFFFF"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:tools="http://schemas.android.com/tools"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_centerHorizontal="true">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center_horizontal"
+                                    android:layout_margin="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Galaxia"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="15dp" />
+                                    <NumberPicker
+                                        android:id="@+id/galaxy"
+                                        android:background="#80000000"
+                                        android:descendantFocusability="blocksDescendants"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center_horizontal"
+                                    android:layout_margin="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Sistema"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="15dp" />
+                                    <NumberPicker
+                                        android:id="@+id/solarSystem"
+                                        android:background="#80000000"
+                                        android:descendantFocusability="blocksDescendants"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center_horizontal"
+                                    android:layout_margin="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Planeta"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="15dp" />
+                                    <NumberPicker
+                                        android:id="@+id/planet"
+                                        android:background="#80000000"
+                                        android:descendantFocusability="blocksDescendants"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="FLOTA"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20dp"
+                        android:textStyle="bold"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="1dp"
+                        android:background="#FFFFFF"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:tools="http://schemas.android.com/tools"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_centerHorizontal="true">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center_horizontal"
+                                    android:layout_margin="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Flota Z"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="15dp" />
+                                    <NumberPicker
+                                        android:id="@+id/z"
+                                        android:background="#80000000"
+                                        android:descendantFocusability="blocksDescendants"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center_horizontal"
+                                    android:layout_margin="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Flota Y"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="15dp" />
+                                    <NumberPicker
+                                        android:id="@+id/y"
+                                        android:background="#80000000"
+                                        android:descendantFocusability="blocksDescendants"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:gravity="center_horizontal"
+                                    android:layout_margin="20dp">
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Flota X"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="15dp" />
+                                    <NumberPicker
+                                        android:id="@+id/x"
+                                        android:background="#80000000"
+                                        android:descendantFocusability="blocksDescendants"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/estimateText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:typeface="normal"
+                                android:textSize="15dp"
+                                android:textColor="#FFFFFF"
+                                android:text=""/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Atacar"
+                        style="@style/Widget.AppCompat.Button"
+                        android:background="#80000000"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="right"
+                        android:textSize="15dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

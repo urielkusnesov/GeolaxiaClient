@@ -6,7 +6,7 @@ package geolaxia.geolaxia.Model;
 
 public class Constants {
     //public static String BASE_URL = "181.47.79.25";/*Server IP*/
-    public static String BASE_URL = "192.168.1.109";/*Server IP*/
+    public static String BASE_URL = "192.168.0.18";/*Server IP*/
     public static final String PORT = ":62078/";
     public static final String HTTP = "http://";
     public static final String LOGIN_SERVICE = "api/player/login";

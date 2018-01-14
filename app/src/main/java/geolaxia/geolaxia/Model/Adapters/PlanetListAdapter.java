@@ -60,9 +60,11 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         if(planets.get(position).getConqueror() != null){
-            holder.name.setText(planets.get(position).getName() + " - " + planets.get(position).getConqueror().getUsername());
+            //holder.name.setText(position + " - " + planets.get(position).getName() + " - " + planets.get(position).getConqueror().getUsername());
+            holder.name.setText(planets.get(position).getId() + " - " + planets.get(position).getConqueror().getUsername());
         }else{
-            holder.name.setText(planets.get(position).getName() + " - No Colonizado");
+            //holder.name.setText(position + planets.get(position).getName() + " - No Colonizado");
+            holder.name.setText(planets.get(position).getId() + " - No Colonizado");
         }
 
         holder.itemView.setBackgroundColor(Color.TRANSPARENT);
@@ -76,7 +78,7 @@ public class PlanetListAdapter extends RecyclerView.Adapter<PlanetListAdapter.Vi
             }
         });
 
-        if(selectedPostion==position){
+        if(selectedPostion == position){
             holder.itemView.setBackgroundColor(Color.WHITE);
             holder.name.setTextColor(Color.BLACK);
         }

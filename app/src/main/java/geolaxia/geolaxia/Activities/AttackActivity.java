@@ -53,6 +53,7 @@ import static geolaxia.geolaxia.R.id.planetList;
 public class AttackActivity extends MenuActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private static int cantUsersCercanos = 0;
 
     static final long ONE_MINUTE_IN_MILLIS = 60000;
 
@@ -204,7 +205,8 @@ public class AttackActivity extends MenuActivity {
                 @Override
                 public void onClick(View v) {
                     NumberPicker planetsPicker = (NumberPicker) rootView.findViewById(R.id.planet);
-                    int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+                    //int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+                    int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()]);
                     Planet targetPlanet = availablePlanets.get(planetOrder);
 
                     ArrayList<Ship> fleet = getAttackFleet();
@@ -224,7 +226,8 @@ public class AttackActivity extends MenuActivity {
             TextView estimateArrival = (TextView) getView().findViewById(R.id.estimateText);
 
             NumberPicker planetsPicker = (NumberPicker) getView().findViewById(R.id.planet);
-            int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+            //int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()].split("-")[0]);
+            int planetOrder = Integer.valueOf(planetsSelected[planetsPicker.getValue()]);
             Planet targetPlanet = availablePlanets.get(planetOrder);
 
             ArrayList<Ship> fleet = getAttackFleet();
@@ -236,10 +239,10 @@ public class AttackActivity extends MenuActivity {
                 long minutes = (totalDifferenceInSeconds%3600)/60;
                 long seconds = totalDifferenceInSeconds - (hours*3600) - (minutes*60);
 
-                estimateArrival.setText("El ataque llegara en: " +
+                estimateArrival.setText("El ataque llegará en: " +
                         String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds));
             }else{
-                estimateArrival.setText("El ataque llegar en: ");
+                estimateArrival.setText("El ataque llegará en: -");
             }
         }
 
@@ -271,7 +274,8 @@ public class AttackActivity extends MenuActivity {
 
             ArrayList<String> galaxyNames = new ArrayList<>();
             for (Galaxy galaxy: galaxies) {
-                galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
+                //galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
+                galaxyNames.add(String.valueOf(galaxy.getId()));
             }
             galaxiesSelected = new String[galaxyNames.size()];
             galaxiesSelected = galaxyNames.toArray(galaxiesSelected);
@@ -287,7 +291,8 @@ public class AttackActivity extends MenuActivity {
 
             ArrayList<String> solarSystemNames = new ArrayList<>();
             for (SolarSystem solarSystem: solarSystems) {
-                solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
+                //solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
+                solarSystemNames.add(String.valueOf(solarSystem.getId()));
             }
             solarSystemsSelected = new String[solarSystemNames.size()];
             solarSystemsSelected = solarSystemNames.toArray(solarSystemsSelected);
@@ -311,7 +316,8 @@ public class AttackActivity extends MenuActivity {
             ArrayList<String> planetNames = new ArrayList<>();
             for (Planet planet: finalPlanets) {
                 availablePlanets.put(planet.getOrder(), planet);
-                planetNames.add(planet.getOrder() + "-" + planet.getName());
+                //planetNames.add(planet.getOrder() + "-" + planet.getName());
+                planetNames.add(String.valueOf(planet.getOrder()));
             }
             planetsSelected = new String[planetNames.size()];
             planetsSelected = planetNames.toArray(planetsSelected);
@@ -458,10 +464,10 @@ public class AttackActivity extends MenuActivity {
                 long minutes = (totalDifferenceInSeconds%3600)/60;
                 long seconds = totalDifferenceInSeconds - (hours*3600) - (minutes*60);
 
-                estimateArrival.setText("El ataque llegara en: " +
+                estimateArrival.setText("El ataque llegará en: " +
                         String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds));
             }else{
-                estimateArrival.setText("El ataque llegar en: ");
+                estimateArrival.setText("El ataque llegará en: -");
             }
         }
 
@@ -498,7 +504,8 @@ public class AttackActivity extends MenuActivity {
 
             ArrayList<String> galaxyNames = new ArrayList<>();
             for (Galaxy galaxy: galaxies) {
-                galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
+                //galaxyNames.add(galaxy.getId() + "-" + galaxy.getName());
+                galaxyNames.add(String.valueOf(galaxy.getId()));
             }
             galaxiesSelected = new String[galaxyNames.size()];
             galaxiesSelected = galaxyNames.toArray(galaxiesSelected);
@@ -514,7 +521,8 @@ public class AttackActivity extends MenuActivity {
 
             ArrayList<String> solarSystemNames = new ArrayList<>();
             for (SolarSystem solarSystem: solarSystems) {
-                solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
+                //solarSystemNames.add(solarSystem.getId() + "-" + solarSystem.getName());
+                solarSystemNames.add(String.valueOf(solarSystem.getId()));
             }
             solarSystemsSelected = new String[solarSystemNames.size()];
             solarSystemsSelected = solarSystemNames.toArray(solarSystemsSelected);
@@ -658,10 +666,10 @@ public class AttackActivity extends MenuActivity {
                 long minutes = (totalDifferenceInSeconds%3600)/60;
                 long seconds = totalDifferenceInSeconds - (hours*3600) - (minutes*60);
 
-                estimateArrival.setText("El ataque llegara en: " +
+                estimateArrival.setText("El ataque llegará en: " +
                         String.valueOf(hours) + ":" + String.valueOf(minutes) + ":" + String.valueOf(seconds));
             }else{
-                estimateArrival.setText("El ataque llegar en: ");
+                estimateArrival.setText("El ataque llegará en: -");
             }
         }
 
@@ -712,6 +720,8 @@ public class AttackActivity extends MenuActivity {
         public void FillUsers(ArrayList<Player> players){
             userListAdapter = new UserListAdapter(players, this);
             userList.setAdapter(userListAdapter);
+
+            cantUsersCercanos = players.size();
         }
     }
 
@@ -746,9 +756,9 @@ public class AttackActivity extends MenuActivity {
                 case 0:
                     return "Atacar";
                 case 1:
-                    return "Por Coordenadas";
+                    return "Por" + String.format("%n") + "Coordenadas";
                 case 2:
-                    return "Por Cercania";
+                    return "Por" + String.format("%n") + "Cercanía (" + cantUsersCercanos + ")";
             }
             return null;
         }

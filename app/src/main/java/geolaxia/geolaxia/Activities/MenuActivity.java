@@ -189,10 +189,10 @@ public class MenuActivity extends BaseActivity {
         long minutos = TimeUnit.MILLISECONDS.toMinutes(time) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(time));
         long segundos = TimeUnit.MILLISECONDS.toSeconds(time) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time));
 
-        tiempoExtension += (dias > 0) ? (((dias >= 10) ? String.valueOf(dias) : "0" + String.valueOf(dias)) + ((dias == 1) ? " día" : " días") + " : ") : "";
-        tiempoExtension += (horas > 0) ? (((horas >= 10) ? String.valueOf(horas) : "0" + String.valueOf(horas)) + ((horas == 1) ? " hora" : " horas") + " : ") : "";
-        tiempoExtension += (minutos > 0) ? (((minutos >= 10) ? String.valueOf(minutos) : "0" + String.valueOf(minutos)) + ((minutos == 1) ? " min" : " mins") + " : ") : "";
-        tiempoExtension += (segundos > 0) ? (((segundos >= 10) ? String.valueOf(segundos) : "0" + String.valueOf(segundos)) + ((segundos == 1) ? " seg" : " segs")) : "";
+        tiempoExtension += (dias > 0) ? (((dias >= 10) ? String.valueOf(dias) : "0" + String.valueOf(dias)) + ((dias == 1) ? " día" : " día") + " : ") : "";
+        tiempoExtension += (horas > 0) ? (((horas >= 10) ? String.valueOf(horas) : "0" + String.valueOf(horas)) + ((horas == 1) ? " hora" : " hora") + " : ") : "";
+        tiempoExtension += (minutos > 0) ? (((minutos >= 10) ? String.valueOf(minutos) : "0" + String.valueOf(minutos)) + ((minutos == 1) ? " min" : " min") + " : ") : "";
+        tiempoExtension += (segundos > 0) ? (((segundos >= 10) ? String.valueOf(segundos) : "0" + String.valueOf(segundos)) + ((segundos == 1) ? " seg" : " seg")) : "";
 
         tiempoExtension.trim();
 

@@ -62,7 +62,7 @@ public class UserPlanetsAdapter extends RecyclerView.Adapter<UserPlanetsAdapter.
         final Planet planet = planets.get(position);
         SolarSystem solarSystem = planet.getSolarSystem();
         Galaxy galaxy = solarSystem.getGalaxy();
-        holder.name.setText(galaxy.getName() + " - " + solarSystem.getName() + " - " + planet.getName());
+        holder.name.setText("Galaxia: " + galaxy.getId() + ", S.Solar: " + solarSystem.getId() + ", Planeta: " + planet.getId() + " (" + planet.getName() + ")");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
