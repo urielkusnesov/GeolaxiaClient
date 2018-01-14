@@ -152,7 +152,7 @@ public class ConstructionsActivity extends MenuActivity {
         public void confirmConstruction(Mine mine){
             mine.setPlanet(act.planet);
             final Mine mineToAdd = mine;
-            SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Confirmar", "Esta seguro que desea comenzar la construccion?", "Construir", "Cancelar");
+            SweetAlertDialog dialog = Helpers.getConfirmationDialog(act, "Confirmar", "¿Está seguro que desea comenzar la construcción?", "Construir", "Cancelar");
             dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -188,61 +188,61 @@ public class ConstructionsActivity extends MenuActivity {
             TextView crystalCurrentLevel = (TextView) getView().findViewById(R.id.cristalLevelText);
             crystalCurrentLevel.setText("Nivel Actual: " + String.valueOf(crystalMine.getLevel()));
             TextView crystalProductivity = (TextView) getView().findViewById(R.id.cristalProductionText);
-            crystalProductivity.setText("Produccion actual: " + String.valueOf(crystalMine.getProductivity()));
+            crystalProductivity.setText("Producción actual: " + String.valueOf(crystalMine.getProductivity()));
             TextView crystalEnergyConsumption = (TextView) getView().findViewById(R.id.cristalConsumptionText);
-            crystalEnergyConsumption.setText("Energia consumida actual: " + String.valueOf(crystalMine.getEnergyConsumption()));
+            crystalEnergyConsumption.setText("Energía consumida actual: " + String.valueOf(crystalMine.getEnergyConsumption()));
 
             TextView metalCurrentLevel = (TextView) getView().findViewById(R.id.metalLevelText);
             metalCurrentLevel.setText("Nivel Actual: " + String.valueOf(metalMine.getLevel()));
             TextView metalProductivity = (TextView) getView().findViewById(R.id.metalProductionText);
-            metalProductivity.setText("Produccion actual: " + String.valueOf(metalMine.getProductivity()));
+            metalProductivity.setText("Producción actual: " + String.valueOf(metalMine.getProductivity()));
             TextView metalEnergyConsumption = (TextView) getView().findViewById(R.id.metalConsumptionText);
-            metalEnergyConsumption.setText("Energia consumida actual: " + String.valueOf(metalMine.getEnergyConsumption()));
+            metalEnergyConsumption.setText("Energía consumida actual: " + String.valueOf(metalMine.getEnergyConsumption()));
 
             TextView darkMatterCurrentLevel = (TextView) getView().findViewById(R.id.darkMatterLevelText);
             darkMatterCurrentLevel.setText("Nivel Actual: " + String.valueOf(darkMatterMine.getLevel()));
             TextView darkMatterProductivity = (TextView) getView().findViewById(R.id.darkMatterProductionText);
-            darkMatterProductivity.setText("Produccion actual: " + String.valueOf(darkMatterMine.getProductivity()));
+            darkMatterProductivity.setText("Producción actual: " + String.valueOf(darkMatterMine.getProductivity()));
             TextView darkMatterEnergyConsumption = (TextView) getView().findViewById(R.id.darkMatterConsumptionText);
-            darkMatterEnergyConsumption.setText("Energia consumida actual: " + String.valueOf(darkMatterMine.getEnergyConsumption()));
+            darkMatterEnergyConsumption.setText("Energía consumida actual: " + String.valueOf(darkMatterMine.getEnergyConsumption()));
         }
 
         public void setCosts(CrystalMine crystalMine, MetalMine metalMine, DarkMatterMine darkMatterMine){
             nextCrystal = crystalMine;
             TextView crystalCost = (TextView) getView().findViewById(R.id.cristalCostText);
-            crystalCost.setText("Costo: Cristal " + String.valueOf(crystalMine.getCost().getCrystalCost()) + " Metal " +
-                    String.valueOf(crystalMine.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(crystalMine.getCost().getDarkMatterCost()));
+            crystalCost.setText("Costo: Cristal: " + String.valueOf(crystalMine.getCost().getCrystalCost()) + ", Metal: " +
+                    String.valueOf(crystalMine.getCost().getMetalCost()) + ", M.Oscura: " + String.valueOf(crystalMine.getCost().getDarkMatterCost()));
             TextView crystalEnergyCost = (TextView) getView().findViewById(R.id.cristalEnergyCostText);
-            crystalEnergyCost.setText("Energia necesaria: " + String.valueOf(crystalMine.getEnergyConsumption()));
+            crystalEnergyCost.setText("Energía necesaria: " + String.valueOf(crystalMine.getEnergyConsumption()));
             TextView crystalTimeCost = (TextView) getView().findViewById(R.id.cristalTimeText);
-            crystalTimeCost.setText("Tiempo finalizacion: " + String.valueOf(crystalMine.getConstructionTime()));
+            crystalTimeCost.setText("Tiempo finalización: " + String.valueOf(crystalMine.getConstructionTime()));
             TextView crystalNewProductivity = (TextView) getView().findViewById(R.id.cristalNewProductionText);
-            crystalNewProductivity.setText("Produccion por hora: " + String.valueOf(crystalMine.getProductivity()));
-            buildCrystal.setText("Construir Nivel " + String.valueOf(crystalMine.getLevel()));
+            crystalNewProductivity.setText("Producción por hora: " + String.valueOf(crystalMine.getProductivity()));
+            buildCrystal.setText("Construir Nivel: " + String.valueOf(crystalMine.getLevel()));
 
             nextMetal = metalMine;
             TextView metalCost = (TextView) getView().findViewById(R.id.metalCostText);
-            metalCost.setText("Costo: Cristal " + String.valueOf(metalMine.getCost().getCrystalCost()) + " Metal " +
-                    String.valueOf(metalMine.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(metalMine.getCost().getDarkMatterCost()));
+            metalCost.setText("Costo: Cristal: " + String.valueOf(metalMine.getCost().getCrystalCost()) + ", Metal: " +
+                    String.valueOf(metalMine.getCost().getMetalCost()) + ", M.Oscura: " + String.valueOf(metalMine.getCost().getDarkMatterCost()));
             TextView metalEnergyCost = (TextView) getView().findViewById(R.id.metalEnergyCostText);
-            metalEnergyCost.setText("Energia necesaria: " + String.valueOf(metalMine.getEnergyConsumption()));
+            metalEnergyCost.setText("Energía necesaria: " + String.valueOf(metalMine.getEnergyConsumption()));
             TextView metalTimeCost = (TextView) getView().findViewById(R.id.metalTimeText);
             metalTimeCost.setText("Tiempo finalizacion: " + String.valueOf(metalMine.getConstructionTime()));
             TextView metalNewProductivity = (TextView) getView().findViewById(R.id.metalNewProductionText);
-            metalNewProductivity.setText("Produccion por hora: " + String.valueOf(metalMine.getProductivity()));
-            buildMetal.setText("Construir Nivel " + String.valueOf(metalMine.getLevel()));
+            metalNewProductivity.setText("Producción por hora: " + String.valueOf(metalMine.getProductivity()));
+            buildMetal.setText("Construir Nivel: " + String.valueOf(metalMine.getLevel()));
 
             nextDarkMatter = darkMatterMine;
             TextView darkMatterCost = (TextView) getView().findViewById(R.id.darkMatterCostText);
-            darkMatterCost.setText("Costo: Cristal " + String.valueOf(darkMatterMine.getCost().getCrystalCost()) + " Metal " +
-                    String.valueOf(darkMatterMine.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(darkMatterMine.getCost().getDarkMatterCost()));
+            darkMatterCost.setText("Costo: Cristal: " + String.valueOf(darkMatterMine.getCost().getCrystalCost()) + ", Metal: " +
+                    String.valueOf(darkMatterMine.getCost().getMetalCost()) + ", M.Oscura: " + String.valueOf(darkMatterMine.getCost().getDarkMatterCost()));
             TextView darkMatterEnergyCost = (TextView) getView().findViewById(R.id.darkMatterEnergyCostText);
-            darkMatterEnergyCost.setText("Energia necesaria: " + String.valueOf(darkMatterMine.getEnergyConsumption()));
+            darkMatterEnergyCost.setText("Energía necesaria: " + String.valueOf(darkMatterMine.getEnergyConsumption()));
             TextView darkMatterTimeCost = (TextView) getView().findViewById(R.id.darkMatterTimeText);
-            darkMatterTimeCost.setText("Tiempo finalizacion: " + String.valueOf(darkMatterMine.getConstructionTime()));
+            darkMatterTimeCost.setText("Tiempo finalización: " + String.valueOf(darkMatterMine.getConstructionTime()));
             TextView darkMatterNewProductivity = (TextView) getView().findViewById(R.id.darkMatterNewProductionText);
-            darkMatterNewProductivity.setText("Produccion por hora: " + String.valueOf(darkMatterMine.getProductivity()));
-            buildDarkMatter.setText("Construir Nivel " + String.valueOf(darkMatterMine.getLevel()));
+            darkMatterNewProductivity.setText("Producción por hora: " + String.valueOf(darkMatterMine.getProductivity()));
+            buildDarkMatter.setText("Construir Nivel: " + String.valueOf(darkMatterMine.getLevel()));
 
             checkAvailability(crystalMine, metalMine, darkMatterMine);
         }
@@ -284,7 +284,7 @@ public class ConstructionsActivity extends MenuActivity {
         public void MineBuilt(Mine mine){
             act.player.getPlanet(act.planet.getId()).setCrystal(act.planet.getCrystal() - act.crystalUsed);
             act.player.getPlanet(act.planet.getId()).setMetal(act.planet.getMetal() - act.metalUsed);
-            SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Construccion", "La construccion de la mina ha comenzado!");
+            SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Construcción", "La construcción de la mina ha comenzado!");
             SetConstructionTimer(timerView, mine.getConstructionTime()*60*1000);
             dialog.show();
         }
@@ -410,8 +410,8 @@ public class ConstructionsActivity extends MenuActivity {
                         int metalCost = newVal * 20;
                         int timeCost =  newVal * 2;
 
-                        solarPanelCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
-                        solarPanelTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+                        solarPanelCostText.setText("Costo: Cristal: " + String.valueOf(crystalCost) + ", Metal: " + String.valueOf(metalCost));
+                        solarPanelTimeText.setText("Tiempo finalización: " + String.valueOf(timeCost));
 
                         if (hasResources(crystalCost, metalCost, 0)) {
                             buildSolarPanel.setPaintFlags(0);
@@ -424,7 +424,7 @@ public class ConstructionsActivity extends MenuActivity {
                         buildSolarPanel.setPaintFlags(buildSolarPanel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildSolarPanel.setEnabled(false);
                         solarPanelCostText.setText("Costo: ");
-                        solarPanelTimeText.setText("Tiempo finalizacion: ");
+                        solarPanelTimeText.setText("Tiempo finalización: ");
                     }
                 }
             });
@@ -448,8 +448,8 @@ public class ConstructionsActivity extends MenuActivity {
                         int metalCost = newVal * 20;
                         int timeCost =  newVal * 2;
 
-                        windTurbineCostText.setText("Costo: Cristal " + String.valueOf(crystalCost) + " Metal " + String.valueOf(metalCost));
-                        windTurbineTimeText.setText("Tiempo finalizacion: " + String.valueOf(timeCost));
+                        windTurbineCostText.setText("Costo: Cristal: " + String.valueOf(crystalCost) + ", Metal: " + String.valueOf(metalCost));
+                        windTurbineTimeText.setText("Tiempo finalización: " + String.valueOf(timeCost));
 
                         if (hasResources(crystalCost, metalCost, 0)) {
                             buildWindTurbine.setPaintFlags(0);
@@ -462,7 +462,7 @@ public class ConstructionsActivity extends MenuActivity {
                         buildWindTurbine.setPaintFlags(buildWindTurbine.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         buildWindTurbine.setEnabled(false);
                         windTurbineCostText.setText("Costo: ");
-                        windTurbineTimeText.setText("TIempo finalaizacion: ");
+                        windTurbineTimeText.setText("Tiempo finalaización: ");
                     }
                 }
             });
@@ -540,13 +540,13 @@ public class ConstructionsActivity extends MenuActivity {
             TextView energyCentralCurrentLevel = (TextView) getView().findViewById(R.id.energyCentralLevelText);
             energyCentralCurrentLevel.setText("Nivel Actual: " + String.valueOf(energyCentral.getLevel()));
             TextView energyCentralProductivity = (TextView) getView().findViewById(R.id.energyCentralProductionText);
-            energyCentralProductivity.setText("Produccion actual: " + String.valueOf(energyCentral.getProductivity()));
+            energyCentralProductivity.setText("Producción actual: " + String.valueOf(energyCentral.getProductivity()));
             TextView energyFuelCentralCurrentLevel = (TextView) getView().findViewById(R.id.energyFuelCentralLevelText);
             energyFuelCentralCurrentLevel.setText("Nivel Actual: " + String.valueOf(energyFuelCentral.getLevel()));
             TextView energyFuelCentralProductivity = (TextView) getView().findViewById(R.id.energyFuelCentralProductionText);
-            energyFuelCentralProductivity.setText("Produccion actual: " + String.valueOf(energyFuelCentral.getProductivity()));
+            energyFuelCentralProductivity.setText("Producción actual: " + String.valueOf(energyFuelCentral.getProductivity()));
             TextView energyFuelCentralDarkMatter = (TextView) getView().findViewById(R.id.energyFuelCentralDarkMatterText);
-            energyFuelCentralDarkMatter.setText("Materia oscura consumida actual: " + String.valueOf(energyFuelCentral.getDarkMatterConsumption()));
+            energyFuelCentralDarkMatter.setText("M.Oscura consumida actual: " + String.valueOf(energyFuelCentral.getDarkMatterConsumption()));
 
             TextView solarPanelQtt = (TextView) getView().findViewById(R.id.solarPanelQttText);
             solarPanelQtt.setText("Cantidad Actual: " + String.valueOf(solarPanels.size()));
@@ -558,23 +558,23 @@ public class ConstructionsActivity extends MenuActivity {
         public void setCosts(EnergyCentral energyCentral, EnergyFuelCentral energyFuelCentral){
             nextEnergyCentral = energyCentral;
             TextView energyCentralCost = (TextView) getView().findViewById(R.id.energyCentralCostText);
-            energyCentralCost.setText("Costo: Cristal " + String.valueOf(energyCentral.getCost().getCrystalCost()) + " Metal " + String.valueOf(energyCentral.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(energyCentral.getCost().getDarkMatterCost()));
+            energyCentralCost.setText("Costo: Cristal: " + String.valueOf(energyCentral.getCost().getCrystalCost()) + ", Metal: " + String.valueOf(energyCentral.getCost().getMetalCost()) + ", M.Oscura: " + String.valueOf(energyCentral.getCost().getDarkMatterCost()));
             TextView energyCentralTimeCost = (TextView) getView().findViewById(R.id.energyCentralTimeText);
-            energyCentralTimeCost.setText("Tiempo finalizacion: " + String.valueOf(energyCentral.getConstructionTime()));
+            energyCentralTimeCost.setText("Tiempo finalización: " + String.valueOf(energyCentral.getConstructionTime()));
             TextView energyCentralNewProductivity = (TextView) getView().findViewById(R.id.energyCentralNewProductionText);
-            energyCentralNewProductivity.setText("Produccion por hora: " + String.valueOf(energyCentral.getProductivity()));
+            energyCentralNewProductivity.setText("Producción por hora: " + String.valueOf(energyCentral.getProductivity()));
             buildEnergyCentral.setText("Construir Nivel " + String.valueOf(energyCentral.getLevel()));
 
             nextEnergyFuelCentral = energyFuelCentral;
             TextView energyFuelCentralCost = (TextView) getView().findViewById(R.id.energyFuelCentralCostText);
-            energyFuelCentralCost.setText("Costo: Cristal " + String.valueOf(energyFuelCentral.getCost().getCrystalCost()) + " Metal " + String.valueOf(energyFuelCentral.getCost().getMetalCost()) + " Materia oscura: " + String.valueOf(energyFuelCentral.getCost().getDarkMatterCost()));
+            energyFuelCentralCost.setText("Costo: Cristal: " + String.valueOf(energyFuelCentral.getCost().getCrystalCost()) + ", Metal: " + String.valueOf(energyFuelCentral.getCost().getMetalCost()) + ", M.Oscura: " + String.valueOf(energyFuelCentral.getCost().getDarkMatterCost()));
             TextView energyFuelCentralTimeCost = (TextView) getView().findViewById(R.id.energyFuelCentralTimeText);
-            energyFuelCentralTimeCost.setText("Tiempo finalizacion: " + String.valueOf(energyFuelCentral.getConstructionTime()));
+            energyFuelCentralTimeCost.setText("Tiempo finalización: " + String.valueOf(energyFuelCentral.getConstructionTime()));
             TextView energyFuelCentralNewProductivity = (TextView) getView().findViewById(R.id.energyFuelCentralNewProductionText);
-            energyFuelCentralNewProductivity.setText("Produccion por hora: " + String.valueOf(energyFuelCentral.getProductivity()));
+            energyFuelCentralNewProductivity.setText("Producción por hora: " + String.valueOf(energyFuelCentral.getProductivity()));
             TextView energyFuelCentralNewDarkMatter = (TextView) getView().findViewById(R.id.energyFuelCentralNextDarkMatterText);
-            energyFuelCentralNewDarkMatter.setText("Consumo materia oscura: " + String.valueOf(energyFuelCentral.getDarkMatterConsumption()));
-            buildEnergyFuelCentral.setText("Construir Nivel " + String.valueOf(energyFuelCentral.getLevel()));
+            energyFuelCentralNewDarkMatter.setText("Consumo M.Oscura: " + String.valueOf(energyFuelCentral.getDarkMatterConsumption()));
+            buildEnergyFuelCentral.setText("Construir Nivel: " + String.valueOf(energyFuelCentral.getLevel()));
 
             checkAvailability(energyCentral, energyFuelCentral);
         }
@@ -668,7 +668,7 @@ public class ConstructionsActivity extends MenuActivity {
                 case 0:
                     return "Minas";
                 case 1:
-                    return "Energia";
+                    return "Energía";
             }
             return null;
         }
