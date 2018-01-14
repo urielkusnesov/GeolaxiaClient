@@ -36,11 +36,11 @@ public class Helpers {
             public void onShow(DialogInterface dialog) {
                 SweetAlertDialog alertDialog = (SweetAlertDialog) dialog;
                 TextView text = (TextView) alertDialog.findViewById(R.id.title_text);
-                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                 TextView content = (TextView) alertDialog.findViewById(R.id.content_text);
-                content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                 TextView confirm = (TextView) alertDialog.findViewById(R.id.confirm_button);
-                confirm.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                confirm.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             }
         });
 
@@ -57,11 +57,11 @@ public class Helpers {
             public void onShow(DialogInterface dialog) {
                 SweetAlertDialog alertDialog = (SweetAlertDialog) dialog;
                 TextView text = (TextView) alertDialog.findViewById(R.id.title_text);
-                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                 TextView content = (TextView) alertDialog.findViewById(R.id.content_text);
-                content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                 TextView confirm = (TextView) alertDialog.findViewById(R.id.confirm_button);
-                confirm.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                confirm.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             }
         });
 
@@ -88,13 +88,13 @@ public class Helpers {
             public void onShow(DialogInterface dialog) {
                 SweetAlertDialog alertDialog = (SweetAlertDialog) dialog;
                 TextView text = (TextView) alertDialog.findViewById(R.id.title_text);
-                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                 TextView content = (TextView) alertDialog.findViewById(R.id.content_text);
-                content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                 TextView confirm = (TextView) alertDialog.findViewById(R.id.confirm_button);
-                confirm.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                confirm.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                 TextView cancel = (TextView) alertDialog.findViewById(R.id.cancel_button);
-                cancel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                cancel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             }
         });
 
