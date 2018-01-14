@@ -159,7 +159,6 @@ public class ConstructionsActivity extends MenuActivity {
                     constructionService.BuildMine(act.player.getUsername(), act.player.getToken(), mineToAdd, act, fragment);
                     act.crystalUsed = mineToAdd.getCost().getCrystalCost();
                     act.metalUsed = mineToAdd.getCost().getMetalCost();
-                    SetConstructionTimer(timerView, mineToAdd.getConstructionTime());
                     sweetAlertDialog.cancel();
                 }
             });
@@ -286,6 +285,7 @@ public class ConstructionsActivity extends MenuActivity {
             act.player.getPlanet(act.planet.getId()).setCrystal(act.planet.getCrystal() - act.crystalUsed);
             act.player.getPlanet(act.planet.getId()).setMetal(act.planet.getMetal() - act.metalUsed);
             SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Construccion", "La construccion de la mina ha comenzado!");
+            SetConstructionTimer(timerView, mine.getConstructionTime()*60*1000);
             dialog.show();
         }
 
@@ -302,17 +302,8 @@ public class ConstructionsActivity extends MenuActivity {
 
                 public void onFinish() {
                     timer.setVisibility(View.INVISIBLE);
-                    SweetAlertDialog dialog = Helpers.getSuccesDialog(act, "Construcciones", "La construccion ha sido finalizada");
-                    dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                        @Override
-                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            constructionService.GetCurrentMines(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
-                            constructionService.GetMinesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
-                            sweetAlertDialog.cancel();
-                        }
-                    });
-
-                    dialog.show();
+                    constructionService.GetCurrentMines(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
+                    constructionService.GetMinesToBuild(act.player.getUsername(), act.player.getToken(), act.planet.getId(), act, fragment);
                 }
 
             }.start();

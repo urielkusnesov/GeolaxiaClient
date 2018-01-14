@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="red_btn_bg_color">#A00000</color>
+    <color name="sweet_dialog_bg_color">#000000</color>
 </resources>

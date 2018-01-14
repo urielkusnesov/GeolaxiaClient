@@ -211,7 +211,7 @@ public class AttackActivity extends MenuActivity {
 
                     Date departure = Calendar.getInstance().getTime();
                     Date arrival = act.calculateArrivalTime(fleet, targetPlanet);
-                    Attack attack = new Attack(act.player, act.planet, null, targetPlanet, fleet, departure, arrival);
+                    Attack attack = new Attack(act.player, act.planet, targetPlanet.getConqueror(), targetPlanet, fleet, departure, arrival);
 
                     attackService.Attack(act.player.getUsername(), act.player.getToken(), act, attack);
                 }

@@ -5,8 +5,7 @@ package geolaxia.geolaxia.Model;
  */
 
 public class Constants {
-    //public static String BASE_URL = "181.47.79.25";/*Server IP*/
-    public static String BASE_URL = "192.168.1.109";/*Server IP*/
+    public static String BASE_URL = "181.47.79.25";/*Server IP*/
     public static final String PORT = ":62078/";
     public static final String HTTP = "http://";
     public static final String LOGIN_SERVICE = "api/player/login";
@@ -92,7 +91,7 @@ public class Constants {
     public static String getBuildShipsServiceUrl(int planetId, int qtt, int shipType) { return (HTTP + BASE_URL + PORT + SHIP_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)) + "&" + "shipType=" + String.valueOf(shipType); }
     public static String getCurrentShieldServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + SHIELD_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getOthersBuildingTimeServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + OTHER_BUILD_TIME_SERVICE + "?planetId=" + String.valueOf(planetId)); }
-    public static String getCurrentProbesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + PROBE_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
+    public static String getCurrentProbesServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + COLONIZE_GETCOLONIZERS_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getCurrentTradersServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + TRADER_CURRENT_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildShieldServiceUrl(int planetId) { return (HTTP + BASE_URL + PORT + SHIELD_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId)); }
     public static String getBuildProbesServiceUrl(int planetId, int qtt) { return (HTTP + BASE_URL + PORT + PROBE_BUILD_SERVICE + "?planetId=" + String.valueOf(planetId) + "&" + "qtt=" + String.valueOf(qtt)); }
